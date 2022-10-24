@@ -27,4 +27,7 @@ return require'packer'.startup(function()
     --lualine
     use 'nvim-lualine/lualine.nvim'
 
+    --notify
+    use 'rcarriga/nvim-notify'
+
 end)

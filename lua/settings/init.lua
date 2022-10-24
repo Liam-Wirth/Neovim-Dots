@@ -33,3 +33,4 @@ set.belloff = all
 set.mousefocus = true
 set.sidescroll = 50
 
+vim.notify = require("notify")
