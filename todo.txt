@@ -4,18 +4,17 @@ configure the font to be a more bold nerdfont
 keybinds
     assign a leader keybind
 make sure nvim-notify is working
-install toggle terminal
-look into the debugger buddy
 make the bar with the numbers be a bit darker
-minimap.nvim
 configure the tokyonight theme
-(I think you can call setup?)
+    (I think you can call setup?)
 
 
 TODO: Plugins!
 git plugin?
+install toggle terminal
 which key
 alpha.nvim
+minimap.nvim
 neorg
 config lualine
 mason.nvim
@@ -27,3 +26,5 @@ spellsitter
 presence.nvim
 shade.nvim
 orgmode.nvim
+look into the debugger buddy
+you are gey
