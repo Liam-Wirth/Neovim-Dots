@@ -23,8 +23,18 @@ return require'packer'.startup(function()
     use 'nvim-lualine/lualine.nvim'
     --notify
     use 'rcarriga/nvim-notify'
-    --lsp-config & mason
+    --lsp-config,mason,dap,linter,and formatters
     use 'neovim/nvim-lspconfig'
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
+    use 'mfussenegger/nvim-dap'
+    use 'jose-elias-alvarez/null-ls.nvim'
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/nvim-cmp'
+    use 'L3MON4D3/LuaSnip'
+    use 'saadparwaiz1/cmp_luasnip'
+
 end)
