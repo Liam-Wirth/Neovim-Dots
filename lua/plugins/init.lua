@@ -29,5 +29,6 @@ return require'packer'.startup(function()
 
     --notify
     use 'rcarriga/nvim-notify'
+    
 
 end)

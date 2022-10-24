@@ -1,0 +1,29 @@
+setup the lsp
+configuree the greeter
+configure the font to be a more bold nerdfont
+keybinds
+    assign a leader keybind
+make sure nvim-notify is working
+install toggle terminal
+look into the debugger buddy
+make the bar with the numbers be a bit darker
+minimap.nvim
+configure the tokyonight theme
+(I think you can call setup?)
+
+
+TODO: Plugins!
+git plugin?
+which key
+alpha.nvim
+neorg
+config lualine
+mason.nvim
+luasnip
+vim illuminate
+todo-comments
+mini.nvim
+spellsitter
+presence.nvim
+shade.nvim
+orgmode.nvim
