@@ -151,6 +151,7 @@ return {
     Smiley = "ﲃ",
     Package = "",
     CircuitBoard = "",
+    amogus = "ඞ",
   },
 }
 

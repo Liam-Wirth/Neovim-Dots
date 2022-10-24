@@ -27,4 +27,3 @@ presence.nvim
 shade.nvim
 orgmode.nvim
 look into the debugger buddy
-you are gey

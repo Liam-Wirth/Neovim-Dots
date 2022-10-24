@@ -5,6 +5,8 @@ require('plugins')
     require('plugins.lualine')
     require('lsp-config')
         require('lsp-config.mason')
+        require('lsp-config.null-ls')
 require('colorschemes-config.tokyonight')
+
 
 
