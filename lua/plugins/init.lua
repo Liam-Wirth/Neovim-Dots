@@ -30,5 +30,7 @@ return require'packer'.startup(function()
     --notify
     use 'rcarriga/nvim-notify'
     
-
+    --lsp-config & mason
+    use 'neovim/nvim-lspconfig'
+    use 'williamboman/mason.nvim'
 end)
