@@ -7,7 +7,7 @@ require('plugins')
     require('lsp-config.language-servers')
         require('lsp-config.mason')
         require('lsp-config.null-ls')
+        require('lsp-config.nvim-cmp')
 require('colorschemes-config.tokyonight')
-
 
 
