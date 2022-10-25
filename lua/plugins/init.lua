@@ -1,4 +1,5 @@
---warn
+--War
+
 return require'packer'.startup(function()
     --Packer
     use 'wbthomason/packer.nvim'
