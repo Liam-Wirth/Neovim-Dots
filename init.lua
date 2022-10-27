@@ -3,6 +3,7 @@ require('plugins')
     require('plugins.nvim-tree-config')
     require('plugins.bufferline')
     require('plugins.lualine')
+    require('plugins.treesitter')
     require('lsp-config')
     require('lsp-config.language-servers')
         require('lsp-config.mason')
@@ -10,5 +11,4 @@ require('plugins')
         require('lsp-config.nvim-cmp')
         require('lsp-config.luasnip')
 require('colorschemes-config.tokyonight')
-
 
