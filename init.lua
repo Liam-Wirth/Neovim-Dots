@@ -8,6 +8,7 @@ require('plugins')
         require('lsp-config.mason')
         require('lsp-config.null-ls')
         require('lsp-config.nvim-cmp')
+        require('lsp-config.luasnip')
 require('colorschemes-config.tokyonight')
 
 
