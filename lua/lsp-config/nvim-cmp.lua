@@ -12,10 +12,7 @@ for _, lsp in ipairs(servers) do
   }
 end
 
--- luasnip setup
-local luasnip = require 'luasnip'
-require("luasnip.loaders.from_vscode").lazy_load({paths = "~/.config/nvim/lua/lspconfig/snippets/JSON/",})
-
+--CMP setup
 local cmp = require 'cmp'
 cmp.setup {
   snippet = {
@@ -46,13 +43,14 @@ cmp.setup {
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
       else
-        fallback()
+        fallback() 
       end
     end, { 'i', 's' }),
   }),
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'j'}
+    { name = 'java'}
   },
+
 }
