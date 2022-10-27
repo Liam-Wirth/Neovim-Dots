@@ -14,8 +14,8 @@ end
 
 -- luasnip setup
 local luasnip = require 'luasnip'
+require("luasnip.loaders.from_vscode").lazy_load({paths = "~/.config/nvim/lua/lspconfig/snippets/JSON/",})
 
--- nvim-cmp setup
 local cmp = require 'cmp'
 cmp.setup {
   snippet = {
@@ -53,5 +53,6 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'j'}
   },
 }
