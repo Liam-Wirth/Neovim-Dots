@@ -7,7 +7,7 @@ set.smarttab = true
 set.shiftwidth = 4
 set.tabstop = 4
 set.showtabline = 2
-
+vim.o.termguicolors = true
 
 set.hlsearch = true
 set.incsearch = true
@@ -25,6 +25,17 @@ set.termguicolors =true
 set.relativenumber = true
 set.number = true
 set.cursorline = true
+set.numberwidth = 4
+set.ignorecase = true
+set.smarttab = true
+set.hlsearch = true
+set.colorcolumn = "99999"
+set.signcolumn = "yes"
+set.showtabline = 2
+set.cmdheight = 1
+set.pumheight = 10
+set.splitbelow = true
+set.splitright = true
 
 --no bell pls
 set.belloff = all 
@@ -34,6 +45,10 @@ set.mousefocus = true
 set.sidescroll = 50
 
 vim.notify = require("notify")
+
+vim.o.completeopt = 'menuone,noselect'
+vim.o.undofile = true
+
 
 --------------Keybinds!
 vim.g.mapleader = ' '

@@ -1,6 +1,4 @@
-local use = require('packer').use
-
-return require'packer'.startup(function()
+return require'packer'.startup(function(use)
     --Packer
     use 'wbthomason/packer.nvim'
     --Nvim-Tree
