@@ -13,7 +13,7 @@ return require'packer'.startup(function(use)
     use 'EdenEast/nightfox.nvim'
     use 'folke/tokyonight.nvim'
     --bufferline
-    use {'akinsho/bufferline.nvim', tag = "v3.*", requires = 'kyazdani42/nvim-web-devicons'}
+    use {'akinsho/bufferline.nvim', tag = "v3.*"} 
     --autopairs
     use {
 	    "windwp/nvim-autopairs",
@@ -56,6 +56,7 @@ return require'packer'.startup(function(use)
         require'alpha'.setup(require'alpha.themes.startify'.config)
     end
     }
+  --TODO fix dis?
     use 'simrat39/rust-tools.nvim'
 
     -- Debugging
@@ -82,10 +83,11 @@ use {
     }
   end
 }
+  -- Lua
 use 'karb94/neoscroll.nvim'
 use 'andweeb/presence.nvim'
-
-
+use 'folke/which-key.nvim'
+  require('plugins.whichkey')
 
 use({
     'NTBBloodbath/doom-one.nvim',
