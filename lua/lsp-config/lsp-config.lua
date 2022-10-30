@@ -1,4 +1,4 @@
--- LSP settings.
+
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
@@ -68,4 +68,15 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+
+--below is how I would setup manual configurations of different lsp servers
+require('lspconfig').sumneko_lua.setup{
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    }
+}
 
