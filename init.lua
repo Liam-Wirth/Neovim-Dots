@@ -10,4 +10,4 @@ require('plugins')
         require('lsp-config.null-ls')
         require('lsp-config.nvim-cmp')
 --require('colorschemes-config.tokyonight')
-
+    require('plugins.discordrpc')

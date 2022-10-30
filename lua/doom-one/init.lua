@@ -13,7 +13,7 @@ local colors = require("doom-one.colors")
 
 local config = {
 	ui = {
-		cursor_coloring = vim.g.doom_one_cursor_coloring or false,
+		cursor_coloring = vim.g.doom_one_cursor_coloring or true,
 		terminal_colors = vim.g.doom_one_terminal_colors or true,
 		italic_comments = vim.g.doom_one_italic_comments or false,
 		enable_treesitter = vim.g.doom_one_enable_treesitter or true,
