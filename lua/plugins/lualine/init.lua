@@ -1,6 +1,6 @@
 -- Eviline config for lualine
 -- Author: shadmansaleh
--- Credit: glepnir
+-- Credit: glepnir heavily edited by liam
 local lualine = require('lualine')
 
 -- Color table for highlights
