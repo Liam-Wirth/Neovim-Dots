@@ -27,3 +27,4 @@ presence.nvim
 shade.nvim
 orgmode.nvim
 look into the debugger buddy
+fix the weird tab bar shit
