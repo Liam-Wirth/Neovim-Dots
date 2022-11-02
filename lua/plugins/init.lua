@@ -9,11 +9,8 @@ return require'packer'.startup(function(use)
     --telescope
     use 'nvim-telescope/telescope.nvim'
     use 'nvim-lua/plenary.nvim'
-    --themes
-    use 'EdenEast/nightfox.nvim'
-    use 'folke/tokyonight.nvim'
     --bufferline
-    use {'akinsho/bufferline.nvim', tag = "v3.*"} 
+    use {'akinsho/bufferline.nvim', tag = "v3.*"}
     --autopairs
     use {
 	    "windwp/nvim-autopairs",
@@ -57,7 +54,6 @@ return require'packer'.startup(function(use)
     end
     }
   --TODO fix dis?
-    use 'simrat39/rust-tools.nvim'
 
     -- Debugging
     use 'nvim-lua/plenary.nvim'
@@ -88,8 +84,7 @@ use 'karb94/neoscroll.nvim'
 use 'andweeb/presence.nvim'
 use 'folke/which-key.nvim'
   require('plugins.whichkey')
-
-use({
+  use({
     'NTBBloodbath/doom-one.nvim',
     setup = function()
         -- Add color to cursor
@@ -101,9 +96,13 @@ use({
 		-- Enable TS support
 		vim.g.doom_one_enable_treesitter = true
 		-- Color whole diagnostic text or only underline
-		vim.g.doom_one_diagnostics_text_color = false
+        vim.g.doom_one_diagnostics_text_color = false
 		-- Enable transparent background
+		vim.g.doom_one_transparent_background = false
 
+        -- Pumblend transparency
+		vim.g.doom_one_pumblend_enable = false
+		vim.g.doom_one_pumblend_transparency = 20
 
         -- Plugins integration
 		vim.g.doom_one_plugin_neorg = true
@@ -119,7 +118,7 @@ use({
 		vim.g.doom_one_plugin_lspsaga = false
 	end,
 	config = function()
+        vim.cmd("colorscheme doom-one")
     end,
 })
-        vim.cmd("colorscheme doom-one")
 end )
