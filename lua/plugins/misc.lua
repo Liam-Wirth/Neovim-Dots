@@ -4,7 +4,7 @@ local colors = require "doom-one.colors".dark
 
 
 --TODO Unfuck all of this, and make things more consice and easier to find/figure out
-
+--TODO rename this file to "Display Options"
 vim.opt.list = true
 --personally I really hate the look of having whitespace have the little dots, but it's an option if you want it I guess
     --vim.opt.listchars:append "space:⋅",
@@ -24,8 +24,9 @@ local hl6 = ("highlight IndentBlankLineIndent6 guifg="..colors.orange.." gui=noc
   vim.cmd(hl4)
   vim.cmd(hl5)
   vim.cmd(hl6)
---enable Colorizer
-vim.cmd[[ColorizerAttachToBuffer]]
+
+
+--indent blankline
 require("indent_blankline").setup {
     space_char_blankline = " ",
     show_current_context = true,
@@ -37,7 +38,17 @@ require("indent_blankline").setup {
         "IndentBlanklineIndent4",
         "IndentBlanklineIndent5",
               "IndentBlanklineIndent6",
-    },   use_treesitter = true
+    },   
+  use_treesitter = true,
 }
 
 
+--this is for Neovide
+local font = "JetBrainsMonoExtraBold"..[[\ ]].."Nerd"..[[\ ]].."Font:h16"
+vim.cmd([[
+    if exists("g:neovide")
+      set guifont=]]..font..[[
+
+]])
+--enable Colorizer
+vim.cmd[[ColorizerAttachToBuffer]]
