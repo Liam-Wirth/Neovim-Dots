@@ -81,10 +81,6 @@ use {
   }
  use {
     "NvChad/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup({ "css", "scss", "html", "javascript" }, {
-        })
-    end,
   }
 
   require("luasnip.loaders.from_vscode").lazy_load()
