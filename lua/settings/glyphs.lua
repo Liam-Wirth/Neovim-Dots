@@ -1,5 +1,5 @@
 --lifted straight from the lunarvim config, I thought I could make use of these at some point. 
-return {
+local icons = {
   kind = {
     Array = "",
     Boolean = "蘒",
@@ -53,6 +53,7 @@ return {
     Branch = "",
   },
   ui = {
+
     ArrowCircleDown = "",
     ArrowCircleLeft = "",
     ArrowCircleRight = "",
@@ -154,4 +155,16 @@ return {
     amogus = "ඞ",
   },
 }
-
+icons.get_misc = function ()
+  return icons.misc()
+end
+icons.get_diagnostics= function ()
+  return icons.diagnostics()
+end
+icons.get_git = function ()
+  return icons.git()
+end
+icons.get_ui= function ()
+  return icons.ui()
+end
+return icons

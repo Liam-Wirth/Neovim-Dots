@@ -8,7 +8,7 @@ set.shiftwidth = 4
 set.tabstop = 4
 set.showtabline = 2
 vim.o.termguicolors = true
-
+set.autochdir = true 
 set.hlsearch = true
 set.incsearch = true
 set.ignorecase = true
