@@ -9,8 +9,11 @@ return require'packer'.startup(function(use)
     --telescope
     use 'nvim-telescope/telescope.nvim'
     use 'nvim-lua/plenary.nvim'
+    --themes
+    use 'EdenEast/nightfox.nvim'
+    use 'folke/tokyonight.nvim'
     --bufferline
-    use {'akinsho/bufferline.nvim', tag = "v3.*"}
+    use {'akinsho/bufferline.nvim', tag = "v3.*"} 
     --autopairs
     use {
 	    "windwp/nvim-autopairs",
@@ -78,64 +81,11 @@ use {
       -- refer to the configuration section below
     }
   end
-  }
- use {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup({ "css", "scss", "html", "javascript" }, {
-        RGB = true, -- #RGB hex codes
-        RRGGBB = true, -- #RRGGBB hex codes
-        RRGGBBAA = true, -- #RRGGBBAA hex codes
-        rgb_fn = true, -- CSS rgb() and rgba() functions
-        hsl_fn = true, -- CSS hsl() and hsla() functions
-        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-      })
-    end,
-  }
-
-  require("luasnip.loaders.from_vscode").lazy_load()
-  
+}
   -- Lua
 use 'karb94/neoscroll.nvim'
 use 'andweeb/presence.nvim'
 use 'folke/which-key.nvim'
   require('plugins.whichkey')
-  use({
-    'NTBBloodbath/doom-one.nvim',
-    setup = function()
-        -- Add color to cursor
-		vim.g.doom_one_cursor_coloring = false
-		-- Set :terminal colors
-		vim.g.doom_one_terminal_colors = true
-		-- Enable italic comments
-		vim.g.doom_one_italic_comments = false
-		-- Enable TS support
-		vim.g.doom_one_enable_treesitter = true
-		-- Color whole diagnostic text or only underline
-        vim.g.doom_one_diagnostics_text_color = false
-		-- Enable transparent background
-		vim.g.doom_one_transparent_background = false
-
-        -- Pumblend transparency
-		vim.g.doom_one_pumblend_enable = false
-		vim.g.doom_one_pumblend_transparency = 20
-
-        -- Plugins integration
-		vim.g.doom_one_plugin_neorg = true
-		vim.g.doom_one_plugin_barbar = false
-		vim.g.doom_one_plugin_telescope = false
-		vim.g.doom_one_plugin_neogit = true
-		vim.g.doom_one_plugin_nvim_tree = true
-		vim.g.doom_one_plugin_dashboard = true
-		vim.g.doom_one_plugin_startify = true
-		vim.g.doom_one_plugin_whichkey = true
-		vim.g.doom_one_plugin_indent_blankline = true
-		vim.g.doom_one_plugin_vim_illuminate = true
-		vim.g.doom_one_plugin_lspsaga = false
-	end,
-	config = function()
-        vim.cmd("colorscheme doom-one")
-    end,
-})
+       vim.cmd("colorscheme doom-one")
 end )
