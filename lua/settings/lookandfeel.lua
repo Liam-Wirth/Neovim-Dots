@@ -4,8 +4,9 @@ local glyphs = require "settings.glyphs"
 
 
 --TODO Unfuck all of this, and make things more consice and easier to find/figure out
---TODO rename this file to "Display Options" and move it to the settings folder
+--TODO get 
 vim.opt.list = true
+
 --personally I really hate the look of having whitespace have the little dots, but it's an option if you want it I guess
     --vim.opt.listchars:append "space:⋅",
 --tab:'
@@ -52,3 +53,12 @@ vim.cmd([[
 ]])
 --enable Colorizer
 --vim.cmd[[ColorizerAttachToBuffer]]
+require("colorizer").setup({ "css", "scss", "html", "javascript" }, {
+        RGB = true, -- #RGB hex codes
+        RRGGBB = true, -- #RRGGBB hex codes
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      })
