@@ -4,7 +4,7 @@ local colors = require "doom-one.colors".dark
 
 
 --TODO Unfuck all of this, and make things more consice and easier to find/figure out
---TODO rename this file to "Display Options"
+--TODO rename this file to "Display Options" and move it to the settings folder
 vim.opt.list = true
 --personally I really hate the look of having whitespace have the little dots, but it's an option if you want it I guess
     --vim.opt.listchars:append "space:⋅",
