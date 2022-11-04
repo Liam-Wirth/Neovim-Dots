@@ -1,42 +1,43 @@
-local plugins = {
+local colors = require "doom-one.colors".dark
 
 
-  { "folke/tokyonight.nvim" },
-  {
-    "folke/trouble.nvim",
-    cmd = "TroubleToggle",
-  },
-  { "oberblastmeister/neuron.nvim" },
-  {
-    'wfxr/minimap.vim',
-    run = "cargo install --locked code-minimap",
-    cmd = { "Minimap", "MinimapClose", "MinimapToggle", "MinimapRefresh", "MinimapUpdateHighlight" },
-    config = function()
-      vim.cmd("let g:minimap_width = 10")
-      vim.cmd("let g:minimap_auto_start = 1")
 
-      vim.cmd("let g:minimap_auto_start_win_enter = 1")
-    end,
-  },
-  {
-    "folke/todo-comments.nvim",
-    event = "BufRead",
-    config = function()
-      require("todo-comments").setup()
-    end,
-  },
-  {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup({ "css", "scss", "html", "javascript" }, {
-        RGB = true, -- #RGB hex codes
-        RRGGBB = true, -- #RRGGBB hex codes
-        RRGGBBAA = true, -- #RRGGBBAA hex codes
-        rgb_fn = true, -- CSS rgb() and rgba() functions
-        hsl_fn = true, -- CSS hsl() and hsla() functions
-        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-      })
-    end,
-  },
+
+--TODO Unfuck all of this, and make things more consice and easier to find/figure out
+
+vim.opt.list = true
+--personally I really hate the look of having whitespace have the little dots, but it's an option if you want it I guess
+    --vim.opt.listchars:append "space:⋅",
+--tab:'
+local escape = [[\ \]]
+  --cursed fucking workaround to get tab to show
+vim.cmd('set listchars=eol:'..'↩'..',tab:'..escape..'')
+local hl1 = ("highlight IndentBlankLineIndent1 guifg="..colors.red.." gui=nocombine")
+local hl2 = ("highlight IndentBlankLineIndent2 guifg="..colors.yellow.." gui=nocombine")
+local hl3 = ("highlight IndentBlankLineIndent3 guifg="..colors.cyan.." gui=nocombine")
+local hl4 = ("highlight IndentBlankLineIndent4 guifg="..colors.green.." gui=nocombine")
+local hl5 = ("highlight IndentBlankLineIndent5 guifg="..colors.magenta.." gui=nocombine")
+local hl6 = ("highlight IndentBlankLineIndent6 guifg="..colors.orange.." gui=nocombine")
+  vim.cmd(hl1)
+  vim.cmd(hl2)
+  vim.cmd(hl3)
+  vim.cmd(hl4)
+  vim.cmd(hl5)
+  vim.cmd(hl6)
+--enable Colorizer
+vim.cmd[[ColorizerAttachToBuffer]]
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    show_current_context = true,
+    show_current_context_start = true,
+     char_highlight_list = {
+        "IndentBlanklineIndent1",
+        "IndentBlanklineIndent2",
+        "IndentBlanklineIndent3",
+        "IndentBlanklineIndent4",
+        "IndentBlanklineIndent5",
+              "IndentBlanklineIndent6",
+    },   use_treesitter = true
 }
+
+
