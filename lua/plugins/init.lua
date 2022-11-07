@@ -1,4 +1,5 @@
 local vim = vim;
+--TODO Move all configs to their own respective files
 return require'packer'.startup(function(use)
     --Packer
     use 'wbthomason/packer.nvim'
@@ -8,7 +9,6 @@ return require'packer'.startup(function(use)
 
     --telescope
     use 'nvim-telescope/telescope.nvim'
-    use 'nvim-lua/plenary.nvim'
     --bufferline
     use {'akinsho/bufferline.nvim', tag = "v3.*"}
     --autopairs
@@ -31,7 +31,7 @@ return require'packer'.startup(function(use)
     use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
     use 'tpope/vim-fugitive'                                                             -- Git commands in nvim
     use 'tpope/vim-rhubarb'                                                              -- Fugitive-companion to interact with github
-    use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }            -- Add git related info in the signs columns and popups
+    use 'lewis6991/gitsigns.nvim'
     use 'numToStr/Comment.nvim'                                                          -- "gc" to comment visual regions/lines
 
     use 'tpope/vim-sleuth'
@@ -57,7 +57,6 @@ return require'packer'.startup(function(use)
 
     -- Debugging
     use 'nvim-lua/plenary.nvim'
-    use 'mfussenegger/nvim-dap'
     use {
   "folke/todo-comments.nvim",
   requires = "nvim-lua/plenary.nvim",
@@ -68,6 +67,9 @@ return require'packer'.startup(function(use)
       -- refer to the configuration section below
     }
   end }
+
+
+
 use {
   "folke/trouble.nvim",
   requires = "kyazdani42/nvim-web-devicons",
@@ -79,52 +81,34 @@ use {
     }
   end
   }
- use {
-    "NvChad/nvim-colorizer.lua",
-  }
+use "NvChad/nvim-colorizer.lua"
+require("luasnip.loaders.from_vscode").lazy_load()
 
-  require("luasnip.loaders.from_vscode").lazy_load()
-  
+
+
+
+
   -- Lua
+
 use 'karb94/neoscroll.nvim'
 use 'andweeb/presence.nvim'
 use 'folke/which-key.nvim'
   require('plugins.whichkey')
-  use({
-    'NTBBloodbath/doom-one.nvim',
-    setup = function()
-        -- Add color to cursor
-		vim.g.doom_one_cursor_coloring = false
-		-- Set :terminal colors
-		vim.g.doom_one_terminal_colors = true
-		-- Enable italic comments
-		vim.g.doom_one_italic_comments = false
-		-- Enable TS support
-		vim.g.doom_one_enable_treesitter = true
-		-- Color whole diagnostic text or only underline
-        vim.g.doom_one_diagnostics_text_color = false
-		-- Enable transparent background
-		vim.g.doom_one_transparent_background = false
 
-        -- Pumblend transparency
-		vim.g.doom_one_pumblend_enable = false
-		vim.g.doom_one_pumblend_transparency = 20
 
-        -- Plugins integration
-		vim.g.doom_one_plugin_neorg = true
-		vim.g.doom_one_plugin_barbar = false
-		vim.g.doom_one_plugin_telescope = false
-		vim.g.doom_one_plugin_neogit = true
-		vim.g.doom_one_plugin_nvim_tree = true
-		vim.g.doom_one_plugin_dashboard = true
-		vim.g.doom_one_plugin_startify = true
-		vim.g.doom_one_plugin_whichkey = true
-		vim.g.doom_one_plugin_indent_blankline = true
-		vim.g.doom_one_plugin_vim_illuminate = true
-		vim.g.doom_one_plugin_lspsaga = false
-	end,
-	config = function()
-        vim.cmd("colorscheme doom-one")
+
+
+  use 'NTBBloodbath/doom-one.nvim'
+    use {
+    'lervag/vimtex',
+    opt = true,
+    config = function ()
+        vim.g.vimtex_view_general_viewer = 'okular'
+        vim.g.vimtex_view_general_options = [[--unique file:@pdf\#src:@line@tex]]
+	vim.g.vimtex_compiler_method = 'latexrun'
+	vim.g.vimtex_view_method = 'okular'
     end,
-})
+    ft = 'tex'
+}
+  use 'mhinz/neovim-remote'
 end )
