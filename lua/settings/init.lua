@@ -76,9 +76,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 --                    Setup for plugins that don't really need their own file!
 
 
-require('Comment').setup({
+--require('Comment').setup({
  --TODO look into the options available for comment.nvim
-});
+--});
 
 
 
