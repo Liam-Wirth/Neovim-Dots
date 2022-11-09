@@ -35,7 +35,8 @@ return require'packer'.startup(function(use)
     use 'numToStr/Comment.nvim'                                                          -- "gc" to comment visual regions/lines
 
     use 'tpope/vim-sleuth'
-    use 'lukas-reineke/indent-blankline.nvim'                                            -- Add indentation guides even on blank lines
+    use 'lukas-reineke/indent-blankline.nvim'
+
 
     -------SNIPPETS?
     use 'hrsh7th/cmp-buffer'
@@ -57,19 +58,8 @@ return require'packer'.startup(function(use)
 
     -- Debugging
     use 'nvim-lua/plenary.nvim'
-    use {
-  "folke/todo-comments.nvim",
-  requires = "nvim-lua/plenary.nvim",
-  config = function()
-    require("todo-comments").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end }
-
-
-
+    use "folke/todo-comments.nvim"
+    require'plugins.todo-comments'
 use {
   "folke/trouble.nvim",
   requires = "kyazdani42/nvim-web-devicons",

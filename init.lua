@@ -1,7 +1,5 @@
 require('settings')
-
-
-
+require('settings.lookandfeel')
 
 require('plugins')
     require('plugins.nvim-tree-config')
@@ -10,7 +8,6 @@ require('plugins')
 --require('colorschemes-config.tokyonight')
     require('plugins.discordrpc')
 
-require('settings.lookandfeel')
 
 
 
@@ -25,4 +22,7 @@ require('plugins.treesitter')
 local vim = vim;
 
 vim.cmd("colorscheme doom-one")
-
+vim.cmd([[
+    luafile ~/.config/nvim/lua/settings/lookandfeel.lua
+    luafile ~/.config/nvim/lua/plugins/todo-comments.lua
+]])
