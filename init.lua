@@ -25,4 +25,7 @@ vim.cmd("colorscheme doom-one")
 vim.cmd([[
     luafile ~/.config/nvim/lua/settings/lookandfeel.lua
     luafile ~/.config/nvim/lua/plugins/todo-comments.lua
+    luafile ~/.config/nvim/lua/settings/init.lua
+    TSEnable highlight
+    
 ]])
