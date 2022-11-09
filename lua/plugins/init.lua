@@ -32,7 +32,7 @@ return require'packer'.startup(function(use)
     use 'tpope/vim-fugitive'                                                             -- Git commands in nvim
     use 'tpope/vim-rhubarb'                                                              -- Fugitive-companion to interact with github
     use 'lewis6991/gitsigns.nvim'
-    use 'numToStr/Comment.nvim'                                                          -- "gc" to comment visual regions/lines
+--    use 'numToStr/Comment.nvim'                                                          -- "gc" to comment visual regions/lines
     use 'mfussenegger/nvim-jdtls'
     use 'tpope/vim-sleuth'
     use 'lukas-reineke/indent-blankline.nvim'
