@@ -5,7 +5,6 @@ require('plugins')
     require('plugins.nvim-tree-config')
     require('plugins.bufferline')
     require('plugins.lualine')
---require('colorschemes-config.tokyonight')
     require('plugins.discordrpc')
 
 
@@ -22,9 +21,9 @@ require('plugins.treesitter')
 local vim = vim;
 
 vim.cmd("colorscheme doom-one")
+--HACK way of fucking loading configuration files. Need to fix
 vim.cmd([[
     luafile ~/.config/nvim/lua/settings/lookandfeel.lua
-    luafile ~/.config/nvim/lua/plugins/todo-comments.lua
     luafile ~/.config/nvim/lua/settings/init.lua
 ]])
 --TODO

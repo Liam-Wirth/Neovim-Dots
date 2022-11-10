@@ -18,7 +18,6 @@ local colors = {
   blue     = '#51afef',
   red      = '#ec5f67',
 }
---I am redifining the colorscheme to the one below because the one below is the one from tokyonight
 local conditions = {
   buffer_not_empty = function()
     return vim.fn.empty(vim.fn.expand('%:t')) ~= 1

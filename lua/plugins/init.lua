@@ -59,7 +59,6 @@ return require'packer'.startup(function(use)
     -- Debugging
     use 'nvim-lua/plenary.nvim'
     use "folke/todo-comments.nvim"
-    require'plugins.todo-comments'
 use {
   "folke/trouble.nvim",
   requires = "kyazdani42/nvim-web-devicons",
@@ -80,7 +79,6 @@ require("luasnip.loaders.from_vscode").lazy_load()
 
   -- Lua
 
-use 'karb94/neoscroll.nvim'
 use 'andweeb/presence.nvim'
 use 'folke/which-key.nvim'
   require('plugins.whichkey')
@@ -89,16 +87,6 @@ use 'folke/which-key.nvim'
 
 
   use 'NTBBloodbath/doom-one.nvim'
-    use {
-    'lervag/vimtex',
-    opt = true,
-    config = function ()
-        vim.g.vimtex_view_general_viewer = 'okular'
-        vim.g.vimtex_view_general_options = [[--unique file:@pdf\#src:@line@tex]]
-	vim.g.vimtex_compiler_method = 'latexrun'
-	vim.g.vimtex_view_method = 'okular'
-    end,
-    ft = 'tex'
-}
+    
   use 'mhinz/neovim-remote'
 end )

@@ -6,8 +6,8 @@ local path_to_jar = plugins_dir..'org.eclipse.equinox.launcher_1.6.400.v20210924
 local lombok_path = jdtls_dir..'/lombok.jar'
 
 local root_markers = { ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }
-local root_dir = require("jdtls.setup").find_root(root_markers)
-
+--local root_dir = require("jdtls.setup").find_root(root_markers)
+local root_dir = vim.fs.dirname(vim.fs.find(root_markers, {upward = true})[1])
 if root_dir == "" then
   return
 end
