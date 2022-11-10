@@ -1,5 +1,4 @@
 local colors = require "doom-one.colors".dark
-
 local glyphs = require "settings.glyphs"
 local hl1 = ("highlight IndentBlankLineIndent1 guifg="..colors.red.." gui=nocombine")
 local hl2 = ("highlight IndentBlankLineIndent2 guifg="..colors.yellow.." gui=nocombine")
@@ -84,10 +83,11 @@ vim.cmd([[
       buftypes = {},
   },
 --NOTE decided to move the stuff that would be in the "Look and Feel" file here?
+--TODO f
 --TODO figure out a way to get this to work so that I don't have to have them here
 require("todo-comments").setup({
   signs = true, -- show icons in the signs column
-  sign_priority = 7, -- sign priority
+  sign_priority = 8, -- sign priority
   -- keywords recognized as todo comments
   keywords = {
     FIX = {
@@ -104,7 +104,7 @@ require("todo-comments").setup({
     TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
   },
   gui_style = {
-    fg = "NONE", -- The gui style to use for the fg highlight group.
+    fg = "BOLD", -- The gui style to use for the fg highlight group.
     bg = "BOLD", -- The gui style to use for the bg highlight group.
   },
   merge_keywords = true, -- when true, custom keywords will be merged with the defaults

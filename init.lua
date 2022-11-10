@@ -27,3 +27,6 @@ vim.cmd([[
     luafile ~/.config/nvim/lua/plugins/todo-comments.lua
     luafile ~/.config/nvim/lua/settings/init.lua
 ]])
+--TODO
+--HACKS
+--
