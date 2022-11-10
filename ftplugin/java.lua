@@ -74,16 +74,8 @@ local config = {
       },
       references = {
         includeDecompiledSources = true,
-      },
-      format = {
-        enabled = false,
-       -- settings = {
-       --   url = vim.fn.stdpath "config" .. "lua/lsp-config/intellij-java-google-style.xml",
-       --   profile = "GoogleStyle",
-       -- },
-      },
-
-    },
+      }
+     },
     signatureHelp = { enabled = true },
     completion = {
       favoriteStaticMembers = {
