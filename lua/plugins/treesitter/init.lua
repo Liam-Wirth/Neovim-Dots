@@ -3,7 +3,8 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript' },
 
   highlight = { enable = false},
-  indent = { enable = true },
+  --NOTE while attempting to debug indent-blankline I edited this file (november 10 2022)
+  indent = { enable = false},
   incremental_selection = {
     enable = true,
     keymaps = {
