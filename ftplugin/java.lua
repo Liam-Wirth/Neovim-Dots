@@ -11,7 +11,8 @@ local root_dir = require("jdtls.setup").find_root(root_markers)
 if root_dir == "" then
   return
 end
-
+--TODO fuck!
+--
 
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 
@@ -60,6 +61,7 @@ local config = {
   -- Here you can configure eclipse.jdt.ls specific settings
   -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
   -- for a list of options
+  --TODO dfksj
   settings = {
     java = {
     },
@@ -74,7 +76,7 @@ local config = {
         includeDecompiledSources = true,
       },
       format = {
-        enabled = true,
+        enabled = false,
        -- settings = {
        --   url = vim.fn.stdpath "config" .. "lua/lsp-config/intellij-java-google-style.xml",
        --   profile = "GoogleStyle",
