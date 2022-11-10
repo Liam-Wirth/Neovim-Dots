@@ -1,11 +1,37 @@
+local lookandfeel = require('settings.lookandfeel')
+
 local vim = vim;
 --TODO Move all configs to their own respective files
 return require'packer'.startup(function(use)
+--------------------------------------------------------
+---                   Meta shit                       --
+--------------------------------------------------------
+  use({
+    'lewis6991/impatient.nvim', -- Decrease nvim load times
+    config = function()
+      require('impatient')
+    end,
+  })
+
+  use('dstein64/vim-startuptime') -- Measure startup time
+
+  use('nvim-lua/popup.nvim') -- Pop up helper
+
+  use('nvim-lua/plenary.nvim') -- Neovim Lua functions
     --Packer
-    use 'wbthomason/packer.nvim'
+  use 'wbthomason/packer.nvim'
+--------------------------------------------------------
+---                   UI Stuff                        --
+--------------------------------------------------------
     --Nvim-Tree
+
     use 'nvim-tree/nvim-web-devicons' -- optional, for file icons
-    use 'nvim-tree/nvim-tree.lua'
+    use({
+        'nvim-tree/nvim-tree.lua',
+        config = function ()
+            require('settings.lookandfeel.nvimtree')
+        end,
+      })
 
     --telescope
     use 'nvim-telescope/telescope.nvim'
@@ -17,7 +43,16 @@ return require'packer'.startup(function(use)
         config = function() require("nvim-autopairs").setup {} end
     }
     --lualine
-    use 'nvim-lualine/lualine.nvim'
+    --TODO restructure my config like below
+  use({
+      'nvim-lualine/lualine.nvim', -- Fancy status line/tab line
+      config = function()
+        require('settings.lookandfeel.lualine')
+      end,
+    })
+
+
+
     --notify
     use 'rcarriga/nvim-notify'
     --lsp-config,mason,dap,linter,and formatters
@@ -57,8 +92,13 @@ return require'packer'.startup(function(use)
   --TODO fix dis?
 
     -- Debugging
-    use 'nvim-lua/plenary.nvim'
-    use "folke/todo-comments.nvim"
+
+use({
+    'folke/todo-comments.nvim', -- Todo comment highlighting
+    config = function()
+      require('settings.lookandfeel.todocomments')
+    end,
+  })
 use {
   "folke/trouble.nvim",
   requires = "kyazdani42/nvim-web-devicons",
