@@ -1,10 +1,10 @@
+--TODO get all of these dumbass require statements OUTTA HERE!!!
+
 require('settings')
 require('settings.lookandfeel')
 
 require('plugins')
-    require('plugins.nvim-tree-config')
     require('plugins.bufferline')
-    require('plugins.lualine')
     require('plugins.discordrpc')
 
 
