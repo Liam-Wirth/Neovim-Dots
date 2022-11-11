@@ -105,7 +105,7 @@ return require'packer'.startup(function(use)
 use({
     'folke/todo-comments.nvim', -- Todo comment highlighting
     config = function()
-      require('settings.lookandfeel.todocomments')
+      require('plugins.lookandfeel.todocomments')
     end,
   })
 use {
