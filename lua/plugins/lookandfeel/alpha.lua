@@ -4,8 +4,6 @@ if not present then
   return
 end
 
-require("base46").load_highlight("alpha")
-
 local function button(sc, txt, keybind)
   local sc_ = sc:gsub("%s", ""):gsub("SPC", "<leader>")
 
@@ -38,7 +36,7 @@ end
 local function footer()
   local date = os.date("  %d/%m/%Y ")
   local time = os.date("  %H:%M:%S ")
-  local plugins = "  " .. #vim.tbl_keys(packer_plugins) .. " plugins "
+  local plugins = "  " .. "41 ish".. " plugins "
 
   local v = vim.version()
   local version = "  v" .. v.major .. "." .. v.minor .. "." .. v.patch
@@ -93,7 +91,6 @@ local options = {
   },
 }
 
-options = require("core.utils").load_override(options, "goolord/alpha-nvim")
 
 local padd = vim.fn.max({ 2, vim.fn.floor(vim.fn.winheight(0) * 0.2) })
 
