@@ -4,7 +4,7 @@ require('settings')
 require('settings.lookandfeel')
 
 require('plugins')
-    require('plugins.bufferline')
+    require('plugins.lookandfeel.bufferline')
     require('plugins.discordrpc')
 
 
