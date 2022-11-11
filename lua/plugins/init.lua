@@ -1,5 +1,5 @@
 local vim = vim;
---TODO Move all configs to their own respective files
+--TODO: Move all configs to their own respective files
 return require'packer'.startup(function(use)
 --------------------------------------------------------
 ---                   Meta shit                       --
@@ -22,46 +22,36 @@ return require'packer'.startup(function(use)
 ---                   UI Stuff                        --
 --------------------------------------------------------
     --Nvim-Tree
-
-    use 'nvim-tree/nvim-web-devicons' -- optional, for file icons
-    use({
-        'nvim-tree/nvim-tree.lua',
-        config = function ()
-            require('plugins.lookandfeel.nvimtree')
-        end,
-      })
+  use({
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+      'nvim-tree/nvim-tree.lua',
+      config = function ()
+          require('plugins.lookandfeel.nvimtree')
+      end,
+    })
 
     --telescope
     use 'nvim-telescope/telescope.nvim'
     --bufferline
-    use {'akinsho/bufferline.nvim', tag = "v3.*",
-          config = function ()
-            require('plugins.lookandfeel.bufferline')
-          end,
-        }
-    --autopairs
-    use {
-	    "windwp/nvim-autopairs",
-        config = function() require("nvim-autopairs").setup {} end
-    }
-    --lualine
-  use({
-      'nvim-lualine/lualine.nvim', -- Fancy status line/tab line
-      config = function()
-        require('plugins.lookandfeel.lualine')
-      end,
-    })
-
-
-
-    --notify
-    use {
-      'rcarriga/nvim-notify',
-      config = function()
-        require('plugins.lookandfeel.notify')
-      end,
-    }
-    
+  use {'akinsho/bufferline.nvim', tag = "v3.*",
+        config = function ()
+          require('plugins.lookandfeel.bufferline')
+        end,
+      }
+    --lualine  -- Fancy status line/tab line
+use({
+    'nvim-lualine/lualine.nvim',
+    config = function()
+      require('plugins.lookandfeel.lualine')
+    end,
+  })
+  --notify
+use {
+    'rcarriga/nvim-notify',
+    config = function()
+      require('plugins.lookandfeel.notify')
+    end,
+  }
  use {
     'goolord/alpha-nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },
@@ -69,9 +59,60 @@ return require'packer'.startup(function(use)
         require('plugins.lookandfeel.alpha')
     end
     }
+ use {
+    'wfxr/minimap.vim',
+ }
+
+--------------------------------------------------------
+---                   Text Stuff?                     --
+--------------------------------------------------------
+ --Highlights the word under the cursor similar to how other editors will
+use {
+  'RRethy/vim-illuminate',
+  config =function ()
+    require('plugins.illuminate')
+  end
+}
+use({
+    'folke/todo-comments.nvim', -- Todo comment highlighting
+    config = function()
+      require('todo-comments').setup {
+          require('plugins.lookandfeel.todocomments')
+      }
+    end,
+  })
+use {
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup {}
+    end,
+}
 
 
-    --lsp-config,mason,dap,linter,and formatters
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--lsp-config,mason,dap,linter,and formatters
     use 'neovim/nvim-lspconfig'
     use 'williamboman/mason.nvim'
     use 'williamboman/mason-lspconfig.nvim'
@@ -96,18 +137,8 @@ return require'packer'.startup(function(use)
     use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
     use 'L3MON4D3/LuaSnip' -- Snippets plugin
     use "rafamadriz/friendly-snippets" --more snippets?
-    
-   
-  --TODO fix dis?
-
     -- Debugging
 
-use({
-    'folke/todo-comments.nvim', -- Todo comment highlighting
-    config = function()
-      require('plugins.lookandfeel.todocomments')
-    end,
-  })
 use {
   "folke/trouble.nvim",
   requires = "kyazdani42/nvim-web-devicons",
@@ -120,13 +151,6 @@ use {
   end
   }
 use "NvChad/nvim-colorizer.lua"
-require("luasnip.loaders.from_vscode").lazy_load()
-
-
-
-
-
-  -- Lua
 
 use 'andweeb/presence.nvim'
 use 'folke/which-key.nvim'
@@ -136,6 +160,5 @@ use 'folke/which-key.nvim'
 
 
   use 'NTBBloodbath/doom-one.nvim'
-    
   use 'mhinz/neovim-remote'
 end )
