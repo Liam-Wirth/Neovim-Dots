@@ -179,5 +179,3 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
-
-require'settings.lookandfeel'
