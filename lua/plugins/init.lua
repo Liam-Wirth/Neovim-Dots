@@ -1,5 +1,3 @@
-local lookandfeel = require('settings.lookandfeel')
-
 local vim = vim;
 --TODO Move all configs to their own respective files
 return require'packer'.startup(function(use)
@@ -29,32 +27,50 @@ return require'packer'.startup(function(use)
     use({
         'nvim-tree/nvim-tree.lua',
         config = function ()
-            require('settings.lookandfeel.nvimtree')
+            require('plugins.lookandfeel.nvimtree')
         end,
       })
 
     --telescope
     use 'nvim-telescope/telescope.nvim'
     --bufferline
-    use {'akinsho/bufferline.nvim', tag = "v3.*"}
+    use {'akinsho/bufferline.nvim', tag = "v3.*",
+          config = function ()
+            require('plugins.lookandfeel.bufferline')
+          end,
+        }
     --autopairs
     use {
 	    "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
     --lualine
-    --TODO restructure my config like below
   use({
       'nvim-lualine/lualine.nvim', -- Fancy status line/tab line
       config = function()
-        require('settings.lookandfeel.lualine')
+        require('plugins.lookandfeel.lualine')
       end,
     })
 
 
 
     --notify
-    use 'rcarriga/nvim-notify'
+    use {
+      'rcarriga/nvim-notify',
+      config = function()
+        require('plugins.lookandfeel.notify')
+      end,
+    }
+    
+ use {
+    'goolord/alpha-nvim',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function ()
+        require('plugins.lookandfeel.alpha')
+    end
+    }
+
+
     --lsp-config,mason,dap,linter,and formatters
     use 'neovim/nvim-lspconfig'
     use 'williamboman/mason.nvim'
@@ -67,7 +83,6 @@ return require'packer'.startup(function(use)
     use 'tpope/vim-fugitive'                                                             -- Git commands in nvim
     use 'tpope/vim-rhubarb'                                                              -- Fugitive-companion to interact with github
     use 'lewis6991/gitsigns.nvim'
---    use 'numToStr/Comment.nvim'                                                          -- "gc" to comment visual regions/lines
     use 'mfussenegger/nvim-jdtls'
     use 'tpope/vim-sleuth'
     use 'lukas-reineke/indent-blankline.nvim'
@@ -82,13 +97,7 @@ return require'packer'.startup(function(use)
     use 'L3MON4D3/LuaSnip' -- Snippets plugin
     use "rafamadriz/friendly-snippets" --more snippets?
     
-    use {
-    'goolord/alpha-nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function ()
-        require'alpha'.setup(require'alpha.themes.startify'.config)
-    end
-    }
+   
   --TODO fix dis?
 
     -- Debugging
