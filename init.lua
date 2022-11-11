@@ -1,10 +1,12 @@
 --TODO get all of these dumbass require statements OUTTA HERE!!!
 
-require('settings')
-require('settings.lookandfeel')
 
 require('plugins')
     require('plugins.lookandfeel.bufferline')
+    require('plugins.lookandfeel.lualine')
+    require('plugins.lookandfeel.notify')
+    require('plugins.lookandfeel.nvimtree')
+    require('plugins.lookandfeel.alpha')
     require('plugins.discordrpc')
 
 
