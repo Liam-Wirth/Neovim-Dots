@@ -63,6 +63,32 @@ use {
     'wfxr/minimap.vim',
  }
 
+use({
+    "nvim-treesitter/nvim-treesitter-context", -- Show current context via TreeSitter
+    config = function()
+      require('treesitter-context').setup({
+        pattern = {
+          tex = {
+            'minted_environment',
+          },
+        },
+      })
+    end,
+  })
+--TODO: get the colors to work more accurately with my config? like it would be nice for shit to kinda just line up ya know
+use({
+    'p00f/nvim-ts-rainbow', -- Rainbow parenthesis from TreeSitter
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        rainbow = {
+          enable = false,
+          extended_mode = false, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+          max_file_lines = nil, -- Do not enable for files with more than n lines, int
+        },
+      })
+    end,
+    after = "nvim-treesitter",
+  })
 --------------------------------------------------------
 ---                   Text Stuff?                     --
 --------------------------------------------------------
@@ -97,6 +123,36 @@ use {
 
 
 
+  -------------------------------------------------------
+  --                     Formatting                    --
+  -------------------------------------------------------
+  --TODO: look into the configuration for this plugin because I kinda just stole this from someone elses cfg
+  use({
+    "mhartington/formatter.nvim", -- auto reformatter
+    config = function()
+      require("formatter").setup({
+        filetype = {
+          lua = {
+            require("formatter.filetypes.lua").stylua,
+          },
+
+          rust = {
+            require("formatter.filetypes.rust").rustfmt,
+          },
+
+          go = {
+            require("formatter.filetypes.go").gofmt,
+          },
+
+          ["*"] = {
+            require("formatter.filetypes.any").remove_trailing_whitespace,
+          },
+        },
+      })
+    end,
+  })
+
+  use('junegunn/vim-easy-align') -- Quickly align around a character
 
 
 
@@ -137,8 +193,13 @@ use {
     use 'saadparwaiz1/cmp_luasnip' -- Snippets source for nvim-cmp
     use 'L3MON4D3/LuaSnip' -- Snippets plugin
     use "rafamadriz/friendly-snippets" --more snippets?
+-- don't pass any arguments, luasnip will find the collection because it is
+-- (probably) in rtp.
+-- specify the full path...
+-- or relative to the directory of $MYVIMRC
+require("luasnip.loaders.from_vscode").load()
+require("luasnip.loaders.from_vscode").load({paths = "~/.config/nvim/lua/lspconfig/snippets/"})
     -- Debugging
-
 use {
   "folke/trouble.nvim",
   requires = "kyazdani42/nvim-web-devicons",
@@ -161,4 +222,17 @@ use 'folke/which-key.nvim'
 
   use 'NTBBloodbath/doom-one.nvim'
   use 'mhinz/neovim-remote'
+
+  -------------------------------------------------------
+  --               Misc/Unsorted Plugins               --
+  -------------------------------------------------------
+
+ -- use({
+ --   "iamcco/markdown-preview.nvim", -- Live markdown preview
+ --   setup = function()
+ --     vim.g.mkdp_filetypes = { "markdown" }
+ --   end,
+ --   ft = { "markdown" },
+ --   run = "cd app && npm install",
+ -- })
 end )
