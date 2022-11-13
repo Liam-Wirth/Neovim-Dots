@@ -22,6 +22,13 @@ return require'packer'.startup(function(use)
 ---                   UI Stuff                        --
 --------------------------------------------------------
     --Nvim-Tree
+  use {
+    'NTBBloodbath/doom-one.nvim',
+    --NOTE: Packer is telling me that the most recent commit is "potentially"
+    commit = "60eb782",
+    lock = false,
+  }
+
   use({
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
       'nvim-tree/nvim-tree.lua',
@@ -214,13 +221,17 @@ use {
 use "NvChad/nvim-colorizer.lua"
 
 use 'andweeb/presence.nvim'
-use 'folke/which-key.nvim'
-  require('plugins.whichkey')
+use {
+      'folke/which-key.nvim',
+      config = function()
+        require("which-key").setup {
+      }
+      end
+    }
 
 
 
 
-  use 'NTBBloodbath/doom-one.nvim'
   use 'mhinz/neovim-remote'
 
   -------------------------------------------------------
