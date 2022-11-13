@@ -1,5 +1,7 @@
 --TODO get all of these dumbass require statements OUTTA HERE!!!
-
+vim.cmd([[nnoremap <SPACE> <Nop>]])
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 require('plugins')
     require('plugins.lookandfeel.bufferline')
