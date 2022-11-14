@@ -28,7 +28,12 @@ return require'packer'.startup(function(use)
     commit = "60eb782",
     lock = false,
   }
+use {'nvim-treesitter/nvim-treesitter'}
 
+use {'nvim-orgmode/orgmode', config = function()
+        require('orgmode').setup{}
+end
+}
   use({
       'nvim-tree/nvim-web-devicons', -- optional, for file icons
       'nvim-tree/nvim-tree.lua',
@@ -181,7 +186,6 @@ use {
     use 'williamboman/mason-lspconfig.nvim'
     use 'mfussenegger/nvim-dap'
     use 'jose-elias-alvarez/null-ls.nvim'
-   use 'nvim-treesitter/nvim-treesitter'                                                -- Highlight, edit, and navigate code
     use { 'nvim-treesitter/nvim-treesitter-textobjects', after = { 'nvim-treesitter' } } -- Additional textobjects for treesitter
     use 'hrsh7th/cmp-nvim-lsp' -- LSP source for nvim-cmp
     use 'tpope/vim-fugitive'                                                             -- Git commands in nvim
