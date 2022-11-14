@@ -67,6 +67,7 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'java'}
+    { name = 'java'},
+    { name = 'orgmode'}
   },
 }
