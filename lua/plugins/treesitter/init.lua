@@ -1,9 +1,11 @@
 -- sldfkjsfdlk?
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript','org' },
+  require('orgmode').setup_ts_grammar(),
+  highlight = { enable = true},
+  additional_vim_regex_highlighting = {'org'},
 
-  highlight = { enable = false},
   --NOTE while attempting to debug indent-blankline I edited this file (november 10 2022)
   indent = { enable = false},
   incremental_selection = {
