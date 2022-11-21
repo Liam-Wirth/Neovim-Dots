@@ -25,6 +25,7 @@ mini.nvim
 spellsitter
 presence.nvim
 shade.nvim
-orgmode.nvim
+*TODO orgmode.nvim
+TODO orgmode.nvim
 look into the debugger buddy
 fix the weird tab bar shit
