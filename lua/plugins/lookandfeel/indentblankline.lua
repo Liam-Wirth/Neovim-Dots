@@ -1,3 +1,4 @@
+
 local colors = require("doom-one.colors").dark
 local glyphs = require("settings.glyphs")
 local hl1 = ("highlight IndentBlankLineIndent1 guifg=" .. colors.red)
