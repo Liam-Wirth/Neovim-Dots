@@ -1,3 +1,28 @@
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+  augroup end
+]])
+
+local fn = vim.fn
+local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({
+    "git",
+    "clone",
+    "--depth",
+    "1",
+    "https://github.com/wbthomason/packer.nvim",
+    install_path,
+  })
+end
+vim.api.nvim_command("packadd packer.nvim")
+-- returns the require for use in `config` parameter of packer's use
+-- expects the name of the config file
+function get_setup(name)
+  return string.format('require("setup/%s")', name)
+end
   local vim = vim
   --TODO: Move all configs to their own respective files
   return require("packer").startup(function(use)
@@ -22,14 +47,13 @@
       ---                   UI Stuff                        --
       --------------------------------------------------------
 
-      --Nvim-Tree
       use({
           "NTBBloodbath/doom-one.nvim",
           --NOTE: Packer is telling me that the most recent commit is "potentially"
           commit = "60eb782",
           lock = false,
       })
-
+--NVIM Orgmode
       use({
           "nvim-orgmode/orgmode",
           config = function()
@@ -37,6 +61,7 @@
               require('orgmode').setup_ts_grammar()
           end,
       })
+      --Nvim-Tree
       use({
           "nvim-tree/nvim-web-devicons", -- optional, for file icons
           "nvim-tree/nvim-tree.lua",
@@ -44,7 +69,7 @@
               require("plugins.lookandfeel.nvimtree")
           end,
       })
-
+--TODO: Get the pretty folds plugin, and then whatever the fold search plugin is
       --telescope
       use("nvim-telescope/telescope.nvim")
       --bufferline
@@ -98,9 +123,8 @@
       use({
           "lukas-reineke/indent-blankline.nvim",
           config = function()
-              require("indent_blankline").setup({
-                  require("plugins.lookandfeel.indentblankline"),
-              })
+                  require("plugins.lookandfeel.indentblankline")
+                  --HACK: why
           end,
       })
       --------------------------------------------------------
@@ -199,21 +223,26 @@
       use("tpope/vim-sleuth")
 
       -------SNIPPETS?
+-- Autocompletion plugin
       use({
         "hrsh7th/nvim-cmp",
+         requires = {
+        { "hrsh7th/cmp-nvim-lsp" },
+        { "hrsh7th/cmp-nvim-lua" },
+        { "hrsh7th/cmp-buffer" },
+        { "hrsh7th/cmp-path" },
+        { "hrsh7th/cmp-cmdline" },
+        { "hrsh7th/cmp-calc" },
+        { "rafamadriz/friendly-snippets" },
+        {'saadparwaiz1/cmp_luasnip'},
+        {'hrsh7th/cmp-omni'},
+      },
         config = function()
             require("cmp")
             require("plugins.nvim-cmp")
         end,
-      }) -- Autocompletion plugin
-    use('hrsh7th/cmp-nvim-lsp') -- LSP completion source 
-    use('hrsh7th/cmp-cmdline') -- Command line completion source
-    use('hrsh7th/cmp-buffer') -- Buffer completion source
-    use('hrsh7th/cmp-path') -- File path completion source
-    use('hrsh7th/cmp-omni') -- Vim omnicompletion source
-    use('hrsh7th/cmp-nvim-lua') -- Nvim Lua API completion
-    use('hrsh7th/cmp-calc') -- In-buffer calculations ( 2+2 = 4 )
-    use('saadparwaiz1/cmp_luasnip') -- Luasnip completion source
+      }) 
+--Snippets
     use({
       "L3MON4D3/LuaSnip",
       config = function ()
@@ -222,7 +251,6 @@
         require("luasnip.loaders.from_vscode").load({ paths = "~/.config/nvim/lua/lspconfig/snippets/" })
       end
     }) -- Snippets plugin
-    use("rafamadriz/friendly-snippets") --more snippets?
   use({ 'tpope/vim-dadbod' }) -- Database plugin
     use({ 'kristijanhusak/vim-dadbod-completion', ft = 'sql' }) -- Database completion
     use({ 'kristijanhusak/vim-dadbod-ui', ft = 'sql' }) -- Database UI
@@ -233,7 +261,6 @@
       end,
     })
       use({
-
           "folke/trouble.nvim",
           requires = "kyazdani42/nvim-web-devicons",
           config = function()

@@ -36,7 +36,9 @@ end
 local function footer()
   local date = os.date("  %d/%m/%Y ")
   local time = os.date("  %H:%M:%S ")
-  local plugins = "  " .. "41 ish".. " plugins "
+  --NOTE: Credit too github user benfrain for this swag ass function!
+   local total_plugins = #vim.tbl_keys(packer_plugins)
+  local plugins = "  " ..total_plugins.. " plugins "
 
   local v = vim.version()
   local version = "  v" .. v.major .. "." .. v.minor .. "." .. v.patch

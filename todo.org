@@ -5,27 +5,29 @@ keybinds
     assign a leader keybind
 make sure nvim-notify is working
 make the bar with the numbers be a bit darker
-configure the tokyonight theme
-    (I think you can call setup?)
 
+* TODO configure cmp so that it doesn't hit me with these weird ass  snippets when I'm just trying to use orgmode
+* TODO figure out why orgmode is fucked up rn
+* TODO get the other orgmode plugins I'd Need
+  work on which-key
+* TODO nvim-undo tree
+* TODO  Plugins!
+* TODO git plugin?
+* TODO install toggle terminal
+* TODO which key
+* TODO alpha.nvim
+* TODO minimap.nvim
 
-TODO: Plugins!
-git plugin?
-install toggle terminal
-which key
-alpha.nvim
-minimap.nvim
-neorg
-config lualine
-mason.nvim
-luasnip
-vim illuminate
-todo-comments
-mini.nvim
-spellsitter
-presence.nvim
-shade.nvim
-*TODO orgmode.nvim
-TODO orgmode.nvim
+* TODO config lualine
+* TODO mason.nvim
+* TODO luasnip
+* TODO vim illuminate
+* TODO todo-comments
+* TODO mini.nvim
+* TODO spellsitter
+* TODO presence.nvim
+* TODO shade.nvim
+* TODO *TODO orgmode.nvim
+* TODO TODO orgmode.nvim
 look into the debugger buddy
 fix the weird tab bar shit
