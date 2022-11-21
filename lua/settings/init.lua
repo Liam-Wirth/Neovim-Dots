@@ -1,27 +1,20 @@
---making it so I don't have to type as much, and make things a little easier to type
-
 --TODO: orgnize these options.
-local font = "JetBrainsMonoExtraBold"..[[\ ]].."Nerd"..[[\ ]].."Font:h16"
+local font = "JetBrainsMonoExtraBold" .. [[\ ]] .. "Nerd" .. [[\ ]] .. "Font:h16"
 
-local tab = [[,tab:»■ ]]
-local tab2 = [[,tab:→\ ]]
-local extends = [[,extends:❯]]
-local nbsp = [[,nbsp:␣]]
-local precedes = [[,precedes:❮]]
 --TODO: get indentblankline to not show the weird vertical lines on tabs
-vim.cmd("set listchars=eol:" .. "↩" .. tab2 .. extends .. precedes .. nbsp)
 --",tab:" .. " ")
 vim.cmd([[
     if exists("g:neovide")
-      set guifont=]]..font..[[
+      set guifont=]] .. font .. [[
 
 ]])
+
 local set = vim.opt
 local vim = vim
-set.expandtab = true
+set.expandtab = true 
+set.smartindent = true
 set.smarttab = true
 set.shiftwidth = 4
-set.tabstop = 4
 set.showtabline = 2
 vim.o.termguicolors = true
 set.autochdir = true
@@ -29,6 +22,15 @@ set.hlsearch = true
 set.incsearch = true
 set.ignorecase = true
 set.smartcase = true
+
+vim.opt.list = true
+local tab = [[,tab:»■ ]]
+local tab2 = [[,tab:→\ ]]
+local tab3 = [[,tab:\ \ ]]
+local extends = [[,extends:❯]]
+local nbsp = [[,nbsp:␣]]
+local precedes = [[,precedes:❮]]
+vim.cmd("set listchars=eol:" .. "↩" .. tab3 .. extends .. precedes .. nbsp)
 
 set.splitbelow = true
 set.splitright = true
@@ -42,11 +44,10 @@ set.number = true
 set.cursorline = true
 set.numberwidth = 4
 set.ignorecase = true
-set.smarttab = true
 set.hlsearch = true
 set.colorcolumn = "99999"
 set.signcolumn = "yes"
-set.showtabline = 2 
+set.showtabline = 2
 set.cmdheight = 1
 set.pumheight = 10
 set.splitbelow = true
