@@ -192,7 +192,7 @@ cmp.setup.cmdline("/", {
     ["<TAB>"] = cmp.mapping({
       c = cmp.mapping.confirm({ select = true }),
     }, { "i", "c" }),
-    ["<CR>"] = cmp.mapping({
+    ["<S-CR>"] = cmp.mapping({
       i = cmp.mapping.confirm({ select = true }),
     }, { "i", "c" }),
   },
@@ -209,7 +209,7 @@ cmp.setup.cmdline("?", {
     ["<TAB>"] = cmp.mapping({
       c = cmp.mapping.confirm({ select = false }),
     }),
-    ["<CR>"] = cmp.mapping({
+    ["<S-CR>"] = cmp.mapping({
       i = cmp.mapping.confirm({ select = true }),
     }),
   },
