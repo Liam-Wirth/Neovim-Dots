@@ -17,7 +17,7 @@ local lookandfeel = {
 --personally I really hate the look of having whitespace have the little dots, but it's an option if you want it I guess
     --vim.opt.listchars:append "space:⋅",
 --tab:'
-vim.cmd('set listchars=eol:'..'↩'..',tab:'..escape..''),
+vim.cmd('set listchars=eol:'..'↩'),
 
 
 --indent blankline
