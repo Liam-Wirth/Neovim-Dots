@@ -1,4 +1,3 @@
-
 -- Add additional capabilities supported by nvim-cmp
 local kind_icons = {
   Text = "",
@@ -110,7 +109,7 @@ window = {
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ["<CR>"] = cmp.mapping(
+    ["<S-CR>"] = cmp.mapping(
       cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
@@ -124,7 +123,7 @@ window = {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'java'},
+    { name = 'jdtls'},
     { name = 'orgmode'},
     { name = "omni" },
       {
