@@ -28,6 +28,7 @@
     -- override the label used to display some keys. It doesn't effect WK in any other way.
     -- For example:
     -- ["<space>"] = "SPC",
+    ["<20>"] = "leader",
     -- ["<cr>"] = "RET",
     -- ["<tab>"] = "TAB",
   },
@@ -73,7 +74,44 @@
     filetypes = { "TelescopePrompt" },
   },
 }
-
-
       }
   end
+  return config;
+
+
+
+
+
+
+--To document and/or setup your own mappings, you need to call the `register`
+--method
+--
+-->
+--    local wk = require("which-key")
+--    wk.register(mappings, opts)
+--<
+--
+--
+--Default options for `opts`
+--
+-->
+--    {
+--      mode = "n", -- NORMAL mode
+--      -- prefix: use "<leader>f" for example for mapping everything related to finding files
+--      -- the prefix is prepended to every mapping part of `mappings`
+--      prefix = "",
+--      buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+--      silent = true, -- use `silent` when creating keymaps
+--      noremap = true, -- use `noremap` when creating keymaps
+--      nowait = false, -- use `nowait` when creating keymaps
+--    }
+--<
+--
+--
+--
+--  ❕ When you specify a command in your mapping that starts with `<Plug>`, then
+--  we automatically set `noremap=false`, since you always want recursive
+--  keybindings in this case
+--
+--
+--
