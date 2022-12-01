@@ -31,3 +31,5 @@ make the bar with the numbers be a bit darker
 * TODO TODO orgmode.nvim
 look into the debugger buddy
 fix the weird tab bar shit
+* TODO add descriptions for keybindings in which-key, I have already pasted the basic setup for how to configure custom entries for which-key, it's located in the which-key.lua file. Maybe I can update the nmap function so that it can also add a which-key entry? I dunno, I don't like how the main menu for space (my leader) pops up currently, I'd like it to be more fleshed out.
+*
