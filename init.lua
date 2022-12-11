@@ -19,9 +19,9 @@ require('plugins.treesitter')
 local vim = vim;
 
 vim.cmd("colorscheme doom-one")
-vim.cmd([[nnoremap <SPACE> <Nop>]])
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader =" " 
+vim.g.maplocalleader = " "
+
 
 --HACK way of fucking loading configuration files. Need to fix
 vim.cmd[[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]]
