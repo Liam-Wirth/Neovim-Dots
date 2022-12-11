@@ -57,7 +57,11 @@ end
       use({
           "nvim-orgmode/orgmode",
           config = function()
-              require("orgmode").setup({})
+              require("orgmode").setup({
+                  
+                  org_agenda_files = {"~/my-orgs/**/*"},
+                  org_default_notes_file = {"~/my-orgs/notes.org"}
+              })
               require('orgmode').setup_ts_grammar()
           end,
       })
