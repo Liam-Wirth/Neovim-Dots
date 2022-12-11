@@ -190,7 +190,15 @@ end
      end
   }
   --Graphical undo tree to make understanding how undo works in vim a little easier
-use { "jiaoshijie/undotree" }
+use {
+  "jiaoshijie/undotree",
+  config = function()
+    require('undotree').setup()
+  end,
+  requires = {
+    "nvim-lua/plenary.nvim",
+  },
+}
       -------------------------------------------------------
       --                     Formatting                    --
       -------------------------------------------------------
