@@ -46,7 +46,7 @@ end
       --------------------------------------------------------
       ---                   UI Stuff                        --
       --------------------------------------------------------
-
+        --Doom-One (the theme I use)
       use({
           "NTBBloodbath/doom-one.nvim",
           --NOTE: Packer is telling me that the most recent commit is "potentially"
@@ -93,12 +93,14 @@ end
       })
       --notify
       use({
+          --TODO: Fix this, it's yelling at me on startup about something to do with the highlight colors.
           "rcarriga/nvim-notify",
           config = function()
               require("plugins.lookandfeel.notify")
           end,
       })
 
+      --Alpha (my greeter)
       use({
           "goolord/alpha-nvim",
           requires = { "kyazdani42/nvim-web-devicons" },
@@ -106,9 +108,10 @@ end
               require("plugins.lookandfeel.alpha")
           end,
       })
-      use({
-          "wfxr/minimap.vim",
-      })
+      --Minimap (I don't ever use this)
+     -- use({
+     --     "wfxr/minimap.vim",
+     -- })
 
       --TODO: get the colors to work more accurately with my config? like it would be nice for shit to kinda just line up ya know
       use({
@@ -124,6 +127,7 @@ end
           end,
           after = "nvim-treesitter",
       })
+      --indent blankline
       use({
           "lukas-reineke/indent-blankline.nvim",
           config = function()
@@ -131,6 +135,8 @@ end
                   --HACK: why
           end,
       })
+
+
       --------------------------------------------------------
       ---                   Text Stuff?                     --
       --------------------------------------------------------
