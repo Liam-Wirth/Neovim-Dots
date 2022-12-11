@@ -14,7 +14,7 @@ local vim = vim
 set.expandtab = true 
 set.smartindent = true
 set.smarttab = true
-set.shiftwidth = 4
+set.shiftwidth = 3
 set.showtabline = 2
 vim.o.termguicolors = true
 set.autochdir = true
@@ -37,7 +37,7 @@ vim.cmd("set listchars=eol:" .. "↩" .. tab3 .. extends .. precedes .. nbsp)
 
 
 -------------------------------------------------------------------------------------------------------------
---                                                 Other Options?                                          -- -------------------------------------------------------------------------------------------------------------
+--                                                    ListChars                                            -- -------------------------------------------------------------------------------------------------------------
 set.splitbelow = true
 set.splitright = true
 set.wrap = true

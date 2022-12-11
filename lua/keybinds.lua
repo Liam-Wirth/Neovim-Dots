@@ -10,9 +10,9 @@ local nmap = function(keys, func, desc, plugin, bufnr)
          vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
       end
  --------------Keybinds!
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.g.maplocalleader = " "
-
---vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.g.mapleader = ' '
 
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -68,12 +68,13 @@ f = {
         name = "File",
           f = { "<cmd>Telescope find_files<cr>", "Find File" },
           r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-          n = { "<cmd>enew<cr>", "New File" },
+         n = { "<cmd>enew<cr>", "New File" },
     },
 }, {prefix = "leader",noremap = true})
 
-
-
+wk.register({
+        u = {"<cmd>UndoTreeToggle<cr>","Toggle Graphical UndoTree"},
+}, {prefix = "leader",noremap = true})
 
 
 -------------------------------------------------------------------------------------------------------------
@@ -81,3 +82,4 @@ f = {
 -------------------------------------------------------------------------------------------------------------
 wk.register({
 })
+

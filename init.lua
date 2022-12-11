@@ -6,6 +6,7 @@ require('plugins')
     require('plugins.lookandfeel.indentblankline')
 
 require('settings.init')
+require('keybinds')
 --HACK: why
 vim.cmd[[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]]
 

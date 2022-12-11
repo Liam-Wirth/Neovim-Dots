@@ -183,11 +183,14 @@ end
               })
           end,
       })
+      --TODO: set this up
     use{ 'anuvyklack/pretty-fold.nvim',
      config = function()
         require('pretty-fold').setup()
      end
   }
+  --Graphical undo tree to make understanding how undo works in vim a little easier
+use { "jiaoshijie/undotree" }
       -------------------------------------------------------
       --                     Formatting                    --
       -------------------------------------------------------
