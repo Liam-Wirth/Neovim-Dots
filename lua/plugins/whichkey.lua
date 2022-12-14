@@ -1,4 +1,3 @@
---TODO: configure all of my keybinds so that all of the Org mode keybinds are organized under one prefix in which-key (I like Leader+Capital O)
  local config = function()
     require("which-key").setup {
     {
@@ -27,10 +26,9 @@
   key_labels = {
     -- override the label used to display some keys. It doesn't effect WK in any other way.
     -- For example:
-     ["<space>"] = "SPC",
-    ["<20>"] = "leader",
-     ["<cr>"] = "Enter",
-     ["<tab>"] = "TAB",
+    ["<space>"] = "SPC",
+    ["<cr>"] = "Enter",
+    ["<tab>"] = "TAB",
   },
   icons = {
     breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
@@ -58,8 +56,8 @@
   hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
   show_help = true, -- show help message on the command line when the popup is visible
   show_keys = true, -- show the currently pressed key and its label as a message in the command line
-  triggers = {"<20>"}, -- automatically setup triggers
- -- triggers = {"<leader>"} -- or specify a list manually
+  --triggers = {"<20>"}, -- automatically setup triggers
+  triggers = {"<leader>"}, -- or specify a list manually
   triggers_blacklist = {
     -- list of mode / prefixes that should never be hooked by WhichKey
     -- this is mostly relevant for key maps that start with a native binding

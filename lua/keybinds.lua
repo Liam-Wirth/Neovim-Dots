@@ -1,18 +1,10 @@
 --NOTE: Just learned that function arguments are completely optional in lua.
 
+--NOTE: Check lsp-config/lsp-config.lua for the setup of more keybindings, these ones are buffer specific
+
 local wk = require("which-key")
 local pluginlist = require("util.plugins")
-local nmap = function(keys, func, desc, plugin, bufnr)
-    if desc and plugin then
-           desc = plugin..": "..desc
-          end
-
-         vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
-      end
- --------------Keybinds!
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-vim.g.maplocalleader = " "
-vim.g.mapleader = ' '
+--------------Keybinds!
 
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -72,14 +64,17 @@ f = {
     },
 }, {prefix = "leader",noremap = true})
 
-wk.register({
-        u = {"<cmd>UndoTreeToggle<cr>","Toggle Graphical UndoTree"},
-}, {prefix = "leader",noremap = true})
 
+vim.keymap.set('n', '<leader>u', require('undotree').toggle, { noremap = true, silent = true })
 
 -------------------------------------------------------------------------------------------------------------
 --                                          Org Mode                                                       --
 -------------------------------------------------------------------------------------------------------------
 wk.register({
 })
+
+
+
+
+
 

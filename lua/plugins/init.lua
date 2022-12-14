@@ -304,6 +304,7 @@ use {
           "folke/which-key.nvim",
           config = function()
                 require('plugins.whichkey')
+                require('keybinds')
           end,
       })
 
