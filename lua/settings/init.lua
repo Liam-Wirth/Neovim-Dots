@@ -69,7 +69,7 @@ set.sidescroll = 50
 vim.notify = require("notify")
 
 vim.o.completeopt = "menuone,noselect"
-vim.o.undofile = true
+vim.o.undofile = false 
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
