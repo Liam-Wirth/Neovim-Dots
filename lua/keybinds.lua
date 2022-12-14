@@ -44,7 +44,10 @@ vim.keymap.set("n", "<leader>/", function()
 		winblend = 10,
 		previewer = false,
 	}))
+
+
 end, { desc = "[/] Fuzzily search in current buffer]" })
+
 wk.register({
     s = {
         name = "Search",
@@ -54,18 +57,21 @@ wk.register({
         g = {"<cmd> Telescope live_grep<cr>","[S]earch by [G]rep"},
         d = {"<cmd> Telescope diagnostics<cr>","[S]earch  [D]iagnostics"},
     },
-}, {prefix = "leader"})
+}, {prefix = "<leader>"})
 wk.register({
 f = {
         name = "File",
-          f = { "<cmd>Telescope find_files<cr>", "Find File" },
-          r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+         f = { "<cmd>Telescope find_files<cr>", "Find File" },
+         r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
          n = { "<cmd>enew<cr>", "New File" },
     },
-}, {prefix = "leader",noremap = true})
+}, {prefix = "<leader>",noremap = true})
 
 
 vim.keymap.set('n', '<leader>u', require('undotree').toggle, { noremap = true, silent = true })
+wk.register({
+        u = "Toggle Visual UndoTree"
+}, {prefix = "<leader>"})
 
 -------------------------------------------------------------------------------------------------------------
 --                                          Org Mode                                                       --
