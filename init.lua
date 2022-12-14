@@ -1,12 +1,11 @@
 --TODO get all of these dumbass require statements OUTTA HERE!!!
-
+vim.g.mapleader=" "
 require('plugins')
     require('plugins.lookandfeel.nvimtree')
     require('plugins.discordrpc')
     require('plugins.lookandfeel.indentblankline')
 
 require('settings.init')
-require('keybinds')
 --HACK: why
 vim.cmd[[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]]
 
@@ -19,9 +18,10 @@ require('plugins.treesitter')
 local vim = vim;
 
 vim.cmd("colorscheme doom-one")
-vim.g.mapleader =" " 
-vim.g.maplocalleader = " "
+vim.g.mapleader = " "
 
+
+require('keybinds')
 
 --HACK way of fucking loading configuration files. Need to fix
 vim.cmd[[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]]
