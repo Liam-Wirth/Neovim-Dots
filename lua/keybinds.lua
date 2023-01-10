@@ -10,8 +10,6 @@ local pluginlist = require("util.plugins")
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
-
-
 --                    Setup for plugins that don't really need their own file!
 
 --require('Comment').setup({
@@ -44,43 +42,36 @@ vim.keymap.set("n", "<leader>/", function()
 		winblend = 10,
 		previewer = false,
 	}))
-
-
 end, { desc = "[/] Fuzzily search in current buffer]" })
 
 wk.register({
-    s = {
-        name = "Search",
-        f = {"<cmd> Telescope find_files<cr>","[S]earch [F]iles"},
-        w = {"<cmd> Telescope grep_string<cr>","[S]earch current [W]ord"},
-        h = {"<cmd> Telescope help_tags<cr>","[S]earch [H]elp"},
-        g = {"<cmd> Telescope live_grep<cr>","[S]earch by [G]rep"},
-        d = {"<cmd> Telescope diagnostics<cr>","[S]earch  [D]iagnostics"},
-    },
-}, {prefix = "<leader>"})
+	s = {
+		name = "Search",
+		f = { "<cmd> Telescope find_files<cr>", "[S]earch [F]iles" },
+		w = { "<cmd> Telescope grep_string<cr>", "[S]earch current [W]ord" },
+		h = { "<cmd> Telescope help_tags<cr>", "[S]earch [H]elp" },
+		g = { "<cmd> Telescope live_grep<cr>", "[S]earch by [G]rep" },
+		d = { "<cmd> Telescope diagnostics<cr>", "[S]earch  [D]iagnostics" },
+	},
+}, { prefix = "<leader>" })
 wk.register({
-f = {
-        name = "File",
-         f = { "<cmd>Telescope find_files<cr>", "Find File" },
-         r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-         n = { "<cmd>enew<cr>", "New File" },
-    },
-}, {prefix = "<leader>",noremap = true})
+	f = {
+		name = "File",
+		f = { "<cmd>Telescope find_files<cr>", "Find File" },
+		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+		n = { "<cmd>enew<cr>", "New File" },
+	},
+}, { prefix = "<leader>", noremap = true })
 
-
-vim.keymap.set('n', '<leader>u', require('undotree').toggle, { noremap = true, silent = true })
-wk.register({
-        u = "Toggle Visual UndoTree"
-}, {prefix = "<leader>"})
-
+vim.keymap.set("n", "e<leader>u", require("undotree").toggle, { noremap = true, silent = true })
 -------------------------------------------------------------------------------------------------------------
 --                                          Org Mode                                                       --
 -------------------------------------------------------------------------------------------------------------
+
 wk.register({
-})
-
-
-
-
-
-
+	e = {
+		name = "Open Auxiliary Windows",
+		t = { "<cmd>NvimTreeToggle<cr>", "Toggle Filetree" },
+		u = "Toggle Visual UndoTree",
+	},
+}, { prefix = "<leader>", noremap = true })
