@@ -49,6 +49,14 @@ return require("packer").startup(function(use)
 	--------------------------------------------------------
 	--Doom-One (the theme I use)
 	use({
+		use("simrat39/rust-tools.nvim"),
+		config = function()
+			require("lsp-config.rust-tools")
+		end,
+	})
+
+	-- Debugging
+	use({
 		"NTBBloodbath/doom-one.nvim",
 		--NOTE: Packer is telling me that the most recent commit is "potentially"
 		commit = "60eb782",
