@@ -105,6 +105,7 @@ return require("packer").startup(function(use)
 		"rcarriga/nvim-notify",
 		config = function()
 			require("plugins.lookandfeel.notify")
+			background_colour = #000000
 		end,
 	})
 
