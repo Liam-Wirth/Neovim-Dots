@@ -47,7 +47,6 @@ return require("packer").startup(function(use)
 	--------------------------------------------------------
 	---                   UI Stuff                        --
 	--------------------------------------------------------
-	--Doom-One (the theme I use)
 	use({
 		use("simrat39/rust-tools.nvim"),
 		config = function()
