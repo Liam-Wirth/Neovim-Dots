@@ -52,6 +52,7 @@ wk.register({
 		h = { "<cmd> Telescope help_tags<cr>", "[S]earch [H]elp" },
 		g = { "<cmd> Telescope live_grep<cr>", "[S]earch by [G]rep" },
 		d = { "<cmd> Telescope diagnostics<cr>", "[S]earch  [D]iagnostics" },
+		t = { "<cmd> Telescope todo-comments todo<cr>", "[S]earch current buffer's TODO flags" }
 	},
 }, { prefix = "<leader>" })
 wk.register({
@@ -75,3 +76,6 @@ wk.register({
 		u = "Toggle Visual UndoTree",
 	},
 }, { prefix = "<leader>", noremap = true })
+
+--TODO: look into registering this with whichkey? I dunno, not sure about getting my leader to work in visual mode, which is the mode that this keybind applies largely to
+vim.cmd [[vnoremap <c-f> y<ESC>/<c-r>"<CR>]]
