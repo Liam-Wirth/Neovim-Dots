@@ -53,7 +53,6 @@ return require("packer").startup(function(use)
 			require("lsp-config.rust-tools")
 		end,
 	})
-
 	-- Debugging
 	use({
 		"NTBBloodbath/doom-one.nvim",
