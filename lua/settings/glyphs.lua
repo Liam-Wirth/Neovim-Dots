@@ -1,4 +1,4 @@
---lifted straight from the lunarvim config, I thought I could make use of these at some point. 
+--lifted straight from the lunarvim config, I thought I could make use of these at some point.
 local icons = {
   kind = {
     Array = "",
@@ -35,6 +35,33 @@ local icons = {
     Unit = "",
     Value = "",
     Variable = "",
+  },
+  kind_icons = {
+    Text = "",
+    Method = "",
+    Function = "",
+    Constructor = "",
+    Field = "",
+    Variable = "",
+    Class = "ﴯ",
+    Interface = "",
+    Module = "",
+    Property = "",
+    Unit = "",
+    Value = "",
+    Enum = "",
+    Keyword = "",
+    Snippet = "",
+    Color = "",
+    File = "",
+    Reference = "",
+    Folder = "",
+    EnumMember = "",
+    Constant = "",
+    Struct = "",
+    Event = "",
+    Operator = "",
+    TypeParameter = "",
   },
   git = {
     LineAdded = "",
@@ -155,16 +182,19 @@ local icons = {
     amogus = "ඞ",
   },
 }
-icons.get_misc = function ()
+icons.get_misc = function()
   return icons.misc()
 end
-icons.get_diagnostics= function ()
+icons.get_diagnostics = function()
   return icons.diagnostics()
 end
-icons.get_git = function ()
+icons.get_git = function()
   return icons.git()
 end
-icons.get_ui= function ()
+icons.get_ui = function()
   return icons.ui()
+end
+icons.get_kind = function()
+  return icons.kind()
 end
 return icons
