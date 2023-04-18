@@ -18,8 +18,7 @@ require("mason-lspconfig").setup_handlers({
 			capabilities = util.capabilities,
 			update_in_insert = true,
 		}
-
-		if server_name == "sumneko_lua" then
+		if server_name == "lua_language_server" or "lua_ls" then
 			opts.settings = {
 				Lua = {
 					runtime = {
@@ -42,7 +41,6 @@ require("mason-lspconfig").setup_handlers({
 				},
 			}
 		end
-
 		require("lspconfig")[server_name].setup(opts)
 	end,
 })

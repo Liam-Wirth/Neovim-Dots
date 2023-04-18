@@ -11,7 +11,7 @@ vim.cmd([[
 
 local set = vim.opt
 local vim = vim
-set.expandtab = true 
+set.expandtab = true
 set.smartindent = true
 set.smarttab = true
 set.shiftwidth = 3
@@ -24,6 +24,10 @@ set.ignorecase = true
 set.smartcase = true
 
 vim.opt.list = true
+set.termguicolors = true
+vim.g.t_Co = '256'
+vim.o.cursorline = true
+vim.o.syntax = on
 -------------------------------------------------------------------------------------------------------------
 --                                                    ListChars                                            -- -------------------------------------------------------------------------------------------------------------
 local tab = [[,tab:»■ ]]
@@ -69,7 +73,7 @@ set.sidescroll = 50
 vim.notify = require("notify")
 
 vim.o.completeopt = "menuone,noselect"
-vim.o.undofile = false 
+vim.o.undofile = false
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
