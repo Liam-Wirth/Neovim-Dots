@@ -1,11 +1,32 @@
---TODO get all of these dumbass require statements OUTTA HERE!!!
+vim.o.termguicolors = true -- Needs to be set before certain plugins load
 vim.g.mapleader = " "
+vim.opt.list = true
+vim.o.encoding = "UTF-8"
+--NOTE: I moved alot of my settings to another file, just to keep this init smaller, probably stupid and pointless, whatever.
+require('settings.init')
+
+vim.o.inccommand = "split"
+vim.o.background = "dark"
+vim.o.expandtab = true
+
+-- Case insensitive searching
+vim.o.ignorecase = true
+
+-- Override ignorecase if search contains caps
+vim.o.smartcase = true
+
+-- Highlights matching parens, braces, etc. Press % to jump to it.
+vim.o.showmatch = true
+
+-- Keep buffers open in background when the window is closed
+vim.o.hidden = true
+
 require('plugins')
+require('impatient')
 require('plugins.lookandfeel.nvimtree')
 require('plugins.discordrpc')
 require('plugins.lookandfeel.indentblankline')
 
-require('settings.init')
 --HACK: why
 vim.cmd [[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]]
 
@@ -14,11 +35,8 @@ require('plugins.treesitter')
 require('lsp-config.language-servers')
 require('lsp-config.mason')
 require('lsp-config.lsp-config')
-require('lsp-config.null-ls')
-local vim = vim;
 
 vim.cmd("colorscheme doom-one")
-vim.g.mapleader = " "
 
 
 require('keybinds')
