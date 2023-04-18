@@ -53,7 +53,7 @@ return require("packer").startup(function(use)
 			require("lsp-config.rust-tools")
 		end,
 	})
-	--NVIM Orgmode
+ --NVIM Orgmode
 	use({
 		"nvim-orgmode/orgmode",
 		config = function()
@@ -96,6 +96,7 @@ return require("packer").startup(function(use)
 		"rcarriga/nvim-notify",
 		config = function()
 			require("plugins.lookandfeel.notify")
+			background_colour = #000000
 		end,
 	})
 
@@ -208,7 +209,7 @@ return require("packer").startup(function(use)
 			require("formatter").setup({
 				filetype = {
 					lua = {
-						require("formatter.filetypes.lua").stylua(),
+						require("formatter.filetypes.lua").luaformat(),
 					},
 
 					rust = {
@@ -304,18 +305,27 @@ return require("packer").startup(function(use)
 	-------------------------------------------------------
 	--               Misc/Unsorted Plugins               --
 	-------------------------------------------------------
+	-- install without yarn or npm
 	use({
-		"NTBBloodbath/doom-one.nvim",
-		config = function()
-			require("settings")
-			require("doom-one").setup({
-				vim.cmd([[echo hello]]),
-			})
-			local doom_one = require("doom-one")
-			vim.cmd("colorscheme doom-one")
-			doom_one.g.doom_one_terminal_colors = true
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		setup = function()
+			vim.g.mkdp_filetypes = { "markdown" }
 		end,
+		ft = { "markdown" },
 	})
-	use({ "ellisonleao/gruvbox.nvim" })
-	use("navarasu/onedark.nvim")
+use({
+    'NTBBloodbath/doom-one.nvim',
+	config = function()
+		require('settings')
+	require('doom-one').setup({
+		vim.cmd([[echo hello]])
+	})
+		local doom_one = require('doom-one')
+        vim.cmd("colorscheme doom-one")
+	doom_one.g.doom_one_terminal_colors = true
+    end,
+})
+use { "ellisonleao/gruvbox.nvim" }
+use 'navarasu/onedark.nvim'
 end)
