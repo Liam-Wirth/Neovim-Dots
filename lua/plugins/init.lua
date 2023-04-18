@@ -53,7 +53,7 @@ return require("packer").startup(function(use)
 			require("lsp-config.rust-tools")
 		end,
 	})
- --NVIM Orgmode
+	--NVIM Orgmode
 	use({
 		"nvim-orgmode/orgmode",
 		config = function()
@@ -96,7 +96,6 @@ return require("packer").startup(function(use)
 		"rcarriga/nvim-notify",
 		config = function()
 			require("plugins.lookandfeel.notify")
-			background_colour = #000000
 		end,
 	})
 
@@ -209,17 +208,15 @@ return require("packer").startup(function(use)
 			require("formatter").setup({
 				filetype = {
 					lua = {
-						require("formatter.filetypes.lua").luaformat(),
+						require("formatter.filetypes.lua").stylua(),
 					},
 
 					rust = {
 						require("formatter.filetypes.rust").rustfmt,
 					},
-
 					go = {
 						require("formatter.filetypes.go").gofmt,
 					},
-
 					["*"] = {
 						require("formatter.filetypes.any").remove_trailing_whitespace,
 					},
@@ -227,9 +224,7 @@ return require("packer").startup(function(use)
 			})
 		end,
 	})
-
 	use("junegunn/vim-easy-align") -- Quickly align around a character
-
 	--lsp-config,mason,dap,linter,and formatters
 	use("neovim/nvim-lspconfig")
 	use("williamboman/mason.nvim")
@@ -242,7 +237,6 @@ return require("packer").startup(function(use)
 	use("lewis6991/gitsigns.nvim")
 	use("mfussenegger/nvim-jdtls")
 	use("tpope/vim-sleuth")
-
 	-------SNIPPETS?
 	-- Autocompletion plugin
 	use({
@@ -298,7 +292,6 @@ return require("packer").startup(function(use)
 			require("plugins.lookandfeel.colorizer")
 		end,
 	})
-
 	use("andweeb/presence.nvim")
 	use({
 		"folke/which-key.nvim",
@@ -307,20 +300,22 @@ return require("packer").startup(function(use)
 			require("keybinds")
 		end,
 	})
-
 	use("mhinz/neovim-remote")
-
 	-------------------------------------------------------
 	--               Misc/Unsorted Plugins               --
 	-------------------------------------------------------
-	-- install without yarn or npm
 	use({
-		"iamcco/markdown-preview.nvim",
-		run = "cd app && npm install",
-		setup = function()
-			vim.g.mkdp_filetypes = { "markdown" }
+		"NTBBloodbath/doom-one.nvim",
+		config = function()
+			require("settings")
+			require("doom-one").setup({
+				vim.cmd([[echo hello]]),
+			})
+			local doom_one = require("doom-one")
+			vim.cmd("colorscheme doom-one")
+			doom_one.g.doom_one_terminal_colors = true
 		end,
-		ft = { "markdown" },
 	})
-
+	use({ "ellisonleao/gruvbox.nvim" })
+	use("navarasu/onedark.nvim")
 end)
