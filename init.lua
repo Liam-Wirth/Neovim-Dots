@@ -36,7 +36,6 @@ require('lsp-config.language-servers')
 require('lsp-config.mason')
 require('lsp-config.lsp-config')
 
-vim.cmd("colorscheme doom-one")
 
 
 require('keybinds')
