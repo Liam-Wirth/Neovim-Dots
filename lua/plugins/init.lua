@@ -113,19 +113,6 @@ return require("packer").startup(function(use)
 	-- })
 
 	--TODO: get the colors to work more accurately with my config? like it would be nice for shit to kinda just line up ya know
-	use({
-		"p00f/nvim-ts-rainbow", -- Rainbow parenthesis from TreeSitter
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				rainbow = {
-					enable = false,
-					extended_mode = false, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-					max_file_lines = nil, -- Do not enable for files with more than n lines, int
-				},
-			})
-		end,
-		after = "nvim-treesitter",
-	})
 	--indent blankline
 	use({
 		"lukas-reineke/indent-blankline.nvim",
@@ -300,7 +287,6 @@ return require("packer").startup(function(use)
 			require("keybinds")
 		end,
 	})
-	use("mhinz/neovim-remote")
 	-------------------------------------------------------
 	--               Misc/Unsorted Plugins               --
 	-------------------------------------------------------
