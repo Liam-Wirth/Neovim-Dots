@@ -53,17 +53,6 @@ return require("packer").startup(function(use)
 			require("lsp-config.rust-tools")
 		end,
 	})
-	--NVIM Orgmode
-	use({
-		"nvim-orgmode/orgmode",
-		config = function()
-			require("orgmode").setup({
-				org_agenda_files = { "~/my-orgs/**/*" },
-				org_default_notes_file = { "~/my-orgs/notes.org" },
-			})
-			require("orgmode").setup_ts_grammar()
-		end,
-	})
 	--Nvim-Tree
 	use({
 		"nvim-tree/nvim-web-devicons", -- optional, for file icons
@@ -107,19 +96,9 @@ return require("packer").startup(function(use)
 			require("plugins.lookandfeel.alpha")
 		end,
 	})
-	--Minimap (I don't ever use this)
-	-- use({
-	--     "wfxr/minimap.vim",
-	-- })
 
-	--TODO: get the colors to work more accurately with my config? like it would be nice for shit to kinda just line up ya know
-	--indent blankline
 	use({
 		"lukas-reineke/indent-blankline.nvim",
-		config = function()
-			require("plugins.lookandfeel.indentblankline")
-			--HACK: why
-		end,
 	})
 
 	--------------------------------------------------------
@@ -290,18 +269,7 @@ return require("packer").startup(function(use)
 	-------------------------------------------------------
 	--               Misc/Unsorted Plugins               --
 	-------------------------------------------------------
-	use({
-		"NTBBloodbath/doom-one.nvim",
-		config = function()
-			require("settings")
-			require("doom-one").setup({
-				vim.cmd([[echo hello]]),
-			})
-			local doom_one = require("doom-one")
-			vim.cmd("colorscheme doom-one")
-			doom_one.g.doom_one_terminal_colors = true
-		end,
-	})
-	use({ "ellisonleao/gruvbox.nvim" })
+		use({ "ellisonleao/gruvbox.nvim" })
+                use( "romgrk/doom-one.vim")
 	use("navarasu/onedark.nvim")
 end)
