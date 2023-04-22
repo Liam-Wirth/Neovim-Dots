@@ -16,7 +16,6 @@ set.smartindent = true
 set.smarttab = true
 set.shiftwidth = 3
 set.showtabline = 2
-vim.o.termguicolors = true
 set.autochdir = true
 set.hlsearch = true
 set.incsearch = true
@@ -24,7 +23,6 @@ set.ignorecase = true
 set.smartcase = true
 
 vim.opt.list = true
-set.termguicolors = true
 vim.g.t_Co = '256'
 vim.o.cursorline = true
 vim.o.syntax = on
@@ -36,7 +34,7 @@ local tab3 = [[,tab:\ \ ]]
 local extends = [[,extends:❯]]
 local nbsp = [[,nbsp:␣]]
 local precedes = [[,precedes:❮]]
-vim.cmd("set listchars=eol:" .. "↩" .. tab3 .. extends .. precedes .. nbsp)
+vim.cmd("set listchars=eol:" .. "↩" .. tab2 .. extends .. precedes .. nbsp)
 
 
 
@@ -48,7 +46,6 @@ set.wrap = true
 set.scrolloff = 5
 set.fileencoding = "utf-8"
 
-set.termguicolors = true
 set.relativenumber = true
 set.number = true
 set.cursorline = true
