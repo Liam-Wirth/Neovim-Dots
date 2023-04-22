@@ -9,6 +9,7 @@ vim.o.inccommand = "split"
 vim.o.background = "dark"
 vim.o.expandtab = true
 
+
 -- Case insensitive searching
 vim.o.ignorecase = true
 
@@ -26,8 +27,8 @@ require('impatient')
 require('plugins.lookandfeel.nvimtree')
 require('plugins.discordrpc')
 require('plugins.lookandfeel.indentblankline')
-
 --HACK: why
+vim.cmd[[let g:doom_one_terminal_colors = v:true]]
 vim.cmd [[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]]
 
 
@@ -42,3 +43,4 @@ require('keybinds')
 
 --HACK way of fucking loading configuration files. Need to fix
 vim.cmd [[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]]
+vim.cmd[[colorscheme doom-one]]
