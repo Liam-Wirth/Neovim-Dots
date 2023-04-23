@@ -7,8 +7,7 @@ require("mason").setup({
 		},
 	},
 })
-require("mason-lspconfig").setup({ automatic_installation = true }
-)
+require("mason-lspconfig").setup({ automatic_installation = true })
 local util = require("util")
 
 require("mason-lspconfig").setup_handlers({
@@ -37,6 +36,9 @@ require("mason-lspconfig").setup_handlers({
 					-- Do not send telemetry data containing a randomized but unique identifier
 					telemetry = {
 						enable = false,
+					},
+					format = {
+						enable = false, -- I use stylua for formatting with null-ls
 					},
 				},
 			}

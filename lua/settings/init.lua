@@ -11,7 +11,7 @@ vim.cmd([[
 
 local set = vim.opt
 local vim = vim
-set.expandtab = true
+set.expandtab = false
 set.smartindent = true
 set.smarttab = true
 set.shiftwidth = 3
@@ -87,7 +87,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 --
 vim.g.doom_one_cursor_coloring = false
 vim.g.doom_one_terminal_colors = true
-vim.g.doom_one_italic_comments = false
+vim.g.doom_one_italic_comments = true
 vim.g.doom_one_enable_treesitter = true
 vim.g.doom_one_diagnostics_text_color = false
 vim.g.doom_one_transparent_background = false
