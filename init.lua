@@ -3,12 +3,11 @@ vim.g.mapleader = " "
 vim.opt.list = true
 vim.o.encoding = "UTF-8"
 --NOTE: I moved alot of my settings to another file, just to keep this init smaller, probably stupid and pointless, whatever.
-require('settings.init')
+require("settings.init")
 
 vim.o.inccommand = "split"
 vim.o.background = "dark"
 vim.o.expandtab = true
-
 
 -- Case insensitive searching
 vim.o.ignorecase = true
@@ -22,25 +21,31 @@ vim.o.showmatch = true
 -- Keep buffers open in background when the window is closed
 vim.o.hidden = true
 
-require('plugins')
-require('impatient')
-require('plugins.lookandfeel.nvimtree')
-require('plugins.discordrpc')
-require('plugins.lookandfeel.indentblankline')
+require("plugins")
+require("impatient")
+require("plugins.lookandfeel.nvimtree")
+require("plugins.discordrpc")
+require("plugins.lookandfeel.indentblankline")
 --HACK: why
-vim.cmd[[let g:doom_one_terminal_colors = v:true]]
-vim.cmd [[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]]
+vim.cmd([[let g:doom_one_terminal_colors = v:true]])
+vim.cmd([[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]])
 
+require("plugins.treesitter")
+require("lsp-config.language-servers")
+require("lsp-config.mason")
+require("lsp-config.lsp-config")
 
-require('plugins.treesitter')
-require('lsp-config.language-servers')
-require('lsp-config.mason')
-require('lsp-config.lsp-config')
-
-
-
-require('keybinds')
+require("keybinds")
 
 --HACK way of fucking loading configuration files. Need to fix
-vim.cmd [[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]]
-vim.cmd[[colorscheme doom-one]]
+vim.cmd([[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]])
+vim.api.nvim_create_autocmd("ColorScheme", {
+	group = vim.api.nvim_create_augroup("ColoringFuckery", { clear = true }),
+	pattern = "*",
+	callback = function()
+		for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+			vim.api.nvim_set_hl(0, group, {})
+		end
+	end,
+})
+vim.cmd([[colorscheme doom-one]])

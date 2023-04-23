@@ -5,7 +5,7 @@
 local wk = require("which-key")
 local pluginlist = require("util.plugins")
 --------------Keybinds!
-vim.cmd [[vnoremap <c-f> y<ESC>/<c-r>"<CR>]]
+vim.cmd([[vnoremap <c-f> y<ESC>/<c-r>"<CR>]])
 -- Remap for dealing with word wrap
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -52,7 +52,7 @@ wk.register({
 		h = { "<cmd> Telescope help_tags<cr>", "[S]earch [H]elp" },
 		g = { "<cmd> Telescope live_grep<cr>", "[S]earch by [G]rep" },
 		d = { "<cmd> Telescope diagnostics<cr>", "[S]earch  [D]iagnostics" },
-		t = { "<cmd> Telescope todo-comments todo<cr>", "[S]earch current buffer's TODO flags" }
+		t = { "<cmd> Telescope todo-comments todo<cr>", "[S]earch current buffer's TODO flags" },
 	},
 }, { prefix = "<leader>" })
 wk.register({
@@ -63,8 +63,10 @@ wk.register({
 		n = { "<cmd>enew<cr>", "New File" },
 	},
 }, { prefix = "<leader>", noremap = true })
-
 vim.keymap.set("n", "e<leader>u", require("undotree").toggle, { noremap = true, silent = true })
+vim.keymap.set("n", "<space>f", function()
+	vim.lsp.buf.format({ async = true })
+end)
 -------------------------------------------------------------------------------------------------------------
 --                                          Org Mode                                                       --
 -------------------------------------------------------------------------------------------------------------
@@ -78,4 +80,4 @@ wk.register({
 }, { prefix = "<leader>", noremap = true })
 
 --TODO: look into registering this with whichkey? I dunno, not sure about getting my leader to work in visual mode, which is the mode that this keybind applies largely to
-vim.cmd [[vnoremap <c-f> y<ESC>/<c-r>"<CR>]]
+vim.cmd([[vnoremap <c-f> y<ESC>/<c-r>"<CR>]])

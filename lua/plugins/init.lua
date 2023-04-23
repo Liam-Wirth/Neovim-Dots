@@ -122,7 +122,6 @@ return require("packer").startup(function(use)
 			require("nvim-autopairs").setup({})
 		end,
 	})
-
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
@@ -131,7 +130,6 @@ return require("packer").startup(function(use)
 			})
 		end,
 	})
-
 	use({
 		"nvim-treesitter/nvim-treesitter-context", -- Show current context via TreeSitter
 		config = function()
@@ -144,8 +142,7 @@ return require("packer").startup(function(use)
 			})
 		end,
 	})
-	use('nvim-treesitter/playground')
-
+	use("nvim-treesitter/playground")
 	--TODO: set this up
 	use({
 		"anuvyklack/pretty-fold.nvim",
@@ -175,7 +172,6 @@ return require("packer").startup(function(use)
 					lua = {
 						require("formatter.filetypes.lua").stylua(),
 					},
-
 					rust = {
 						require("formatter.filetypes.rust").rustfmt,
 					},
@@ -195,7 +191,21 @@ return require("packer").startup(function(use)
 	use("williamboman/mason.nvim")
 	use("williamboman/mason-lspconfig.nvim")
 	use("mfussenegger/nvim-dap")
-	use("jose-elias-alvarez/null-ls.nvim")
+	use({
+		"jose-elias-alvarez/null-ls.nvim", -- General purpose LSP things
+		config = function()
+			local null_ls = require("null-ls")
+
+			null_ls.setup({
+				debug = false,
+				sources = {
+					null_ls.builtins.formatting.prettier,
+					null_ls.builtins.formatting.stylua,
+				},
+			})
+		end,
+		event = "BufRead",
+	})
 	use({ "nvim-treesitter/nvim-treesitter-textobjects", after = { "nvim-treesitter" } }) -- Additional textobjects for treesitter
 	use("tpope/vim-fugitive") -- Git commands in nvim
 	use("tpope/vim-rhubarb") -- Fugitive-companion to interact with github
@@ -268,42 +278,42 @@ return require("packer").startup(function(use)
 	-------------------------------------------------------
 	--               Misc/Unsorted Plugins               --
 	-------------------------------------------------------
-		use({ "ellisonleao/gruvbox.nvim" })
-               use({
-    'NTBBloodbath/doom-one.nvim',
-    setup = function()
-        -- Add color to cursor
-		vim.g.doom_one_cursor_coloring = false
-		-- Set :terminal colors
-		vim.g.doom_one_terminal_colors = true
-		-- Enable italic comments
-		vim.g.doom_one_italic_comments = false
-		-- Enable TS support
-		vim.g.doom_one_enable_treesitter = true
-		-- Color whole diagnostic text or only underline
-        vim.g.doom_one_diagnostics_text_color = false
-		-- Enable transparent background
-		vim.g.doom_one_transparent_background = false
-
-        -- Pumblend transparency
-		vim.g.doom_one_pumblend_enable = false
-		vim.g.doom_one_pumblend_transparency = 20
-
-        -- Plugins integration
-		vim.g.doom_one_plugin_neorg = true
-		vim.g.doom_one_plugin_barbar = false
-		vim.g.doom_one_plugin_telescope = false
-		vim.g.doom_one_plugin_neogit = true
-		vim.g.doom_one_plugin_nvim_tree = true
-		vim.g.doom_one_plugin_dashboard = true
-		vim.g.doom_one_plugin_startify = true
-		vim.g.doom_one_plugin_whichkey = true
-		vim.g.doom_one_plugin_indent_blankline = true
-		vim.g.doom_one_plugin_vim_illuminate = true
-		vim.g.doom_one_plugin_lspsaga = false
-	end,
-	config = function()
-        vim.cmd("colorscheme doom-one")
-    end,
-})
+	use({ "ellisonleao/gruvbox.nvim" })
+	use({
+		"NTBBloodbath/doom-one.nvim",
+		setup = function()
+			-- Add color to cursor
+			vim.g.doom_one_cursor_coloring = false
+			-- Set :terminal colors
+			vim.g.doom_one_terminal_colors = true
+			-- Enable italic comments
+			vim.g.doom_one_italic_comments = false
+			-- Enable TS support
+			vim.g.doom_one_enable_treesitter = true
+			-- Color whole diagnostic text or only underline
+			vim.g.doom_one_diagnostics_text_color = false
+			-- Enable transparent background
+			vim.g.doom_one_transparent_background = false
+			-- Pumblend transparency
+			vim.g.doom_one_pumblend_enable = false
+			vim.g.doom_one_pumblend_transparency = 20
+			-- Plugins integration
+			vim.g.doom_one_plugin_neorg = true
+			vim.g.doom_one_plugin_barbar = false
+			vim.g.doom_one_plugin_telescope = false
+			vim.g.doom_one_plugin_neogit = true
+			vim.g.doom_one_plugin_nvim_tree = true
+			vim.g.doom_one_plugin_dashboard = true
+			vim.g.doom_one_plugin_startify = true
+			vim.g.doom_one_plugin_whichkey = true
+			vim.g.doom_one_plugin_indent_blankline = true
+			vim.g.doom_one_plugin_vim_illuminate = true
+			vim.g.doom_one_plugin_lspsaga = false
+		end,
+		config = function()
+			vim.cmd("colorscheme doom-one")
+			vim.cmd([[hi link @lsp.]])
+		end,
+	})
+	use({ "wesleimp/stylua.nvim" })
 end)
