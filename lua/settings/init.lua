@@ -82,10 +82,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	group = highlight_group,
 	pattern = "*",
 })
--------------------------------------------------------------------------------------------------------------
---                                                    doom-one                                              -- --------------------------------------------------------------------------------------------------------------
---
-vim.g.doom_one_cursor_coloring = false
+vim.g.doom_one_cursor_coloring = true
 vim.g.doom_one_terminal_colors = true
 vim.g.doom_one_italic_comments = true
 vim.g.doom_one_enable_treesitter = true

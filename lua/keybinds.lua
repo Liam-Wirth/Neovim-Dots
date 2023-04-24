@@ -64,7 +64,7 @@ wk.register({
 	},
 }, { prefix = "<leader>", noremap = true })
 vim.keymap.set("n", "e<leader>u", require("undotree").toggle, { noremap = true, silent = true })
-vim.keymap.set("n", "<space>f", function()
+vim.keymap.set("n", "<a-f>", function()
 	vim.lsp.buf.format({ async = true })
 end)
 -------------------------------------------------------------------------------------------------------------
@@ -75,6 +75,7 @@ wk.register({
 	e = {
 		name = "Open Auxiliary Windows",
 		t = { "<cmd>NvimTreeToggle<cr>", "Toggle Filetree" },
+		f = { "<cmd> NvimTreeFocus<cr>", "Focus Filetree" },
 		u = "Toggle Visual UndoTree",
 	},
 }, { prefix = "<leader>", noremap = true })
