@@ -56,10 +56,9 @@ set.mousefocus = true
 set.sidescroll = 50
 
 vim.notify = require("notify")
-
+vim.o.syntax = on
 vim.o.completeopt = "menuone,noselect"
 vim.o.undofile = false
-
 
 require("plugins")
 require("impatient")
@@ -95,7 +94,6 @@ vim.cmd([[
 
 ]])
 
-vim.o.syntax = on
 -------------------------------------------------------------------------------------------------------------
 --                                                    ListChars                                            -- -------------------------------------------------------------------------------------------------------------
 local tab = [[,tab:»■ ]]
@@ -109,7 +107,7 @@ vim.cmd("set listchars=eol:" .. "↩" .. tab2 .. extends .. precedes .. nbsp)
 -------------------------------------------------------------------------------------------------------------
 --                                                    ListChars                                            -- -------------------------------------------------------------------------------------------------------------
 
--- [[ Highlight on yank ]]
+--!NOTE: [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {

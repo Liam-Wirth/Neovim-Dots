@@ -63,7 +63,6 @@ wk.register({
 		n = { "cmd>enew<cr>", "New File" },
 	},
 }, { prefix = "<leader>", noremap = true })
-vim.keymap.set("n", "e<leader>u", require("undotree").toggle, { noremap = true, silent = true })
 vim.keymap.set("n", "<a-f>", function()
 	vim.lsp.buf.format({ async = true })
 end)
