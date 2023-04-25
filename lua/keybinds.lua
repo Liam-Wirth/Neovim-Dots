@@ -60,7 +60,7 @@ wk.register({
 		name = "File",
 		f = { "<cmd>Telescope find_files<cr>", "Find File" },
 		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-		n = { "<cmd>enew<cr>", "New File" },
+		n = { "cmd>enew<cr>", "New File" },
 	},
 }, { prefix = "<leader>", noremap = true })
 vim.keymap.set("n", "e<leader>u", require("undotree").toggle, { noremap = true, silent = true })
@@ -75,8 +75,8 @@ wk.register({
 	e = {
 		name = "Open Auxiliary Windows",
 		t = { "<cmd>NvimTreeToggle<cr>", "Toggle Filetree" },
-		f = { "<cmd> NvimTreeFocus<cr>", "Focus Filetree" },
-		u = "Toggle Visual UndoTree",
+		f = { "<cmd> nvimtreefocus<cr>", "Focus Filetree" },
+		u = {"<cmd>lua require('undotree').toggle() <cr>", "Toggle Visual UndoTree"},
 	},
 }, { prefix = "<leader>", noremap = true })
 
