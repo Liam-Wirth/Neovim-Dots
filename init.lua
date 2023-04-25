@@ -60,6 +60,10 @@ vim.o.syntax = on
 vim.o.completeopt = "menuone,noselect"
 vim.o.undofile = false
 
+-- disable netrw at the very start of your init.lua (strongly advised)
+-- (For Nvim Tree)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 require("plugins")
 require("impatient")
 require("plugins.lookandfeel.nvimtree")
