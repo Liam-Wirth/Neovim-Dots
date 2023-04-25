@@ -74,7 +74,7 @@ wk.register({
 	e = {
 		name = "Open Auxiliary Windows",
 		t = { "<cmd>NvimTreeToggle<cr>", "Toggle Filetree" },
-		f = { "<cmd> nvimtreefocus<cr>", "Focus Filetree" },
+		f = { "<cmd> NvimTreeFocus<cr>", "Focus Filetree" },
 		u = {"<cmd>lua require('undotree').toggle() <cr>", "Toggle Visual UndoTree"},
 	},
 }, { prefix = "<leader>", noremap = true })
