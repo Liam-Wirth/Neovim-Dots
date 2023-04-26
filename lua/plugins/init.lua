@@ -84,7 +84,6 @@ return require("packer").startup(function(use)
 			require("plugins.lookandfeel.notify")
 		end,
 	})
-
 	--Alpha (my greeter)
 	use({
 		"goolord/alpha-nvim",
@@ -93,11 +92,9 @@ return require("packer").startup(function(use)
 			require("plugins.lookandfeel.alpha")
 		end,
 	})
-
 	use({
 		"lukas-reineke/indent-blankline.nvim",
 	})
-
 	--------------------------------------------------------
 	---                   Text Stuff?                     --
 	--------------------------------------------------------
@@ -147,7 +144,7 @@ return require("packer").startup(function(use)
 	use({
 		"anuvyklack/pretty-fold.nvim",
 		config = function()
-			require("pretty-fold").setup()
+			require("pretty-fold").setup({})
 		end,
 	})
 	--Graphical undo tree to make understanding how undo works in vim a little easier
@@ -195,7 +192,6 @@ return require("packer").startup(function(use)
 		"jose-elias-alvarez/null-ls.nvim", -- General purpose LSP things
 		config = function()
 			local null_ls = require("null-ls")
-
 			null_ls.setup({
 				debug = false,
 				sources = {
@@ -282,37 +278,9 @@ return require("packer").startup(function(use)
 	use({
 		"NTBBloodbath/doom-one.nvim",
 		setup = function()
-			-- Add color to cursor
-			vim.g.doom_one_cursor_coloring = true
-			-- Set :terminal colors
-			vim.g.doom_one_terminal_colors = true
-			-- Enable italic comments
-			vim.g.doom_one_italic_comments = true
-			-- Enable TS support
-			vim.g.doom_one_enable_treesitter = true
-			-- Color whole diagnostic text or only underline
-			vim.g.doom_one_diagnostics_text_color = false
-			-- Enable transparent background
-			vim.g.doom_one_transparent_background = false
-			-- Pumblend transparency
-			vim.g.doom_one_pumblend_enable = false
-			vim.g.doom_one_pumblend_transparency = 20
-			-- Plugins integration
-			vim.g.doom_one_plugin_neorg = true
-			vim.g.doom_one_plugin_barbar = false
-			vim.g.doom_one_plugin_telescope = true
-			vim.g.doom_one_plugin_neogit = true
-			vim.g.doom_one_plugin_nvim_tree = true
-			vim.g.doom_one_plugin_dashboard = true
-			vim.g.doom_one_plugin_startify = true
-			vim.g.doom_one_plugin_whichkey = true
-			vim.g.doom_one_plugin_indent_blankline = false
-			vim.g.doom_one_plugin_vim_illuminate = true
-			vim.g.doom_one_plugin_lspsaga = false
+			--See base init.lua for this
 		end,
 		config = function()
-			vim.cmd("colorscheme doom-one")
-			vim.cmd([[hi link @lsp.]])
 		end,
 	})
 	use({ "wesleimp/stylua.nvim" })
