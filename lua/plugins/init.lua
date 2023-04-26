@@ -44,8 +44,7 @@ return require("packer").startup(function(use)
 	--------------------------------------------------------
 	---                   UI Stuff                        --
 	--------------------------------------------------------
-	use({
-		"simrat39/rust-tools.nvim",
+	use({ "simrat39/rust-tools.nvim",
 		config = function()
 			require("lsp-config.rust-tools")
 		end,
