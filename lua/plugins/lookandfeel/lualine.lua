@@ -108,7 +108,7 @@ local mode_name= {
       rm = "More",
       ['r?'] = "Confirm",
       ['!'] = "Terminal",
-      t = "I literally don't know what the fuck this is",
+      t = "Terminal (Editing)",
     }
 
     return mode_name[vim.fn.mode()];
