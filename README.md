@@ -1,2 +1,5 @@
-fjjfj# Neovim-Dots
+# Neovim-Dots
+
+
+
 My handwritten neovim dots! yippeee!
