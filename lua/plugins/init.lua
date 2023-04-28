@@ -44,7 +44,8 @@ return require("packer").startup(function(use)
 	--------------------------------------------------------
 	---                   UI Stuff                        --
 	--------------------------------------------------------
-	use({ "simrat39/rust-tools.nvim",
+	use({
+		"simrat39/rust-tools.nvim",
 		config = function()
 			require("lsp-config.rust-tools")
 		end,
@@ -156,6 +157,14 @@ return require("packer").startup(function(use)
 			"nvim-lua/plenary.nvim",
 		},
 	})
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		setup = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+	})
 	-------------------------------------------------------
 	--                     Formatting                    --
 	-------------------------------------------------------
@@ -202,8 +211,8 @@ return require("packer").startup(function(use)
 		event = "BufRead",
 	})
 	use({ "nvim-treesitter/nvim-treesitter-textobjects", after = { "nvim-treesitter" } }) -- Additional textobjects for treesitter
-	use("tpope/vim-fugitive") -- Git commands in nvim
-	use("tpope/vim-rhubarb") -- Fugitive-companion to interact with github
+	use("tpope/vim-fugitive")                                                       -- Git commands in nvim
+	use("tpope/vim-rhubarb")                                                        -- Fugitive-companion to interact with github
 	use("lewis6991/gitsigns.nvim")
 	use("mfussenegger/nvim-jdtls")
 	use("tpope/vim-sleuth")
