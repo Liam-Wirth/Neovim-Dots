@@ -141,3 +141,4 @@ vim.g.doom_one_plugin_indent_blankline = true
 vim.g.doom_one_plugin_vim_illuminate = true
 vim.g.doom_one_plugin_lspsaga = false
 vim.cmd([[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]])
+
