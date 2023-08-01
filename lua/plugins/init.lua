@@ -103,9 +103,28 @@ return require("packer").startup(function(use)
       require("plugins.lookandfeel.alpha")
     end,
   })
+  --TODO: swap this out with another one that I understand
+  --session manager
+  use({
+    "Shatur/neovim-session-manager",
+    config = function()
+      require("plugins.lookandfeel.session-manager")
+    end,
+  })
+  --telescope ui selector for the session manager
+  use {'nvim-telescope/telescope-ui-select.nvim' }
   use({
     "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("plugins.lookandfeel.indentblankline")
+    end,
   })
+  --ToggleTerm
+  use {"akinsho/toggleterm.nvim", tag = '*', 
+    config = function()
+      require("plugins.lookandfeel.toggleterm")
+    end
+    }
   --------------------------------------------------------
   ---                   Text Stuff?                     --
   --------------------------------------------------------

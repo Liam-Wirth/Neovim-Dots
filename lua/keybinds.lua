@@ -81,3 +81,15 @@ wk.register({
 
 --TODO: look into registering this with whichkey? I dunno, not sure about getting my leader to work in visual mode, which is the mode that this keybind applies largely to
 vim.cmd([[vnoremap <c-f> y<ESC>/<c-r>"<CR>]])
+    vim.keymap.set("n", "<Leader>xb", "<Cmd>term<CR><Cmd>setlocal nonu nornu<CR>i", { silent = true })
+wk.register({
+	x = {
+		name = "ToggleTerm",
+		f = {'<Cmd>execute v:count . "ToggleTerm direction=float"<CR>', "Floating Terminal"},
+		h = {'<Cmd>execute v:count . "ToggleTerm direction=horizontal"<CR>', "Horizontal Terminal"},
+		v = {'<Cmd>execute v:count . "ToggleTerm direction=vertical"<CR>', "Vertical Terminal"},
+		t = {'<Cmd>execute v:count . "ToggleTerm direction=tab"<CR>', "Open Terminal in other tab"},
+		b = {"<Cmd>term<CR><Cmd>setlocal nonu nornu<CR>i", "I think this just switches to the terminal"},
+	},
+}, { prefix = "<leader>", noremap = true })
+
