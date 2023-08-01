@@ -18,13 +18,13 @@ vim.o.showmatch = true
 vim.o.hidden = true
 set.splitbelow = true
 set.splitright = true
-set.wrap = true
+set.wrap = false
 set.scrolloff = 5
 set.fileencoding = "utf-8"
 set.relativenumber = true
 set.number = true
 set.cursorline = true
-set.numberwidth = 4
+set.numberwidth = 3 
 set.ignorecase = true
 set.hlsearch = true
 set.colorcolumn = "99999"
@@ -44,6 +44,7 @@ set.hlsearch = true
 set.incsearch = true
 set.ignorecase = true
 set.smartcase = true
+set.hidden = true
 
 vim.opt.list = true
 vim.g.t_Co = "256"
@@ -75,7 +76,6 @@ require("lsp-config.language-servers")
 require("lsp-config.mason")
 require("lsp-config.lsp-config")
 
-require("keybinds")
 
 vim.api.nvim_create_autocmd("ColorScheme", {
 	group = vim.api.nvim_create_augroup("ColoringFuckery", { clear = true }),
@@ -141,4 +141,3 @@ vim.g.doom_one_plugin_indent_blankline = true
 vim.g.doom_one_plugin_vim_illuminate = true
 vim.g.doom_one_plugin_lspsaga = false
 vim.cmd([[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]])
-
