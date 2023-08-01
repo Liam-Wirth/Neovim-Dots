@@ -116,7 +116,7 @@ cmp.setup {
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     }),
-    ["<S-CR>"] = cmp.mapping(
+    ["<Tab>"] = cmp.mapping(
       cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
