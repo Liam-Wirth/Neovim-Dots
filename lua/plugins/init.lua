@@ -222,7 +222,13 @@ return require("packer").startup(function(use)
   })
   use("junegunn/vim-easy-align") -- Quickly align around a character
   --lsp-config,mason,dap,linter,and formatters
-  use("neovim/nvim-lspconfig")
+  use({
+    "neovim/nvim-lspconfig",
+    config = function()
+      require("lsp-config.lsp-config")
+    end
+  })
+
   use("williamboman/mason.nvim")
   use("williamboman/mason-lspconfig.nvim")
   use("mfussenegger/nvim-dap")
