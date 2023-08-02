@@ -74,7 +74,7 @@ wk.register({
     t = { "<cmd>NvimTreeToggle<cr>", "Toggle Filetree" },
     f = { "<cmd> NvimTreeFocus<cr>", "Focus Filetree" },
     u = { "<cmd>lua require('undotree').toggle() <cr>", "Toggle Visual UndoTree" },
-    F = {"<cmd> vim.diagnostic.open_float", "LSP: Open Float"}
+    F = {"<cmd> vim.diagnostic.open_float<cr>", "LSP: Open Float"}
   },
 }, { prefix = "<leader>", noremap = true })
 
