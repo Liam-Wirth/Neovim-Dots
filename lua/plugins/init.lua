@@ -20,7 +20,7 @@ end
 vim.api.nvim_command("packadd packer.nvim")
 -- returns the require for use in `config` parameter of packer's use
 -- expects the name of the config file
-function get_setup(name)
+local function get_setup(name)
   return string.format('require("setup/%s")', name)
 end
 
@@ -120,7 +120,7 @@ return require("packer").startup(function(use)
     end,
   })
   --ToggleTerm
-  use {"akinsho/toggleterm.nvim", tag = '*', 
+  use {"akinsho/toggleterm.nvim", tag = '*',
     config = function()
       require("plugins.lookandfeel.toggleterm")
     end
