@@ -117,7 +117,7 @@ require("mason-lspconfig").setup({
 
 for _, lsp in ipairs(servers) do
     local opts = {
-        on_attach = on_attatch,
+        on_attach = on_attach,
         capabilities = capabilities,
         update_in_insert = true,
     }
