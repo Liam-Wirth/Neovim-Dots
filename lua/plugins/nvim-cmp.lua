@@ -39,7 +39,7 @@ cmp.setup({
     { name = "crates" },
     { name = "vim-dadbod-completion" },
     { name = "neorg" },
-    { name = "calc",  },
+    { name = "calc" },
     { name = "path" },
     {
       name = "buffer",
@@ -73,19 +73,25 @@ cmp.setup({
         menu = { omni = "omni" },
       })(entry, vim_item)
       local strings = vim.split(kind.kind, "%s", { trimempty = true })
-      kind.kind = " " .. (strings[1] or "") .. " "
       
+      kind.kind = " " .. (strings[1] or "") .. " "
 
       -- Kind icons
       --vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
       -- Source
-      local menu_icon = ({
+      local menu_icon = {
         luasnip = "[LuaSnip]",
         nvim_lua = "[Lua]",
-        calc = "󰃬",
-      })
+        calc = " 󰃬 ",
+      }
+      if entry.source.name == "calc" then
+        -- Get the custom icon for 'calc' source
+        -- Replace the kind glyph with the custom icon
+        vim_item.kind = menu_icon.calc
+        vim_item.menu = "Calculator"
+        kind.menu = "Calculator"
+      end
       kind.menu = "    (" .. (strings[2] or "") .. ") "
-        kind.menu = kind.menu .. (menu_icon[entry.source.name] or "")
       return kind
     end,
   },
@@ -212,7 +218,6 @@ cmp.setup.cmdline("?", {
 })
 local doomcolors = require("colorschemes-config.doomcolors").dark
 
-
 -- Customization for Pmenu
 vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#282C34", fg = "NONE" })
 vim.api.nvim_set_hl(0, "Pmenu", { fg = "#C5CDD9", bg = "#22252A" })
@@ -224,15 +229,15 @@ vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#C792EA", bg = "NONE", italic = tr
 
 vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "#EED8DA", bg = doomcolors.red })
 vim.api.nvim_set_hl(0, "CmpItemKindProperty", { fg = "#EED8DA", bg = doomcolors.red })
-vim.api.nvim_set_hl(0, "CmpItemKindEvent", { fg = "#EED8DA", bg = doomcolors.red})
+vim.api.nvim_set_hl(0, "CmpItemKindEvent", { fg = "#EED8DA", bg = doomcolors.red })
 
 vim.api.nvim_set_hl(0, "CmpItemKindText", { fg = "#EED8DA", bg = doomcolors.green })
-vim.api.nvim_set_hl(0, "CmpItemKindEnum", { fg = "#EED8DA", bg = doomcolors.green})
-vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#EED8DA", bg = doomcolors.green})
+vim.api.nvim_set_hl(0, "CmpItemKindEnum", { fg = "#EED8DA", bg = doomcolors.green })
+vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#EED8DA", bg = doomcolors.green })
 
-vim.api.nvim_set_hl(0, "CmpItemKindConstant", { fg = "#EED8DA", bg = doomcolors.yellow})
-vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { fg = "#EED8DA", bg = doomcolors.yellow})
-vim.api.nvim_set_hl(0, "CmpItemKindReference", { fg = "#EED8DA", bg = doomcolors.yellow})
+vim.api.nvim_set_hl(0, "CmpItemKindConstant", { fg = "#EED8DA", bg = doomcolors.yellow })
+vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { fg = "#EED8DA", bg = doomcolors.yellow })
+vim.api.nvim_set_hl(0, "CmpItemKindReference", { fg = "#EED8DA", bg = doomcolors.yellow })
 
 vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#EADFF0", bg = "#A377BF" })
 vim.api.nvim_set_hl(0, "CmpItemKindStruct", { fg = "#EADFF0", bg = "#A377BF" })
@@ -243,14 +248,14 @@ vim.api.nvim_set_hl(0, "CmpItemKindOperator", { fg = "#EADFF0", bg = "#A377BF" }
 vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#C5CDD9", bg = "#7E8294" })
 vim.api.nvim_set_hl(0, "CmpItemKindFile", { fg = "#C5CDD9", bg = "#7E8294" })
 
-vim.api.nvim_set_hl(0, "CmpItemKindUnit", { fg = "#F5EBD9", bg = doomcolors.orange})
-vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { fg = "#F5EBD9", bg = doomcolors.orange})
-vim.api.nvim_set_hl(0, "CmpItemKindFolder", { fg = "#F5EBD9", bg = doomcolors.orange})
+vim.api.nvim_set_hl(0, "CmpItemKindUnit", { fg = "#F5EBD9", bg = doomcolors.orange })
+vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { fg = "#F5EBD9", bg = doomcolors.orange })
+vim.api.nvim_set_hl(0, "CmpItemKindFolder", { fg = "#F5EBD9", bg = doomcolors.orange })
 
-vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "#DDE5F5", bg = doomcolors.blue})
-vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = "#DDE5F5", bg = doomcolors.blue})
-vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { fg = "#DDE5F5", bg = doomcolors.blue})
+vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "#DDE5F5", bg = doomcolors.blue })
+vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = "#DDE5F5", bg = doomcolors.blue })
+vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { fg = "#DDE5F5", bg = doomcolors.blue })
 
-vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "#D8EEEB", bg = doomcolors.teal})
-vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = "#D8EEEB", bg = doomcolors.teal})
-vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { fg = "#D8EEEB", bg = doomcolors.teal})
+vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "#D8EEEB", bg = doomcolors.teal })
+vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = "#D8EEEB", bg = doomcolors.teal })
+vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { fg = "#D8EEEB", bg = doomcolors.teal })

@@ -15,10 +15,10 @@ lspconfig.lua_ls.setup({})
 vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float(nil,{focusable=false,scope="cursor"})]])
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.keymap.set("n", "<leader>E", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>le", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
+vim.keymap.set("n", "<space>eq", vim.diagnostic.setloclist)
 local on_attatch = function(_, bufnr)
   vim.cmd([[echo "lsp attatched"]])
   require("illuminate").on_attach(_)
@@ -61,10 +61,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
     else
       vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
     end
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, opts)
+    vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
     --vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "gI", vim.lsp.buf.implementation, opts)
+    vim.keymap.set("n", "<leader>gI", vim.lsp.buf.implementation, opts)
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
     vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
     vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
@@ -72,12 +72,29 @@ vim.api.nvim_create_autocmd("LspAttach", {
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, opts)
     vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-    vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-    vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-    vim.keymap.set("n", "<space>f", function()
+    vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts)
+    vim.keymap.set({ "n", "v" }, "<leader>lc", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "<leader>lf", function()
       vim.lsp.buf.format({ async = true })
     end, opts)
+    --NOTE: with which-key, you can declare notation for pre-existing keybinds without overrwriting the keybinds
+    wk.register({
+      g = {
+        name = "(LSP) [g]o To",
+        D = { "[g]o to [D]eclaration" },
+        d = { "[g]o to [d]efinition" },
+        I = { "[g]o to [I]mplementation" },
+        r = { "[g]o to [R]eferences" },
+      },
+      l = {
+        name = "(LSP) actions",
+        r = "Rename",
+        c = "Code Actions",
+        f = "Format",
+        e = "(Diagnostic) Open Float"
+      },
+    }, { prefix = "<leader>" })
   end,
 })
 require("lspconfig").lua_ls.setup({
