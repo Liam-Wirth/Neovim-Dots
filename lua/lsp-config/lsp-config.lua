@@ -1,3 +1,4 @@
+--TODO: make sure I have everything imported over from the lsp-config.bak file
 local wk = require("which-key")
 -- Setup language servers.
 local lspconfig = require("lspconfig")
