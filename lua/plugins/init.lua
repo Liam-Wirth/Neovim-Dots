@@ -35,10 +35,10 @@ return require("packer").startup(function(use)
     "nvim-orgmode/orgmode",
     config = function()
       require("orgmode").setup({
-	require('orgmode').setup_ts_grammar(),
-  org_agenda_files = {'~/Documents/Agenda/*', '~/my-orgs/**/*'},
-  org_default_notes_file = '~/Documents/org/default.org',
-})
+        require("orgmode").setup_ts_grammar(),
+        org_agenda_files = { "~/Documents/Agenda/*", "~/my-orgs/**/*" },
+        org_default_notes_file = "~/Documents/org/default.org",
+      })
     end,
   })
   use({
@@ -96,6 +96,7 @@ return require("packer").startup(function(use)
     end,
   })
   --Alpha (my greeter)
+  
   use({
     "goolord/alpha-nvim",
     requires = { "kyazdani42/nvim-web-devicons" },
@@ -112,7 +113,7 @@ return require("packer").startup(function(use)
     end,
   })
   --telescope ui selector for the session manager
-  use {'nvim-telescope/telescope-ui-select.nvim' }
+  use({ "nvim-telescope/telescope-ui-select.nvim" })
   use({
     "lukas-reineke/indent-blankline.nvim",
     config = function()
@@ -120,11 +121,13 @@ return require("packer").startup(function(use)
     end,
   })
   --ToggleTerm
-  use {"akinsho/toggleterm.nvim", tag = '*',
+  use({
+    "akinsho/toggleterm.nvim",
+    tag = "*",
     config = function()
       require("plugins.lookandfeel.toggleterm")
-    end
-    }
+    end,
+  })
   --------------------------------------------------------
   ---                   Text Stuff?                     --
   --------------------------------------------------------
@@ -226,9 +229,9 @@ return require("packer").startup(function(use)
     "neovim/nvim-lspconfig",
     config = function()
       require("lsp-config.lsp-config")
-    end
+    end,
   })
-
+use({ "onsails/lspkind-nvim", module = "lspkind" })
   use("williamboman/mason.nvim")
   use("williamboman/mason-lspconfig.nvim")
   use("mfussenegger/nvim-dap")
@@ -328,3 +331,4 @@ return require("packer").startup(function(use)
   })
   use({ "wesleimp/stylua.nvim" })
 end)
+
