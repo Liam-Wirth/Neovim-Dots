@@ -24,7 +24,7 @@ set.fileencoding = "utf-8"
 set.relativenumber = true
 set.number = true
 set.cursorline = true
-set.numberwidth = 3 
+set.numberwidth = 2
 set.ignorecase = true
 set.hlsearch = true
 set.colorcolumn = "99999"
@@ -76,15 +76,14 @@ require("lsp-config.language-servers")
 require("lsp-config.mason")
 require("lsp-config.lsp-config")
 
-
 vim.api.nvim_create_autocmd("ColorScheme", {
-	group = vim.api.nvim_create_augroup("ColoringFuckery", { clear = true }),
-	pattern = "*",
-	callback = function()
-		for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-			vim.api.nvim_set_hl(0, group, {})
-		end
-	end,
+  group = vim.api.nvim_create_augroup("ColoringFuckery", { clear = true }),
+  pattern = "*",
+  callback = function()
+    for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+      vim.api.nvim_set_hl(0, group, {})
+    end
+  end,
 })
 vim.cmd([[colorscheme doom-one]])
 --TODO: orgnize these options.
@@ -115,12 +114,14 @@ vim.cmd("set listchars=eol:" .. "↩" .. tab2 .. extends .. precedes .. nbsp)
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
-	callback = function()
-		vim.highlight.on_yank()
-	end,
-	group = highlight_group,
-	pattern = "*",
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  group = highlight_group,
+  pattern = "*",
 })
+vim.cmd([[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]])
+--NOTE: maybe attatch these to an autocmd that runs when the colorscheme is set specifically to doom-one?
 vim.g.doom_one_cursor_coloring = true
 vim.g.doom_one_terminal_colors = true
 vim.g.doom_one_italic_comments = true
@@ -140,4 +141,3 @@ vim.g.doom_one_plugin_whichkey = true
 vim.g.doom_one_plugin_indent_blankline = true
 vim.g.doom_one_plugin_vim_illuminate = true
 vim.g.doom_one_plugin_lspsaga = false
-vim.cmd([[luafile ~/.config/nvim/lua/plugins/lookandfeel/indentblankline.lua]])

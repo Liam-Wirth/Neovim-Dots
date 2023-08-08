@@ -180,8 +180,10 @@ local icons = {
     Package = "",
     CircuitBoard = "",
     amogus = "ඞ",
+    calculator = "󰃬",
   },
 }
+
 icons.get_misc = function()
   return icons.misc()
 end

@@ -1,50 +1,26 @@
 -- Add additional capabilities supported by nvim-cmp
-local kind_icons = {
-  Text = "",
-  Method = "",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "ﴯ",
-  Interface = "",
-  Module = "",
-  Property = "",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
-  Operator = "",
-  TypeParameter = "",
-}
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-local luasnip = require 'luasnip'
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
---CMP setup
-local cmp = require 'cmp'
-cmp.setup {
 
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local luasnip = require("luasnip")
+local glyphs = require("settings.glyphs")
+local lspkind = require("lspkind")
+lspkind.init({
+  symbol_map = {
+    TypeParameter = "",
+  },
+})
+--CMP setup
+local cmp = require("cmp")
+cmp.setup({
+  preselect = cmp.PreselectMode.None, --Don't automatically select a completion
+  -- disable completion in comments
   enabled = function()
-    -- disable completion in comments
-    local context = require 'cmp.config.context'
+    local context = require("cmp.config.context")
     -- keep command mode completion enabled when cursor is in a comment
-    if vim.api.nvim_get_mode().mode == 'c' then
+    if vim.api.nvim_get_mode().mode == "c" then
       return true
     else
-      return not context.in_treesitter_capture("comment")
-          and not context.in_syntax_group("Comment")
+      return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
     end
   end,
   completion = {
@@ -56,10 +32,64 @@ cmp.setup {
       require("luasnip").lsp_expand(args.body)
     end,
   },
+  sources = cmp.config.sources({
+    { name = "luasnip", priority = 10 }, -- Force snippet/lsp suggestions to the top
+    { name = "nvim_lsp", priority = 9 },
+    { name = "nvim-lua" },
+    { name = "crates" },
+    { name = "vim-dadbod-completion" },
+    { name = "neorg" },
+    { name = "calc",  },
+    { name = "path" },
+    {
+      name = "buffer",
+      priority = -2, -- Force buffer suggestions to the bottom
+      option = {
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end,
+      },
+    },
+  }),
   experimental = {
     ghost_text = true,
-
   },
+  window = {
+    completion = cmp.config.window.bordered({
+      winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+      col_offset = -3,
+      side_padding = 0,
+    }),
+    documentation = cmp.config.window.bordered({
+      winhighlight = "",
+    }),
+  },
+  formatting = {
+    fields = { "kind", "abbr", "menu" },
+    format = function(entry, vim_item)
+      local kind = lspkind.cmp_format({
+        mode = "symbol_text",
+        maxwidth = 50,
+        menu = { omni = "omni" },
+      })(entry, vim_item)
+      local strings = vim.split(kind.kind, "%s", { trimempty = true })
+      kind.kind = " " .. (strings[1] or "") .. " "
+      
+
+      -- Kind icons
+      --vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+      -- Source
+      local menu_icon = ({
+        luasnip = "[LuaSnip]",
+        nvim_lua = "[Lua]",
+        calc = "󰃬",
+      })
+      kind.menu = "    (" .. (strings[2] or "") .. ") "
+        kind.menu = kind.menu .. (menu_icon[entry.source.name] or "")
+      return kind
+    end,
+  },
+
   view = {
     native_menu = false,
     entries = "custom",
@@ -69,11 +99,9 @@ cmp.setup {
         winhighlight = "FloatBorder",
       },
     },
-
   }, -----------------------------------------------------------------------------------------------------------------------------------------
   --                                                               Mappings                                                              --
   -----------------------------------------------------------------------------------------------------------------------------------------
-
   --  mapping = cmp.mapping.preset.insert({
   --     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
   --     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -104,7 +132,7 @@ cmp.setup {
   -- }),
   --TODO: add these bindings to Whichkey
   mapping = {
-    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs( -4), { "i", "c" }),
+    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
     ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
     ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
@@ -120,58 +148,15 @@ cmp.setup {
       cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
-
       }),
       { "i", "c" }
     ),
   },
+})
+-----------------------------------------------------------------------------------------------------------------------------------------
+--                                                               Sources                                                               --
+-----------------------------------------------------------------------------------------------------------------------------------------
 
-  -----------------------------------------------------------------------------------------------------------------------------------------
-  --                                                               Sources                                                               --
-  -----------------------------------------------------------------------------------------------------------------------------------------
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-    { name = 'jdtls' },
-    { name = 'orgmode' },
-    { name = "omni" },
-    {
-      name = "buffer",
-      option = {
-        get_bufnrs = function()
-          local bufs = {}
-          for _, win in ipairs(vim.api.nvim_list_wins()) do
-            bufs[vim.api.nvim_win_get_buf(win)] = true
-          end
-          return vim.tbl_keys(bufs)
-        end,
-      },
-    },
-    { name = "nvim_lua" },
-    { name = "crates" },
-    { name = 'orgmode' },
-    { name = "path" },
-    { name = "calc" },
-    { name = "vim-dadbod-completion" },
-  },
-  formatting = {
-    format = function(entry, vim_item)
-      -- Kind icons
-      vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-      -- Source
-      vim_item.menu = ({
-            buffer = "",
-            nvim_lsp = "",
-            spell = "",
-            look = "",
-            unit = "",
-            luasnip = "[LuaSnip]",
-            nvim_lua = "[Lua]",
-          })[entry.source.name]
-      return vim_item
-    end,
-  },
-}
 cmp.setup.cmdline(":", {
   mapping = {
     ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
@@ -225,3 +210,47 @@ cmp.setup.cmdline("?", {
     { name = "buffer" },
   },
 })
+local doomcolors = require("colorschemes-config.doomcolors").dark
+
+
+-- Customization for Pmenu
+vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#282C34", fg = "NONE" })
+vim.api.nvim_set_hl(0, "Pmenu", { fg = "#C5CDD9", bg = "#22252A" })
+
+vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#7E8294", bg = "NONE", strikethrough = true })
+vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#82AAFF", bg = "NONE", bold = true })
+vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#82AAFF", bg = "NONE", bold = true })
+vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#C792EA", bg = "NONE", italic = true })
+
+vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "#EED8DA", bg = doomcolors.red })
+vim.api.nvim_set_hl(0, "CmpItemKindProperty", { fg = "#EED8DA", bg = doomcolors.red })
+vim.api.nvim_set_hl(0, "CmpItemKindEvent", { fg = "#EED8DA", bg = doomcolors.red})
+
+vim.api.nvim_set_hl(0, "CmpItemKindText", { fg = "#EED8DA", bg = doomcolors.green })
+vim.api.nvim_set_hl(0, "CmpItemKindEnum", { fg = "#EED8DA", bg = doomcolors.green})
+vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#EED8DA", bg = doomcolors.green})
+
+vim.api.nvim_set_hl(0, "CmpItemKindConstant", { fg = "#EED8DA", bg = doomcolors.yellow})
+vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { fg = "#EED8DA", bg = doomcolors.yellow})
+vim.api.nvim_set_hl(0, "CmpItemKindReference", { fg = "#EED8DA", bg = doomcolors.yellow})
+
+vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#EADFF0", bg = "#A377BF" })
+vim.api.nvim_set_hl(0, "CmpItemKindStruct", { fg = "#EADFF0", bg = "#A377BF" })
+vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = "#EADFF0", bg = "#A377BF" })
+vim.api.nvim_set_hl(0, "CmpItemKindModule", { fg = "#EADFF0", bg = "#A377BF" })
+vim.api.nvim_set_hl(0, "CmpItemKindOperator", { fg = "#EADFF0", bg = "#A377BF" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#C5CDD9", bg = "#7E8294" })
+vim.api.nvim_set_hl(0, "CmpItemKindFile", { fg = "#C5CDD9", bg = "#7E8294" })
+
+vim.api.nvim_set_hl(0, "CmpItemKindUnit", { fg = "#F5EBD9", bg = doomcolors.orange})
+vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { fg = "#F5EBD9", bg = doomcolors.orange})
+vim.api.nvim_set_hl(0, "CmpItemKindFolder", { fg = "#F5EBD9", bg = doomcolors.orange})
+
+vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "#DDE5F5", bg = doomcolors.blue})
+vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = "#DDE5F5", bg = doomcolors.blue})
+vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { fg = "#DDE5F5", bg = doomcolors.blue})
+
+vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "#D8EEEB", bg = doomcolors.teal})
+vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = "#D8EEEB", bg = doomcolors.teal})
+vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { fg = "#D8EEEB", bg = doomcolors.teal})
