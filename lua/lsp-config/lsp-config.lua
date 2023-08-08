@@ -1,9 +1,13 @@
 local vim = vim
 local wk = require("which-key")
 --  This function gets run when an LSP connects to a particular buffer.
+vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float(nil,{focusable=false,scope="cursor"})]])
+
+
 local nvim_lsp = require("lspconfig")
 local on_attach = function(_, bufnr)
 
+  vim.cmd[[echo "lsp attatched and shi"]]
   require("illuminate").on_attach(_)
   vim.keymap.set("n", "<M-n>", function()
     require("illuminate").next_reference({ wrap = true })
@@ -61,7 +65,6 @@ local on_attach = function(_, bufnr)
   nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
   -- See `:help K` for why this keymap
-  nmap("K", vim.lsp.buf.hover, "Hover Documentation")
   nmap("<leader>k", vim.lsp.buf.signature_help, "Signature Documentation")
 
   -- Lesser used LSP functionality
@@ -112,12 +115,6 @@ require("mason-lspconfig").setup({
   ensure_installed = servers,
 })
 
-for _, lsp in ipairs(servers) do
-  require("lspconfig")[lsp].setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-  })
-end
 for _, lsp in ipairs(servers) do
     local opts = {
         on_attach = on_attach,
