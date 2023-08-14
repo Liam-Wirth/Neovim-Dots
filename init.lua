@@ -16,5 +16,7 @@ require('lazy').setup(plugins, {
   defaults = { lazy = true },
   performance = {},
 })
+--require("lua.plugins.colorscheme")
 require("config")
-require("config.colorscheme")
+
+
