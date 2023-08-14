@@ -8,7 +8,6 @@ return {
         "NTBBloodbath/doom-one.nvim",
         lazy = false,
         init = function()
-            --NOTE: maybe attatch these to an autocmd that runs when the colorscheme is set specifically to doom-one?
             vim.g.doom_one_cursor_coloring = true
             vim.g.doom_one_terminal_colors = true
             vim.g.doom_one_italic_comments = true
