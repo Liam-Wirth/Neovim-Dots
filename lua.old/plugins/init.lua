@@ -96,7 +96,6 @@ return require("packer").startup(function(use)
     end,
   })
   --Alpha (my greeter)
-  
   use({
     "goolord/alpha-nvim",
     requires = { "kyazdani42/nvim-web-devicons" },
@@ -105,14 +104,15 @@ return require("packer").startup(function(use)
     end,
   })
   --TODO: swap this out with another one that I understand
+
   --session manager
-  use({
-    "Shatur/neovim-session-manager",
-    config = function()
-      require("plugins.lookandfeel.session-manager")
-    end,
+  -- Lua
+use({
+  "folke/persistence.nvim",
+  event = "BufReadPre", -- this will only start session saving when an actual file was opened
+  opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp" }}
   })
-  --telescope ui selector for the session manager
+    --telescope ui selector for the session manager
   use({ "nvim-telescope/telescope-ui-select.nvim" })
   use({
     "lukas-reineke/indent-blankline.nvim",
@@ -152,15 +152,7 @@ return require("packer").startup(function(use)
       require("nvim-autopairs").setup({})
     end,
   })
-  use({
-    "nvim-treesitter/nvim-treesitter",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        require("plugins.treesitter"),
-      })
-    end,
-  })
-  use({
+   use({
     "nvim-treesitter/nvim-treesitter-context", -- Show current context via TreeSitter
     config = function()
       require("treesitter-context").setup({
