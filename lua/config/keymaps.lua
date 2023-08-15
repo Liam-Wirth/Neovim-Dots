@@ -49,13 +49,11 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window w
 -- Move Lines
 map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
 map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
-map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
-map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
 map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 -- Clear search with <esc>
-map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
+map({ "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
 
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
 
@@ -116,28 +114,28 @@ map("n", "<C-1>", "1gt",{ desc = "First Tab"})
 map("n", "<leader><tab>2", "2gt",{ desc = "Second Tab"})
 map("n", "<C-2>", "2gt",{ desc = "Second Tab"})
 
-map("n", "<leader><tab>3", "<cmd>3gt<cr>",{ desc = "Third Tab"})
-map("n", "<C-3>", "<cmd>3gt<cr>",{ desc = "Third Tab"})
+map("n", "<leader><tab>3", "3gt",{ desc = "Third Tab"})
+map("n", "<C-3>", "3gt",{ desc = "Third Tab"})
 
-map("n", "<leader><tab>4", "<cmd>4gt<cr>",{ desc = "Fourth Tab"})
-map("n", "<C-4>", "<cmd>4gt<cr>",{ desc = "Fourth Tab"})
+map("n", "<leader><tab>4", "4gt",{ desc = "Fourth Tab"})
+map("n", "<C-4>", "4gt",{ desc = "Fourth Tab"})
 
-map("n", "<leader><tab>5", "<cmd>5gt<cr>",{ desc = "Fifth Tab"})
-map("n", "<C-5>", "<cmd>5gt<cr>",{ desc = "Fifth Tab"})
+map("n", "<leader><tab>5", "5gt",{ desc = "Fifth Tab"})
+map("n", "<C-5>", "5gt",{ desc = "Fifth Tab"})
 
-map("n", "<leader><tab>6", "<cmd>6gt<cr>",{ desc = "Sixth Tab"})
-map("n", "<C-6>", "<cmd>6gt<cr>",{ desc = "Sixth Tab"})
+map("n", "<leader><tab>6", "6gt",{ desc = "Sixth Tab"})
+map("n", "<C-6>", "6gt",{ desc = "Sixth Tab"})
 
-map("n", "<leader><tab>7", "<cmd>7gt<cr>",{ desc = "Seventh Tab"})
-map("n", "<C-7>", "<cmd>7gt<cr>",{ desc = "Seventh Tab"})
+map("n", "<leader><tab>7", "7gt",{ desc = "Seventh Tab"})
+map("n", "<C-7>", "7gt",{ desc = "Seventh Tab"})
 
-map("n", "<leader><tab>8", "<cmd>8gt<cr>",{ desc = "Eighth Tab"})
-map("n", "<C-8>", "<cmd>8gt<cr>",{ desc = "Eigth Tab"})
+map("n", "<leader><tab>8", "8gt",{ desc = "Eighth Tab"})
+map("n", "<C-8>", "8gt",{ desc = "Eigth Tab"})
 
-map("n", "<leader><tab>9", "<cmd>9gt<cr>",{ desc = "Ninth Tab"})
-map("n", "<C-9>", "<cmd>9gt<cr>",{ desc = "Ninth Tab"})
+map("n", "<leader><tab>9", "9gt",{ desc = "Ninth Tab"})
+map("n", "<C-9>", "9gt",{ desc = "Ninth Tab"})
 
-map("n", "<leader><tab>0", "<cmd>10gt<cr>",{ desc = "Tenth Tab"})
-map("n", "<C-0>", "<cmd>10gt<cr>",{ desc = "Tenth Tab"})
+map("n", "<leader><tab>0", "10gt",{ desc = "Tenth Tab"})
+map("n", "<C-0>", "10gt",{ desc = "Tenth Tab"})
 --TODO might be cool to make a specific keybinding here that when pressed pulls up a little window in which you can type the number of the tab you want to go to. but that's a super fringe case IMO
 return M
