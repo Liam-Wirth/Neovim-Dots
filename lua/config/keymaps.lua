@@ -53,7 +53,7 @@ map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 -- Clear search with <esc>
-map({ "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
+--map({ "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
 
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
 
@@ -73,6 +73,8 @@ map("i", ";", ";<c-g>u")
 -- redundantsave file
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 
+-- noh
+map({"v","n"}, "<leader>h", "<cmd>noh<cr>", {desc = "Clear Highlight"})
 --keywordprg
 map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 
