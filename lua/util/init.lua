@@ -5,6 +5,8 @@
 
 local M = {}
 
+--TODO: Fix this get_root function, it has a bug regarding finding the root directory if I am currently working within the root directory.
+--(IE: Calling Telescope fzf from the init.lua in the root directory)
 -- returns the root directory based on:
 -- * lsp workspace folders
 -- * lsp root_dir
@@ -87,6 +89,22 @@ function M.on_attach(on_attach)
       local buffer = args.buf
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       on_attach(client, buffer)
+    end,
+  })
+end
+function M.fg(name)
+  ---@type {foreground?:number}?
+  local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name }) or vim.api.nvim_get_hl_by_name(name, true)
+  local fg = hl and hl.fg or hl.foreground
+  return fg and { fg = string.format("#%06x", fg) }
+end
+
+--@param fn fun()
+function M.on_very_lazy(fn)
+  vim.api.nvim_create_autocmd("User", {
+    pattern = "VeryLazy",
+    callback = function()
+      fn()
     end,
   })
 end
