@@ -1,5 +1,7 @@
 local vim = vim;
 local M = {}
+---@ignore
+local wk = require('which-key')
 vim.cmd([[tnoremap <Esc> <C-\><C-n>]])
   --NOTE: this will be helpful later, basically ensuring that if we are in vscode environment (I.E, Vscode-NVIM, remapping will not take place (so as to help not interfere with vscode keybinds))
  M.is_vscode = vim.g.vscode;
@@ -140,4 +142,13 @@ map("n", "<C-9>", "9gt",{ desc = "Ninth Tab"})
 map("n", "<leader><tab>0", "10gt",{ desc = "Tenth Tab"})
 map("n", "<C-0>", "10gt",{ desc = "Tenth Tab"})
 --TODO might be cool to make a specific keybinding here that when pressed pulls up a little window in which you can type the number of the tab you want to go to. but that's a super fringe case IMO
+wk.register({
+   g = {name = "Git",},
+   c = {name = "Config",},
+   f = {name = "Find"},
+   q = {name = "Session Management"},
+   s = {name = "Dismiss Notifications"},
+   w = {name = "Window Management"},
+   Tab = {name = "Tab Navigation"},
+}, {prefix = "<leader>", noremap = true })
 return M
