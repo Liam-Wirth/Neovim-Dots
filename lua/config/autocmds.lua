@@ -19,4 +19,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   pattern = "*",
 })
 vim.cmd([[autocmd CursorHold * lua vim.diagnostic.open_float(nil,{focusable=false,scope="cursor"})]])
-
+local misc_aucmds = vim.api.nvim_create_augroup('misc_aucmds', { clear = true })
+vim.api.nvim_create_autocmd('BufReadPre', {
+  group = misc_aucmds,
+  callback = function()
+    require 'lua.plugins.lsp.lspconf'
+  end,
+  once = true,
+})

@@ -1,0 +1,56 @@
+ret = {
+   {
+    'utilyre/barbecue.nvim',
+    lazy = true,
+    event = "BufReadPost",
+    name = 'barbecue',
+    version = '*',
+    dependencies = {
+      'SmiteshP/nvim-navic',
+      'nvim-tree/nvim-web-devicons',
+    },
+    opts = {},
+ },
+{ "hrsh7th/cmp-nvim-lsp" },
+{
+    "folke/neodev.nvim",
+    opts = {
+      debug = true,
+      experimental = {
+        pathStrict = true,
+      },
+    },
+  },
+ {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "stylua",
+        "selene",
+        "luacheck",
+        "shellcheck",
+        "shfmt",
+      })
+    end,
+  },
+    'p00f/clangd_extensions.nvim',
+    "neovim/nvim-lspconfig",
+   'jose-elias-alvarez/null-ls.nvim',
+   {
+    'stevearc/aerial.nvim',
+    opts = {
+      backends = { 'lsp', 'treesitter', 'markdown', 'man' },
+      on_attach = function(bufnr)
+        vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', { buffer = bufnr })
+        vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr })
+      end,
+    },
+    cmd = { 'AerialOpen', 'AerialToggle' },
+  },
+    }
+  
+  vim.keymap.set("n", "<leader>.", function()
+      vim.lsp.buf.format({ async = true })
+   end
+   )
+return ret
