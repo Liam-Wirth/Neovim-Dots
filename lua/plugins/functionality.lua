@@ -6,7 +6,6 @@ return {
   {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
-    lazy = true,
     opts = { open_cmd = "noswapfile vnew" },
     -- stylua: ignore
     keys = {
@@ -16,7 +15,7 @@ return {
 --NOTE: I lifted this entire telescope implementation straight out of lazyvim's config, and made some minor changes based on my old cfg
 -- fuzzy finder
 {
- "nvim-telescope/telescope.nvim",
+    "nvim-telescope/telescope.nvim",
     commit = vim.fn.has("nvim-0.9.0") == 0 and "057ee0f8783" or nil,
     cmd = "Telescope",
     version = false, -- telescope did only one release, so use HEAD for now
@@ -92,7 +91,6 @@ return {
         desc = "Goto Symbol (Workspace)",
       },
     },
-    lazy = true,
     opts = {
       defaults = {
         prompt_prefix = " ",
@@ -142,7 +140,6 @@ return {
   -- hunks in a commit.
   {
     "lewis6991/gitsigns.nvim",
-    lazy = true,
     event = { "BufReadPre", "BufNewFile" },
     opts = {
       signs = {

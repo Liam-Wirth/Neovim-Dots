@@ -8,10 +8,8 @@ vim.api.nvim_create_autocmd("colorscheme", {
   end,
 })
 
---NOTE: [[ Highlight on yank ]]
+--!NOTE: [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
-
--- stylua ignore
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
