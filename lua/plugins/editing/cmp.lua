@@ -3,7 +3,7 @@ return {
       {
     "hrsh7th/nvim-cmp",
     version = false,       -- last release is way too old
-    event = "InsertEnter",
+    event = "BufReadPre",
     dependencies = {
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-nvim-lua" },
