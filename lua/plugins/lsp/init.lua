@@ -47,6 +47,13 @@ ret = {
     },
     cmd = { 'AerialOpen', 'AerialToggle' },
   },
+  {
+     'simrat39/rust-tools.nvim',
+     lazy = true,
+     event = "BufReadPost",
+  
+  }
+
     }
   
   vim.keymap.set("n", "<leader>.", function()
