@@ -6,7 +6,7 @@ My handwritten neovim dots! yippeee!
 
 
 # Credit to these lovely people!
-    [WBThomason](https://github.com/wbthomason) :
+[WBThomason](https://github.com/wbthomason) :
 I ~~stole~~ borrowed a lot from how he implemented lspconfiguration [here]("lua/plugins/lsp/lspconf")
     
 [the LazyVim Team](https://www.lazyvim.org/):
