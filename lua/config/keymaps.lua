@@ -1,38 +1,39 @@
-local vim = vim;
+local vim = vim
 local M = {}
 ---@ignore
-local wk = require('which-key')
+local wk = require("which-key")
 vim.cmd([[tnoremap <Esc> <C-\><C-n>]])
-  --NOTE: this will be helpful later, basically ensuring that if we are in vscode environment (I.E, Vscode-NVIM, remapping will not take place (so as to help not interfere with vscode keybinds))
- M.is_vscode = vim.g.vscode;
- M.defaultOpts = {
-    remap = false,
-    silent = true,
-    desc = nil,
-  }
- function M.map(mode, lhs, rhs, opts)
-   --Merge provided options with defaults, ensuring provided opts takes priority over defaults
-    opts = vim.tbl_extend('keep', opts or {}, M.defaultOpts)
-    opts.remap = not M.is_vscode
-    opts.silent = opts.silent ~= false
-  
-    -- Register the keybinding with Which-Key
-    if vim.fn.exists(':WhichKey') == 2 then
-      local wk = require('which-key')
-      wk.register({
-        [lhs] = { rhs, opts.desc },
-      }, {
-        mode = mode,
-      })
-    end
-  
-    -- Perform the remapping if opts.remap is truthy
-    if opts.remap then
-      vim.keymap.set(mode, lhs, rhs, opts)
-    end
+--NOTE: this will be helpful later, basically ensuring that if we are in vscode environment (I.E, Vscode-NVIM, remapping will not take place (so as to help not interfere with vscode keybinds))
+M.is_vscode = vim.g.vscode
+M.defaultOpts = {
+  remap = false,
+  silent = true,
+  desc = nil,
+}
+function M.map(mode, lhs, rhs, opts)
+  --Merge provided options with defaults, ensuring provided opts takes priority over defaults
+  opts = vim.tbl_extend("keep", opts or {}, M.defaultOpts)
+  opts.remap = not M.is_vscode
+  opts.silent = opts.silent ~= false
+
+  -- Register the keybinding with Which-Key
+  if vim.fn.exists(":WhichKey") == 2 then
+    local wk = require("which-key")
+    wk.register({
+      [lhs] = { rhs, opts.desc },
+    }, {
+      mode = mode,
+    })
   end
-  local map = M.map
- -- better up/down
+
+  -- Perform the remapping if opts.remap is truthy
+  if opts.remap then
+    vim.keymap.set(mode, lhs, rhs, opts)
+  end
+end
+
+local map = M.map
+-- better up/down
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
@@ -76,7 +77,7 @@ map("i", ";", ";<c-g>u")
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 
 -- noh
-map({"v","n"}, "<leader>h", "<cmd>noh<cr>", {desc = "Clear Highlight"})
+map({ "v", "n" }, "<leader>h", "<cmd>noh<cr>", { desc = "Clear Highlight" })
 --keywordprg
 map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 
@@ -89,7 +90,7 @@ map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 
---TODO: what this do 
+--TODO: what this do
 map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
 map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
 
@@ -112,43 +113,48 @@ map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 --easy tab navidation
-map("n", "<leader><tab>1", "1gt",{ desc = "First Tab"})
-map("n", "<C-1>", "1gt",{ desc = "First Tab"})
+map("n", "<leader><tab>1", "1gt", { desc = "First Tab" })
+map("n", "<C-1>", "1gt", { desc = "First Tab" })
 
-map("n", "<leader><tab>2", "2gt",{ desc = "Second Tab"})
-map("n", "<C-2>", "2gt",{ desc = "Second Tab"})
+map("n", "<leader><tab>2", "2gt", { desc = "Second Tab" })
+map("n", "<C-2>", "2gt", { desc = "Second Tab" })
 
-map("n", "<leader><tab>3", "3gt",{ desc = "Third Tab"})
-map("n", "<C-3>", "3gt",{ desc = "Third Tab"})
+map("n", "<leader><tab>3", "3gt", { desc = "Third Tab" })
+map("n", "<C-3>", "3gt", { desc = "Third Tab" })
 
-map("n", "<leader><tab>4", "4gt",{ desc = "Fourth Tab"})
-map("n", "<C-4>", "4gt",{ desc = "Fourth Tab"})
+map("n", "<leader><tab>4", "4gt", { desc = "Fourth Tab" })
+map("n", "<C-4>", "4gt", { desc = "Fourth Tab" })
 
-map("n", "<leader><tab>5", "5gt",{ desc = "Fifth Tab"})
-map("n", "<C-5>", "5gt",{ desc = "Fifth Tab"})
+map("n", "<leader><tab>5", "5gt", { desc = "Fifth Tab" })
+map("n", "<C-5>", "5gt", { desc = "Fifth Tab" })
 
-map("n", "<leader><tab>6", "6gt",{ desc = "Sixth Tab"})
-map("n", "<C-6>", "6gt",{ desc = "Sixth Tab"})
+map("n", "<leader><tab>6", "6gt", { desc = "Sixth Tab" })
+map("n", "<C-6>", "6gt", { desc = "Sixth Tab" })
 
-map("n", "<leader><tab>7", "7gt",{ desc = "Seventh Tab"})
-map("n", "<C-7>", "7gt",{ desc = "Seventh Tab"})
+map("n", "<leader><tab>7", "7gt", { desc = "Seventh Tab" })
+map("n", "<C-7>", "7gt", { desc = "Seventh Tab" })
 
-map("n", "<leader><tab>8", "8gt",{ desc = "Eighth Tab"})
-map("n", "<C-8>", "8gt",{ desc = "Eigth Tab"})
+map("n", "<leader><tab>8", "8gt", { desc = "Eighth Tab" })
+map("n", "<C-8>", "8gt", { desc = "Eigth Tab" })
 
-map("n", "<leader><tab>9", "9gt",{ desc = "Ninth Tab"})
-map("n", "<C-9>", "9gt",{ desc = "Ninth Tab"})
+map("n", "<leader><tab>9", "9gt", { desc = "Ninth Tab" })
+map("n", "<C-9>", "9gt", { desc = "Ninth Tab" })
 
-map("n", "<leader><tab>0", "10gt",{ desc = "Tenth Tab"})
-map("n", "<C-0>", "10gt",{ desc = "Tenth Tab"})
+map("n", "<leader><tab>0", "10gt", { desc = "Tenth Tab" })
+map("n", "<C-0>", "10gt", { desc = "Tenth Tab" })
+map("n", "<leader>et", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle Filetree"})
+map("n", "<leader>eu", "<cmd>lua require('undotree').toggle() <cr>", {desc ="Toggle Visual undotree"})
+map("n", "<leader>ea", "<cmd> AerialToggle <cr>", { desc = "Toggle Aerial (File overview)"})
+
 --TODO might be cool to make a specific keybinding here that when pressed pulls up a little window in which you can type the number of the tab you want to go to. but that's a super fringe case IMO
 wk.register({
-   g = {name = "Git",},
-   c = {name = "Config",},
-   f = {name = "Find"},
-   q = {name = "Session Management"},
-   s = {name = "Dismiss Notifications"},
-   w = {name = "Window Management"},
-   Tab = {name = "Tab Navigation"},
-}, {prefix = "<leader>", noremap = true })
+  g = { name = "Git" },
+  c = { name = "Config" },
+  f = { name = "Find" },
+  q = { name = "Session Management" },
+  s = { name = "Dismiss Notifications" },
+  w = { name = "Window Management" },
+  Tab = { name = "Tab Navigation" },
+  e = { name = "Open Auxiliary Windows" },
+}, { prefix = "<leader>", noremap = true })
 return M

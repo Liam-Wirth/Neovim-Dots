@@ -28,3 +28,4 @@ require('lazy').setup({
 require("plugins.colorscheme")
 
 require("config")
+
