@@ -330,5 +330,7 @@ use({ "onsails/lspkind-nvim", module = "lspkind" })
     config = function() end,
   })
   use({ "wesleimp/stylua.nvim" })
-end)
 
+use({'lervag/vimtex'})
+  use({"frabjous/knap"})
+end)
