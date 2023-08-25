@@ -30,7 +30,6 @@ return require("packer").startup(function(use)
   --------------------------------------------------------
   ---                   Meta/Functionality              --
   --------------------------------------------------------
-  use({ "nvim-treesitter/nvim-treesitter" })
   use({
     "nvim-orgmode/orgmode",
     config = function()
@@ -154,11 +153,6 @@ return require("packer").startup(function(use)
   })
   use({
     "nvim-treesitter/nvim-treesitter",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        require("plugins.treesitter"),
-      })
-    end,
   })
   use({
     "nvim-treesitter/nvim-treesitter-context", -- Show current context via TreeSitter
