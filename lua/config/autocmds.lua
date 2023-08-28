@@ -23,7 +23,8 @@ local misc_aucmds = vim.api.nvim_create_augroup('misc_aucmds', { clear = true })
 vim.api.nvim_create_autocmd('BufReadPre', {
   group = misc_aucmds,
   callback = function()
-    require 'lua.plugins.lsp.lspconf'
+    require('plugins.lsp.lspconf')
   end,
+  
   once = true,
 })
