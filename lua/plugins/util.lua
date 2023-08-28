@@ -11,6 +11,7 @@ return {
   -- Session management. This saves your session in the background,
   -- keeping track of open buffers, window arrangement, and more.
   -- You can restore sessions when returning through the dashboard.
+  --TODO: see if it is possible to have a ui thing be able to be loaded for this? I dunno
   {
     "folke/persistence.nvim",
     event = "BufReadPre",
