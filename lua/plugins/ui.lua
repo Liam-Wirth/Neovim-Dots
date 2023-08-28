@@ -1,3 +1,5 @@
+--The point of this file is to hold anything and everything to do with the explicit UI of neovim, so stuff like Nvim-Tree, Which Key
+--Lualine,
 return {
   {
     --TODO: Register the directory names for a lot of my keybind groups here
@@ -8,7 +10,7 @@ return {
       },
     },
     event = "BufReadPost",
-  }, --TODO: Maybe use noice 
+  }, --TODO: Maybe use noice / wtf is this, this doesnt really do anything? 
   { "folke/noice.nvim", event = "VeryLazy",
     opts = {
       lsp = {
@@ -101,6 +103,7 @@ return {
       },
     },
     -- Better `vim.notify()`
+    -- FIX: This literally just wont work
     {
       "rcarriga/nvim-notify",
       lazy = false,
@@ -465,7 +468,7 @@ return {
     event = "VeryLazy",
     opts = function()
       local icons = require("util.glyphs")
-      local Util = require("util")
+  local Util = require("util")
 
       return {
         options = {

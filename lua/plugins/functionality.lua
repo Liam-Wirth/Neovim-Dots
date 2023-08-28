@@ -1,3 +1,4 @@
+
 --again, credit to the lazyvim people for the way they implemented the telescope stuff, super smart guys
 local Util = require("util")
 
@@ -34,26 +35,26 @@ return {
       { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
       { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
       -- search
-      { '<leader>s"', "<cmd>Telescope registers<cr>", desc = "Registers" },
-      { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
-      { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
-      { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-      { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
-      { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
-      { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
-      { "<leader>sg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
-      { "<leader>sG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
-      { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
-      { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
-      { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
-      { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
-      { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
-      { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
-      { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
-      { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
-      { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
-      { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
-      { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
+      { '<leader>t"', "<cmd>Telescope registers<cr>", desc = "Registers" },
+      { "<leader>ta", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
+      { "<leader>tb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
+      { "<leader>tc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      { "<leader>tC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+      { "<leader>td", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
+      { "<leader>tD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
+      { "<leader>tg", Util.telescope("live_grep"), desc = "Grep (root dir)" },
+      { "<leader>tG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
+      { "<leader>th", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
+      { "<leader>tH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
+      { "<leader>tk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
+      { "<leader>tM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
+      { "<leader>tm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
+      { "<leader>to", "<cmd>Telescope vim_options<cr>", desc = "Options" },
+      { "<leader>tR", "<cmd>Telescope resume<cr>", desc = "Resume" },
+      { "<leader>tw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
+      { "<leader>tW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+      { "<leader>tw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
+      { "<leader>tW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
       {
         "<leader>ss",
         Util.telescope("lsp_document_symbols", {
@@ -135,12 +136,14 @@ return {
       },
     },
   },
+  --TODO fix this
     -- git signs highlights text that has changed since the list
   -- git commit, and also lets you interactively stage & unstage
   -- hunks in a commit.
   {
     "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    lazy = true,
+    event = { "BufReadPre", "BufNewFile","BufEnter" },
     opts = {
       signs = {
         add = { text = "▎" },
@@ -172,6 +175,7 @@ return {
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
       end,
     },
+ },
     {
         "RRethy/vim-illuminate",
         event = { "BufReadPost", "BufNewFile" },
@@ -184,16 +188,16 @@ return {
         },
         config = function(_, opts)
           require("illuminate").configure(opts)
-    
+
           local function map(key, dir, buffer)
             vim.keymap.set("n", key, function()
               require("illuminate")["goto_" .. dir .. "_reference"](false)
             end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
           end
-    
+
           map("]]", "next")
           map("[[", "prev")
-    
+
           -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
           vim.api.nvim_create_autocmd("FileType", {
             callback = function()
@@ -208,6 +212,5 @@ return {
           { "[[", desc = "Prev Reference" },
         },
       },
-  },
+  }
 
-}
