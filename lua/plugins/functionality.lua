@@ -212,5 +212,6 @@ return {
           { "[[", desc = "Prev Reference" },
         },
       },
+      'norcalli/nvim-colorizer.lua',
   }
 

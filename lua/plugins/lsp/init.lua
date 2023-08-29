@@ -1,26 +1,26 @@
 ret = {
-   {
-    'utilyre/barbecue.nvim',
-    lazy = true,
-    event = "BufReadPost",
-    name = 'barbecue',
-    version = '*',
-    dependencies = {
-      'SmiteshP/nvim-navic',
-      'nvim-tree/nvim-web-devicons',
-    },
-    opts = {},
- },
-{ "hrsh7th/cmp-nvim-lsp" },
+  ---  --  {
+  --  'utilyre/barbecue.nvim',
+  --  lazy = true,
+  --  event = "BufReadPost",
+  --  name = 'barbecue',
+  --  version = '*',
+  --  dependencies = {
+  --    'SmiteshP/nvim-navic',
+  --    'nvim-tree/nvim-web-devicons',
+  --  },
+  --  opts = {},
+ --},
+{   "hrsh7th/cmp-nvim-lsp" },
 {
-    "folke/neodev.nvim",
-    opts = {
-      debug = true,
-      experimental = {
-        pathStrict = true,
+      "folke/neodev.nvim",
+      opts = {
+        debug = true,
+        experimental = {
+          pathStrict = true,
+        },
       },
     },
-  },
  {
     "williamboman/mason.nvim",
     opts = function(_, opts)

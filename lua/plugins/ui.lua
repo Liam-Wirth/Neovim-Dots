@@ -10,8 +10,10 @@ return {
       },
     },
     event = "BufReadPost",
-  }, --TODO: Maybe use noice / wtf is this, this doesnt really do anything? 
-  { "folke/noice.nvim", event = "VeryLazy",
+  }, --TODO: Maybe use noice / wtf is this, this doesnt really do anything?
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
     opts = {
       lsp = {
         override = {
@@ -173,10 +175,12 @@ return {
         highlight = true,
         depth_limit = 5,
         icons = require("util.glyphs").kind,
+	highlight = true,
+	
       }
     end,
   },
-     --TODO: sync the glyphs used in this config with the glyphs that exist within util.glyphs
+  --TODO: sync the glyphs used in this config with the glyphs that exist within util.glyphs
   {
     "nvim-tree/nvim-tree.lua",
     version = "*",
@@ -463,13 +467,12 @@ return {
     end, --end
   },
   {
-     --TODO: as of right now, this is literally just lifted straight out of the lazyvim config, I would like to start to mix and match things from evil line, with just a few things in this config, for now I just wanted a working lualine
+    --TODO: as of right now, this is literally just lifted straight out of the lazyvim config, I would like to start to mix and match things from evil line, with just a few things in this config, for now I just wanted a working lualine
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     opts = function()
       local icons = require("util.glyphs")
-  local Util = require("util")
-
+      local Util = require("util")
       return {
         options = {
           theme = "auto",
@@ -493,6 +496,7 @@ return {
             { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
           -- stylua: ignore
           {
+	     --TODO: look into making this awesome sauce
             function() return require("nvim-navic").get_location() end,
             cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
           },
@@ -505,8 +509,10 @@ return {
             color = Util.fg("Statement"),
           },
           -- stylua: ignore
-          { function() return require("noice").api.status.mode.get() end, cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-            color = Util.fg("Constant"),
+          { function() return require("noice").api.status.mode.get() end, 
+	  cond = function() return package.loaded["noice"]
+	  and require("noice").api.status.mode.has() end,
+	 color = Util.fg("Constant"),
           },
           -- stylua: ignore
           {
@@ -538,4 +544,4 @@ return {
       }
     end,
   },
-  }
+}
