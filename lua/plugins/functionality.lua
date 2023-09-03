@@ -1,9 +1,8 @@
-
 --again, credit to the lazyvim people for the way they implemented the telescope stuff, super smart guys
 local Util = require("util")
 
 return {
-    -- search/replace in multiple files
+  -- search/replace in multiple files
   {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
@@ -13,9 +12,9 @@ return {
       { "<leader>sr", function() require("spectre").open() end, desc = "Replace in files (Spectre)" },
     },
   },
---NOTE: I lifted this entire telescope implementation straight out of lazyvim's config, and made some minor changes based on my old cfg
--- fuzzy finder
-{
+  --NOTE: I lifted this entire telescope implementation straight out of lazyvim's config, and made some minor changes based on my old cfg
+  -- fuzzy finder
+  {
     "nvim-telescope/telescope.nvim",
     commit = vim.fn.has("nvim-0.9.0") == 0 and "057ee0f8783" or nil,
     cmd = "Telescope",
@@ -137,13 +136,13 @@ return {
     },
   },
   --TODO fix this
-    -- git signs highlights text that has changed since the list
+  -- git signs highlights text that has changed since the list
   -- git commit, and also lets you interactively stage & unstage
   -- hunks in a commit.
   {
     "lewis6991/gitsigns.nvim",
     lazy = true,
-    event = { "BufReadPre", "BufNewFile","BufEnter" },
+    event = { "BufReadPre", "BufNewFile", "BufEnter" },
     opts = {
       signs = {
         add = { text = "▎" },
@@ -175,43 +174,53 @@ return {
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
       end,
     },
- },
-    {
-        "RRethy/vim-illuminate",
-        event = { "BufReadPost", "BufNewFile" },
-        opts = {
-          delay = 200,
-          large_file_cutoff = 2000,
-          large_file_overrides = {
-            providers = { "lsp" },
-          },
-        },
-        config = function(_, opts)
-          require("illuminate").configure(opts)
-
-          local function map(key, dir, buffer)
-            vim.keymap.set("n", key, function()
-              require("illuminate")["goto_" .. dir .. "_reference"](false)
-            end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
-          end
-
-          map("]]", "next")
-          map("[[", "prev")
-
-          -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
-          vim.api.nvim_create_autocmd("FileType", {
-            callback = function()
-              local buffer = vim.api.nvim_get_current_buf()
-              map("]]", "next", buffer)
-              map("[[", "prev", buffer)
-            end,
-          })
-        end,
-        keys = {
-          { "]]", desc = "Next Reference" },
-          { "[[", desc = "Prev Reference" },
-        },
+  },
+  {
+    "RRethy/vim-illuminate",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      delay = 200,
+      large_file_cutoff = 2000,
+      large_file_overrides = {
+        providers = { "lsp" },
       },
-      'norcalli/nvim-colorizer.lua',
-  }
+    },
+    config = function(_, opts)
+      require("illuminate").configure(opts)
 
+      local function map(key, dir, buffer)
+        vim.keymap.set("n", key, function()
+          require("illuminate")["goto_" .. dir .. "_reference"](false)
+        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
+      end
+
+      map("]]", "next")
+      map("[[", "prev")
+
+      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          local buffer = vim.api.nvim_get_current_buf()
+          map("]]", "next", buffer)
+          map("[[", "prev", buffer)
+        end,
+      }) end,
+    keys = {
+      { "]]", desc = "Next Reference" },
+      { "[[", desc = "Prev Reference" },
+    },
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+    lazy = true,
+    keys = {
+      { "<leader>ep", "<cmd>MarkdownPreview<cr>", desc = "Start Markdown Preview" },
+      { "<leader>epp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle Markdown Preview" },
+      { "<leader>eps", "<cmd>MarkdownPreviewStop<cr>", desc = "Stop Markdown Preview" },
+    }
+  },
+  "norcalli/nvim-colorizer.lua",
+}
