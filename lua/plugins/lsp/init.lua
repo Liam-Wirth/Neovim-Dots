@@ -21,18 +21,6 @@ ret = {
         },
       },
     },
- {
-    "williamboman/mason.nvim",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
-        "stylua",
-        "selene",
-        "luacheck",
-        "shellcheck",
-        "shfmt",
-      })
-    end,
-  },
     'p00f/clangd_extensions.nvim',
     "neovim/nvim-lspconfig",
    'jose-elias-alvarez/null-ls.nvim',
@@ -53,7 +41,6 @@ ret = {
      event = "BufReadPost",
   
   }
-
     }
   
   vim.keymap.set("n", "<leader>.", function()
