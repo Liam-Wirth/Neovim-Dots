@@ -54,6 +54,7 @@ return {
       { "<leader>tW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
       { "<leader>tw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
       { "<leader>tW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
+      { "<leader>ts", "<cmd>SearchSession<cr>", mode = {"v","n"}, desc = "Search Sessions" },
       {
         "<leader>ss",
         Util.telescope("lsp_document_symbols", {
@@ -204,7 +205,8 @@ return {
           map("]]", "next", buffer)
           map("[[", "prev", buffer)
         end,
-      }) end,
+      })
+    end,
     keys = {
       { "]]", desc = "Next Reference" },
       { "[[", desc = "Prev Reference" },
@@ -220,7 +222,38 @@ return {
       { "<leader>ep", "<cmd>MarkdownPreview<cr>", desc = "Start Markdown Preview" },
       { "<leader>epp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle Markdown Preview" },
       { "<leader>eps", "<cmd>MarkdownPreviewStop<cr>", desc = "Stop Markdown Preview" },
-    }
+    },
   },
   "norcalli/nvim-colorizer.lua",
+  --Auto Session by default stores sessions in vim.fn.stdpath('data').."/sessions/".
+  {
+    "rmagatti/auto-session",
+    lazy = false,
+    config = function()
+    vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions",
+    require("auto-session").setup({
+      log_level == "error",
+      auto_session_suppress_dirs = { "~/", "~/Downloads" },
+      cwd_change_handling = {
+      restore_upcoming_session = false, -- I believe that this disables the session being auto-restored on startup with no arguments
+      post_cwd_changed_hook = function() -- example refreshing the lualine status line _after_ the cwd changes
+          require("lualine").refresh() -- refresh lualine so the new session name is displayed in the status bar
+      end,
+      },
+    })
+ end,
+  },
+  {
+     "rmagatti/session-lens",
+     lazy = false,
+     dependencies = {'rmagatti/auto-session','nvim-telescope/telescope.nvim'},
+     config = function()
+	require("session-lens").setup({
+	   prompt_title = "Sessions",
+	   theme = dropdown,
+	   theme_conf = {border = true},
+	   previewer = false,
+	})
+     end,
+  }
 }

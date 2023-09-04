@@ -39,7 +39,6 @@ ret = {
      'simrat39/rust-tools.nvim',
      lazy = true,
      event = "BufReadPost",
-  
   }
     }
   

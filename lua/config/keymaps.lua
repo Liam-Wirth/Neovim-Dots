@@ -154,6 +154,7 @@ wk.register({
   q = { name = "Session Management" },
   s = { name = "Dismiss Notifications" },
   w = { name = "Window Management" },
+  --FIX: This is entirely broken and doesnt work
   Tab = { name = "Tab Navigation" },
   e = { name = "Open Auxiliary Windows" },
 }, { prefix = "<leader>", noremap = true })
