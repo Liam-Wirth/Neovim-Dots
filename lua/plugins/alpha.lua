@@ -22,7 +22,7 @@ return{
         dashboard.button("r", ui.RecentFiles .. " Recent files", ":Telescope oldfiles <CR>"),
         dashboard.button("g", ui.FindText .. " Find text", ":Telescope live_grep <CR>"),
         dashboard.button("c", ui.Config .. " Config", ":e $MYVIMRC <CR>"),
-        dashboard.button("s", ui.RestoreSession.. " Restore Session", [[:lua require("persistence").load() <cr>]]),
+        dashboard.button("s", ui.RestoreSession.. " Restore Session", [[:SearchSession<cr>]]),
         dashboard.button("l", ui.Lazy .. " Lazy", ":Lazy<CR>"),
         dashboard.button("q", ui.Quit .. " Quit", ":qa<CR>"),      
      }

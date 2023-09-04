@@ -334,9 +334,7 @@ null_ls.setup({
     null_fmt.isort,
     -- null_fmt.prettier,
     null_fmt.prettierd,
-    null_fmt.rustfmt,
     null_fmt.shfmt,
-    null_fmt.stylua,
     null_fmt.trim_whitespace,
     null_fmt.yapf,
     -- null_fmt.black
