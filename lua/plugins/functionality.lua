@@ -237,7 +237,6 @@ return {
       cwd_change_handling = {
       restore_upcoming_session = false, -- I believe that this disables the session being auto-restored on startup with no arguments
       post_cwd_changed_hook = function() -- example refreshing the lualine status line _after_ the cwd changes
-          require("lualine").refresh() -- refresh lualine so the new session name is displayed in the status bar
       end,
       },
     })

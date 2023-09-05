@@ -5,3 +5,11 @@ local extends = [[,extends:❯]]
 local nbsp = [[,nbsp:␣]]
 local precedes = [[,precedes:❮]]
 vim.cmd("set listchars=eol:" .. "↩" .. tab2 .. extends .. precedes .. nbsp)
+vim.opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
+}

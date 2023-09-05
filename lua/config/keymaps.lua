@@ -69,10 +69,11 @@ map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result
 map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
 
 -- Add undo break-points
+--[[
 map("i", ",", ",<c-g>u")
 map("i", ".", ".<c-g>u")
 map("i", ";", ";<c-g>u")
-
+--]]
 -- redundantsave file
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 
@@ -85,7 +86,7 @@ map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 -- open lazy
-map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
+map("n", "<leader>el", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
@@ -146,6 +147,10 @@ map("n", "<leader>et", "<cmd>NvimTreeToggle<cr>", { desc = "Toggle Filetree"})
 map("n", "<leader>eu", "<cmd>lua require('undotree').toggle() <cr>", {desc ="Toggle Visual undotree"})
 map("n", "<leader>ea", "<cmd> AerialToggle <cr>", { desc = "Toggle Aerial (File overview)"})
 
+map('n','<leader>be',vim.diagnostic.open_float,{desc = "Open Float", remap = true, silent = true})
+map('n', '<leader>b[', vim.diagnostic.goto_prev,{desc = "Go to next Diagnostic", remap = true, silent = true})
+map('n', '<leader>b]', vim.diagnostic.goto_next,{desc = "go to previous diagnostic", remap = true, silent = true})
+map('n', '<leader>bq', vim.diagnostic.setloclist, {desc = "Set Local List", remap = true, silent = true})
 --TODO might be cool to make a specific keybinding here that when pressed pulls up a little window in which you can type the number of the tab you want to go to. but that's a super fringe case IMO
 wk.register({
   g = { name = "Git" },
@@ -154,6 +159,7 @@ wk.register({
   q = { name = "Session Management" },
   s = { name = "Dismiss Notifications" },
   w = { name = "Window Management" },
+  b = { name = "[LSP] Buffer Stuff"},
   --FIX: This is entirely broken and doesnt work
   Tab = { name = "Tab Navigation" },
   e = { name = "Open Auxiliary Windows" },
