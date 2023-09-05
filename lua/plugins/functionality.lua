@@ -230,15 +230,20 @@ return {
     "rmagatti/auto-session",
     lazy = false,
     config = function()
-    vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions",
+    vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
     require("auto-session").setup({
-      log_level == "error",
+      log_level = "error",
+      auto_session_enabled = true,
+      auto_session_last_session_dir = require('auto-session').conf.auto_session_last_session_dir,
+      auto_session_root_dir = require('auto-session').conf.auto_session_root_dir,
       auto_session_suppress_dirs = { "~/", "~/Downloads" },
       cwd_change_handling = {
       restore_upcoming_session = false, -- I believe that this disables the session being auto-restored on startup with no arguments
       post_cwd_changed_hook = function() -- example refreshing the lualine status line _after_ the cwd changes
       end,
       },
+      auto_session_enable_last_session = false,
+      auto_restore_enabled = false,
     })
  end,
   },
