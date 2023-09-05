@@ -60,3 +60,6 @@ vim.o.undofile = false
 -- (For Nvim Tree)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+set.splitkeep = "screen"
+set.laststatus = 3

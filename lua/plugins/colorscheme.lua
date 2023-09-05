@@ -1,3 +1,4 @@
+local vim = vim
 ret = {
   {
     "NTBBloodbath/doom-one.nvim",
