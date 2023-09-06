@@ -125,7 +125,10 @@ return {
    "nvim-tree/nvim-web-devicons",
 
    {
+      
       "akinsho/bufferline.nvim",
+      lazy = true,
+      event = {"BufReadPost", "BufNewFile"},
       opts = {
          options = {
             close_command = "bdelete! %d",       -- can be a string | function, | false see "Mouse actions"
@@ -156,7 +159,7 @@ return {
   --]]
    {
       "nvim-lualine/lualine.nvim",
-      event = "VeryLazy",
+      event = {"BufReadPost","BufNewFile"},
       opts = function()
          local conditions = {
             buffer_not_empty = function()
@@ -361,7 +364,7 @@ return {
    {
       's1n7ax/nvim-window-picker',
       name = 'window-picker',
-      event = 'VeryLazy',
+      event = 'BufReadPost',
       version = '2.*',
       config = function()
          require 'window-picker'.setup()
