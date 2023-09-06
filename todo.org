@@ -1,4 +1,4 @@
-setup the lsp
+
 * TODO configuree the greeter
 configure the font to be a more bold nerdfont
 keybinds
