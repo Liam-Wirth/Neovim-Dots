@@ -14,6 +14,8 @@ local ret = {
    { "hrsh7th/cmp-nvim-lsp" },
    {
       "folke/neodev.nvim",
+      lazy = true,
+      event = "BufReadPost",
       opts = {
          debug = true,
          experimental = {
@@ -25,6 +27,7 @@ local ret = {
    -- 'jose-elias-alvarez/null-ls.nvim',
    {
       'stevearc/aerial.nvim',
+      lazy = true,
       opts = {
          backends = { 'lsp', 'treesitter', 'markdown', 'man' },
          on_attach = function(bufnr)
