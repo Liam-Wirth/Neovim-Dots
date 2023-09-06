@@ -18,16 +18,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   group = highlight_group,
   pattern = "*",
 })
---[[
-local misc_aucmds = vim.api.nvim_create_augroup('misc_aucmds', { clear = true })
-vim.api.nvim_create_autocmd('BufReadPre', {
-  group = misc_aucmds,
-  callback = function()
-    require('plugins.lsp.lspconf')
-  end,
-  once = true,
-})
---]]
+--   local misc_aucmds = vim.api.nvim_create_augroup('misc_aucmds', { clear = true })
+--   vim.api.nvim_create_autocmd('BufReadPre', {
+--     group = misc_aucmds,
+--     callback = function()
+--       require('plugins.lsp.lspconf')
+--     end,
+--     once = true,
+--   })
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)

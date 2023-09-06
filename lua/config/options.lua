@@ -12,7 +12,7 @@ vim.o.smartcase = true
 -- Highlights matching parens, braces, etc. Press % to jump to it.
 vim.o.showmatch = true
 -- Keep buffers open in background when the window is closed
-vim.o.hidden = true
+vim.o.hidden = false
 set.splitbelow = true
 set.splitright = true
 set.wrap = false
@@ -31,7 +31,7 @@ set.cmdheight = 1
 set.pumheight = 10
 set.splitbelow = true
 set.splitright = true
-set.expandtab = false
+set.expandtab = true
 set.smartindent = true
 set.smarttab = true
 set.shiftwidth = 3
@@ -63,3 +63,46 @@ vim.g.loaded_netrwPlugin = 1
 
 set.splitkeep = "screen"
 set.laststatus = 3
+
+vim.diagnostic.config({
+    virtual_text = false,
+    signs = true,
+    update_in_insert = true,
+    underline = true,
+    severity_sort = false,
+    float = {
+        border = 'rounded',
+        source = 'always',
+        header = '',
+        prefix = '',
+    },
+})
+vim.cmd([[
+set signcolumn=yes
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+]])
+--[[
+--
+'comments'	  'com'     patterns that can start a comment line
+'commentstring'   'cms'     template for comments; used for fold marker
+'cursorline'	  'cul'	    highlight the screen line of the cursor
+'cursorlineopt'	  'culopt'  settings for 'cursorline'
+'expandtab'	  'et'	    use spaces when <Tab> is inserted
+'lines'			    number of lines in the display
+'linespace'	  'lsp'     number of pixel lines to use between characters
+'list'			    show <Tab> and <EOL>
+'listchars'	  'lcs'     characters for displaying in list mode
+'mouse'			    enable the use of mouse clicks
+'mousefocus'	  'mousef'  keyboard focus follows the mouse
+'mousehide'	  'mh'	    hide mouse pointer while typing
+'mousemodel'	  'mousem'  changes meaning of mouse buttons
+'mousemoveevent'  'mousemev'  report mouse moves with <MouseMove>
+'mousescroll'		    amount to scroll by when scrolling with a mouse
+'mouseshape'	  'mouses'  shape of the mouse pointer in different modes
+'mousetime'
+'smarttab'	  'sta'     use 'shiftwidth' when inserting <Tab>
+'smartindent'	  'si'	    smart autoindenting for C programs
+'varsofttabstop'  'vsts'    a list of number of spaces when typing <Tab>
+'vartabstop'	  'vts'	    a list of number of spaces for <Tab>s
+'virtualedit'	  've'	    when to use virtual editing
+--]]
