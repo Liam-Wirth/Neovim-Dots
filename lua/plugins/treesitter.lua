@@ -90,6 +90,8 @@ return {
    },
    {
       "nvim-treesitter/nvim-treesitter-textobjects",
+       lazy = true,
+      event = {"BufNewFile", "BufReadPost"},
       init = function()
          -- disable rtp plugin, as we only need its queries for mini.ai
          -- In case other textobject modules are enabled, we will load them
