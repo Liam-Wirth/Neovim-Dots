@@ -21,6 +21,7 @@ return {
             --"latexindent",
             "bibtex-tidy",
             "misspell",
+
            -- "flake8",
          },
       },
@@ -171,14 +172,6 @@ return {
             capabilities = capabilities,
             on_attach = on_attach,
          })
-         lspconfig.grammarly.setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-         })
-        -- lspconfig.misspell.setup({
-        --    capabilities = capabilities,
-        --    on_attach = on_attach,
-        -- })
       end
    }
 }

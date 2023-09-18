@@ -1,10 +1,7 @@
 --NOTE:
---Lots of credit to some of the people who worked on lazy-vim here,
---they really elegantly implemented functionality, never used lazy-vim, but heard it was good and  started snooping through the repo
---https://github.com/LazyVim/LazyVim
 
 local M = {}
-
+-- TODO: this function seems rather broken, doesnt work if I open the buffer while already within the root dir
 -- returns the root directory based on:
 -- * lsp workspace folders
 -- * lsp root_dir
@@ -112,5 +109,13 @@ function M.fg(name)
   local fg = hl and hl.fg or hl.foreground
   return fg and { fg = string.format("#%06x", fg) }
 end
-
+--super simple function that allows for easy toggling of light mode and darkmode
+function M.togle_light_mode()
+   local current_background = vim.opt.background
+   if current_background == "dark" then
+      vim.opt.background = "light"
+else
+vim.opt.background = "dark"
+   end
+end
 return M

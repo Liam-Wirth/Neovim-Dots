@@ -9,7 +9,26 @@ local ret = {
          'SmiteshP/nvim-navic',
          'nvim-tree/nvim-web-devicons',
       },
-      opts = {},
+      opts = {
+         show_basename = false,
+         symbols = {
+            ---Modification indicator.
+            ---
+            ---@type string
+            modified = "●",
+
+            ---Truncation indicator.
+            ---
+            ---@type string
+            ellipsis = "…",
+
+            ---Entry separator.
+            ---
+            ---@type string
+            separator = "",
+         },
+         context_follow_icon_color = true,
+      },
    },
    { "hrsh7th/cmp-nvim-lsp" },
    {
@@ -22,6 +41,37 @@ local ret = {
             pathStrict = true,
          },
       },
+   },
+   {
+      "hiphish/rainbow-delimiters.nvim",
+      lazy = false,
+      event = "BufReadPost",
+      config = function()
+         -- This module contains a number of default definitions
+         local rainbow_delimiters = require 'rainbow-delimiters'
+
+         vim.g.rainbow_delimiters = {
+            strategy = {
+               [''] = rainbow_delimiters.strategy['global'],
+               commonlisp = rainbow_delimiters.strategy['local'],
+            },
+            query = {
+               [''] = 'rainbow-delimiters',
+               lua = 'rainbow-blocks',
+               latex = 'rainbow-blocks',
+            },
+            highlight = {
+               'RainbowDelimiterRed',
+               'RainbowDelimiterYellow',
+               'RainbowDelimiterBlue',
+               'RainbowDelimiterOrange',
+               'RainbowDelimiterGreen',
+               'RainbowDelimiterViolet',
+               'RainbowDelimiterCyan',
+            },
+            blacklist = { 'c', 'cpp' },
+         }
+      end
    },
    'p00f/clangd_extensions.nvim',
    -- 'jose-elias-alvarez/null-ls.nvim',
@@ -64,22 +114,22 @@ local ret = {
          local augend = require("dial.augend")
          require("dial.config").augends:register_group {
             default = {
-               augend.constant.new{
+               augend.constant.new {
                   elements = { "and", "or" },
-                  word = true, -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
+                  word = true,   -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
                   cyclic = true, -- "or" is incremented into "and".
                },
-               augend.constant.new{
+               augend.constant.new {
                   elements = { "&&", "||" },
                   word = false,
                   cyclic = true,
                },
-               augend.constant.new{
+               augend.constant.new {
                   elements = { "++", "--" },
                   word = false,
                   cyclic = true,
                },
-               augend.constant.new{
+               augend.constant.new {
                   elements = { "+=", "-=" },
                   word = false,
                   cyclic = true,

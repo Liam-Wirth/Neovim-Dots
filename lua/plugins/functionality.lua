@@ -22,53 +22,89 @@ return {
       lazy = true,
       version = false, -- telescope did only one release, so use HEAD for now
       keys = {
-         { "<leader>,",       "<cmd>Telescope buffers show_all_buffers=true<cr>",                desc = "Switch Buffer" },
-         { "<leader>/",       Util.telescope("live_grep"),                                       desc = "Grep (root dir)" },
-         { "<leader>:",       "<cmd>Telescope command_history<cr>",                              desc = "Command History" },
-         { "<leader><space>", Util.telescope("files"),                                           desc =
-         "Find Files (root dir)" },
+         { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
+         { "<leader>/", Util.telescope("live_grep"),                        desc = "Grep (root dir)" },
+         { "<leader>:", "<cmd>Telescope command_history<cr>",               desc = "Command History" },
+         {
+            "<leader><space>",
+            Util.telescope("files"),
+            desc =
+            "Find Files (root dir)"
+         },
          -- find
-         { "<leader>fb",      "<cmd>Telescope buffers<cr>",                                      desc = "Buffers" },
-         { "<leader>ff",      Util.telescope("files"),                                           desc =
-         "Find Files (root dir)" },
-         { "<leader>fF",      Util.telescope("files", { cwd = false }),                          desc =
-         "Find Files (cwd)" },
-         { "<leader>fr",      "<cmd>Telescope oldfiles<cr>",                                     desc = "Recent" },
-         { "<leader>fR",      Util.telescope("oldfiles", { cwd = vim.loop.cwd() }),              desc = "Recent (cwd)" },
+         { "<leader>fb", "<cmd>Telescope buffers<cr>",                         desc = "Buffers" },
+         {
+            "<leader>ff",
+            Util.telescope("files"),
+            desc =
+            "Find Files (root dir)"
+         },
+         {
+            "<leader>fF",
+            Util.telescope("files", { cwd = false }),
+            desc =
+            "Find Files (cwd)"
+         },
+         { "<leader>fr", "<cmd>Telescope oldfiles<cr>",                        desc = "Recent" },
+         { "<leader>fR", Util.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
          -- git
-         { "<leader>gc",      "<cmd>Telescope git_commits<CR>",                                  desc = "commits" },
-         { "<leader>gs",      "<cmd>Telescope git_status<CR>",                                   desc = "status" },
+         { "<leader>gc", "<cmd>Telescope git_commits<CR>",                     desc = "commits" },
+         { "<leader>gs", "<cmd>Telescope git_status<CR>",                      desc = "status" },
          -- search
-         { '<leader>t"',      "<cmd>Telescope registers<cr>",                                    desc = "Registers" },
-         { "<leader>ta",      "<cmd>Telescope autocommands<cr>",                                 desc = "Auto Commands" },
-         { "<leader>tb",      "<cmd>Telescope current_buffer_fuzzy_find<cr>",                    desc = "Buffer" },
-         { "<leader>tc",      "<cmd>Telescope command_history<cr>",                              desc = "Command History" },
-         { "<leader>tC",      "<cmd>Telescope commands<cr>",                                     desc = "Commands" },
-         { "<leader>td",      "<cmd>Telescope diagnostics bufnr=0<cr>",                          desc =
-         "Document diagnostics" },
-         { "<leader>tD",      "<cmd>Telescope diagnostics<cr>",                                  desc =
-         "Workspace diagnostics" },
-         { "<leader>tg",      Util.telescope("live_grep"),                                       desc = "Grep (root dir)" },
-         { "<leader>tG",      Util.telescope("live_grep", { cwd = false }),                      desc = "Grep (cwd)" },
-         { "<leader>th",      "<cmd>Telescope help_tags<cr>",                                    desc = "Help Pages" },
-         { "<leader>tH",      "<cmd>Telescope highlights<cr>",                                   desc =
-         "Search Highlight Groups" },
-         { "<leader>tk",      "<cmd>Telescope keymaps<cr>",                                      desc = "Key Maps" },
-         { "<leader>tM",      "<cmd>Telescope man_pages<cr>",                                    desc = "Man Pages" },
-         { "<leader>tm",      "<cmd>Telescope marks<cr>",                                        desc = "Jump to Mark" },
-         { "<leader>to",      "<cmd>Telescope vim_options<cr>",                                  desc = "Options" },
-         { "<leader>tR",      "<cmd>Telescope resume<cr>",                                       desc = "Resume" },
-         { "<leader>tw",      Util.telescope("grep_string", { word_match = "-w" }),              desc = "Word (root dir)" },
-         { "<leader>tW",      Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
-         { "<leader>tw",      Util.telescope("grep_string"),                                     mode = "v",
-                                                                                                                                     desc =
-            "Selection (root dir)" },
-         { "<leader>tW",      Util.telescope("grep_string", { cwd = false }),                    mode = "v",
-                                                                                                                                     desc =
-            "Selection (cwd)" },
-         { "<leader>ts",      "<cmd>SearchSession<cr>",                                          mode = { "v", "n" },
-                                                                                                                                     desc =
-            "Search Sessions" },
+         { '<leader>t"', "<cmd>Telescope registers<cr>",                       desc = "Registers" },
+         { "<leader>ta", "<cmd>Telescope autocommands<cr>",                    desc = "Auto Commands" },
+         { "<leader>tb", "<cmd>Telescope current_buffer_fuzzy_find<cr>",       desc = "Buffer" },
+         { "<leader>tc", "<cmd>Telescope command_history<cr>",                 desc = "Command History" },
+         { "<leader>tC", "<cmd>Telescope commands<cr>",                        desc = "Commands" },
+         {
+            "<leader>td",
+            "<cmd>Telescope diagnostics bufnr=0<cr>",
+            desc =
+            "Document diagnostics"
+         },
+         {
+            "<leader>tD",
+            "<cmd>Telescope diagnostics<cr>",
+            desc =
+            "Workspace diagnostics"
+         },
+         { "<leader>tg", Util.telescope("live_grep"),                  desc = "Grep (root dir)" },
+         { "<leader>tG", Util.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
+         { "<leader>th", "<cmd>Telescope help_tags<cr>",               desc = "Help Pages" },
+         {
+            "<leader>tH",
+            "<cmd>Telescope highlights<cr>",
+            desc =
+            "Search Highlight Groups"
+         },
+         { "<leader>tk", "<cmd>Telescope keymaps<cr>",                                      desc = "Key Maps" },
+         { "<leader>tM", "<cmd>Telescope man_pages<cr>",                                    desc = "Man Pages" },
+         { "<leader>tm", "<cmd>Telescope marks<cr>",                                        desc = "Jump to Mark" },
+         { "<leader>to", "<cmd>Telescope vim_options<cr>",                                  desc = "Options" },
+         { "<leader>tR", "<cmd>Telescope resume<cr>",                                       desc = "Resume" },
+         { "<leader>tw", Util.telescope("grep_string", { word_match = "-w" }),              desc = "Word (root dir)" },
+         { "<leader>tW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+         {
+            "<leader>tw",
+            Util.telescope("grep_string"),
+            mode = "v",
+            desc =
+            "Selection (root dir)"
+         },
+         {
+            "<leader>tW",
+            Util.telescope("grep_string", { cwd = false }),
+            mode = "v",
+            desc =
+            "Selection (cwd)"
+         },
+         {
+            "<leader>ts",
+            "<cmd>SearchSession<cr>",
+            mode = { "v", "n" },
+            desc =
+            "Search Sessions"
+         },
          {
             "<leader>ss",
             Util.telescope("lsp_document_symbols", {
@@ -239,7 +275,6 @@ return {
          { "<leader>eps", "<cmd>MarkdownPreviewStop<cr>",   desc = "Stop Markdown Preview" },
       },
    },
-   "norcalli/nvim-colorizer.lua",
    --Auto Session by default stores sessions in vim.fn.stdpath('data').."/sessions/".
    {
       "rmagatti/auto-session",
@@ -253,7 +288,7 @@ return {
             auto_session_root_dir = require('auto-session').conf.auto_session_root_dir,
             auto_session_suppress_dirs = { "~/", "~/Downloads" },
             cwd_change_handling = {
-               restore_upcoming_session = false, -- I believe that this disables the session being auto-restored on startup with no arguments
+               restore_upcoming_session = false,  -- I believe that this disables the session being auto-restored on startup with no arguments
                post_cwd_changed_hook = function() -- example refreshing the lualine status line _after_ the cwd changes
                end,
             },
@@ -282,8 +317,10 @@ return {
       event = { "BufReadPost", "BufNewFile" },
       keys = {
          vim.keymap.set("n", "<Leader>xf", '<Cmd>execute v:count . "ToggleTerm direction=float"<CR>', { silent = true }),
-         vim.keymap.set("n", "<Leader>xh", '<Cmd>execute v:count . "ToggleTerm direction=horizontal"<CR>',{ silent = true }),
-         vim.keymap.set("n", "<Leader>xv", '<Cmd>execute v:count . "ToggleTerm direction=vertical"<CR>', { silent = true }),
+         vim.keymap.set("n", "<Leader>xh", '<Cmd>execute v:count . "ToggleTerm direction=horizontal"<CR>',
+            { silent = true }),
+         vim.keymap.set("n", "<Leader>xv", '<Cmd>execute v:count . "ToggleTerm direction=vertical"<CR>',
+            { silent = true }),
          vim.keymap.set("n", "<Leader>xt", '<Cmd>execute v:count . "ToggleTerm direction=tab"<CR>', { silent = true }),
          vim.keymap.set("n", "<Leader>xb", "<Cmd>term<CR><Cmd>setlocal nonu nornu<CR>i", { silent = true }),
       },
@@ -304,5 +341,17 @@ return {
             },
          },
       }
+   },
+   {
+      'norcalli/nvim-colorizer.lua',
+      lazy = true,
+      event = { "BufReadPost", "BufNewFile" },
+      config = function()
+         require 'colorizer'.setup({
+            'css',
+            'javascript',
+            html = { mode = 'background' },
+         }, { mode = 'foreground' })
+      end
    }
 }

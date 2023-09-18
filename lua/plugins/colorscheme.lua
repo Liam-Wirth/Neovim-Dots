@@ -25,8 +25,58 @@ ret = {
          vim.g.doom_one_plugin_lspsaga = false
       end,
    },
+   {
+      "ellisonleao/gruvbox.nvim",
+      lazy = false,
+      init = function()
+         require("gruvbox").setup({
+            undercurl = true,
+            underline = true,
+            bold = true,
+            italic = {
+               strings = false,
+               comments = true,
+               operators = false,
+               folds = true,
+            },
+            strikethrough = true,
+            invert_selection = false,
+            invert_signs = false,
+            invert_tabline = false,
+            invert_intend_guides = false,
+            inverse = false,     -- invert background for search, diffs, statuslines and errors
+            contrast = "hard",   -- can be "hard", "soft" or empty string
+            palette_overrides = {},
+            overrides = {
+               SignColumn = { bg = "#ff9900" }
+            },
+            dim_inactive = false,
+            --transparent_mode = vim.g.transparent_enabled,
+            transparent_mode = true,
+         })
+      end,
+   },
+   -- {
+   --    "morhetz/gruvbox",
+   --    lazy = false,
+   --    init = function()
+   --       vim.cmd [[
+   --          set termguicolors
+   --          let g:gruvbox_contrast_dark='hard'
+   --          let g:gruvbox_contrast_light='hard'
+   --          let g:gruvbox_transparent_bg=1
+   --          let g:gruvbox_invert_signs=1
+   --          let g:gruvbox_sign_column='bg'
+   --          colorscheme gruvbox
+   --          hi LspCxxHlGroupMemberVariable guifg=#83a598
+   --       ]]
+   --    end
+   -- }
+   {
+      'zefei/vim-colortuner',
+      lazy = true,
+   },
 }
-local colors = require("util.doomcolors").dark
 --TODO: set these colors
 ---vim.api.nvim_set_hl(0, "NavicIconsFile", { default = true, colors.base2, fg = colors.green })
 --im.api.nvim_set_hl(0, "NavicIconsModule", { default = true, colors.base2, fg = "#ffffff" })

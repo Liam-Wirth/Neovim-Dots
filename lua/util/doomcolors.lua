@@ -1,4 +1,5 @@
 	
+--TODO: replace this file with a function that gets the current colorscheme, accesses its pallette and
 local colors = {
   dark = {
     bg = "#282c34",
@@ -65,5 +66,5 @@ local colors = {
 colors.get_palette = function(current_bg)
 	return colors[current_bg]
 end
-
+local j = vim.cmd([[colorscheme]])
 return colors

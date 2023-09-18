@@ -107,12 +107,10 @@ map("n", "<leader>-", "<C-W>s", { desc = "Split window below", remap = true })
 map("n", "<leader>|", "<C-W>v", { desc = "Split window right", remap = true })
 
 -- tabs
-map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
-map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
 map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
-map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
-map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
-map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+map("n", "<leader><tab>]", "<cmd>BufferLineMoveNext<cr>", { desc = "Next Tab" })
+map("n", "<leader><tab>d", "<cmd>BufferLine<cr>", { desc = "Close Tab" })
+map("n", "<leader><tab>[", "<cmd>BufferLineMovePrev<cr>", { desc = "Previous Tab" })
 
 map("n", "<leader>et", "<cmd>Neotree<cr>", { desc = "Toggle Filetree" })
 map("n", "<leader>eu", "<cmd>lua require('undotree').toggle() <cr>", { desc = "Toggle Visual undotree" })
@@ -139,8 +137,10 @@ wk.register({
    s = { name = "Dismiss Notifications" },
    w = { name = "Window Management" },
    b = { name = "[LSP] Buffer Stuff" },
-   --FIX: This is entirely broken and doesnt work
    Tab = { name = "Tab Navigation" },
    e = { name = "Open Auxiliary Windows" },
+   r = { name = "Rename"},
+   t = { name = "Telescope"},
+   x = { name = "ToggleTerm and list"}
 }, { prefix = "<leader>", noremap = true })
 return M

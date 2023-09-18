@@ -97,10 +97,6 @@ return {
          end
       end,
    },
-   -- lsp symbol navigation for lualine. This shows where
-   -- in the code structure you are - within functions, classes,
-   -- TODO: Reinstall Barbecue and move this out of the statusline
-   -- etc - in the statusline.
    {
       "SmiteshP/nvim-navic",
       lazy = true,
@@ -118,6 +114,7 @@ return {
             depth_limit = 5,
             icons = require("util.glyphs").kind,
             highlight = true,
+            click = true,
          }
       end,
    },
@@ -125,10 +122,9 @@ return {
    "nvim-tree/nvim-web-devicons",
 
    {
-      
       "akinsho/bufferline.nvim",
       lazy = true,
-      event = {"BufReadPost", "BufNewFile"},
+      event = { "BufReadPost", "BufNewFile" },
       opts = {
          options = {
             close_command = "bdelete! %d",       -- can be a string | function, | false see "Mouse actions"
@@ -137,7 +133,7 @@ return {
             middle_mouse_command = nil,          -- can be a string | function, | false see "Mouse actions"
             diagnostics = "nvim_lsp",
             always_show_bufferline = true,
-            separator_style = "slant",
+            --separator_style = "slant",
             offsets = {
                filetype = "Neo-Tree",
                text = "Neo-Tree",
@@ -149,6 +145,15 @@ return {
                delay = 2,
                reveal = { 'close' }
             },
+            config = function()
+               require('transparent').clear_prefix('BufferLine')
+               vim.g.transparent_groups = vim.list_extend(
+                  vim.g.transparent_groups or {},
+                  vim.tbl_map(function(v)
+                     return v.hl_group
+                  end, vim.tbl_values(require('bufferline.config').highlights))
+               )
+            end
          },
       },
    },
@@ -159,7 +164,7 @@ return {
   --]]
    {
       "nvim-lualine/lualine.nvim",
-      event = {"BufReadPost","BufNewFile"},
+      event = { "BufReadPost", "BufNewFile" },
       opts = function()
          local conditions = {
             buffer_not_empty = function()
@@ -181,13 +186,14 @@ return {
                -- Disable sections and component separators
                component_separators = "",
                section_separators = "",
-               theme = {
-                  -- We are going to use lualine_c an lualine_x as left and
-                  -- right section. Both are highlighted by c theme .  So we
-                  -- are just setting default looks o statusline
-                  normal = { c = { fg = colors.fg, bg = colors.bg } },
-                  inactive = { c = { fg = colors.fg, bg = colors.bg } },
-               },
+               --theme = {
+               --   -- We are going to use lualine_c an lualine_x as left and
+               --   -- right section. Both are highlighted by c theme .  So we
+               --   -- are just setting default looks o statusline
+               --   normal = { c = { fg = colors.fg, bg = colors.bg } },
+               --   inactive = { c = { fg = colors.fg, bg = colors.bg } },
+               -- },
+               require('transparent').clear_prefix('lualine')
             },
             disabled_filetypes = { statusline = { "dashboard", "alpha" } },
             sections = {
@@ -222,7 +228,6 @@ return {
          local function ins_right(component)
             table.insert(config.sections.lualine_x, component)
          end
-
          ins_left({
             function()
                return "▊"
@@ -230,7 +235,6 @@ return {
             color = modeColor(),
             padding = { left = 0, right = 1 }, -- We don't need space before this
          })
-
          ins_left({
             -- mode component
             function()
@@ -267,17 +271,13 @@ return {
             "filesize",
             cond = conditions.buffer_not_empty,
          })
-
          ins_left({
             "filename",
             cond = conditions.buffer_not_empty,
             color = { fg = colors.magenta, gui = "bold" },
          })
-
          ins_left({ "location" })
-
          ins_left({ "progress", color = { fg = colors.fg, gui = "bold" } })
-
          ins_left({
             "diagnostics",
             sources = { "nvim_diagnostic" },
@@ -369,5 +369,28 @@ return {
       config = function()
          require 'window-picker'.setup()
       end,
+   },
+   {
+      "xiyaowong/transparent.nvim",
+      lazy = false,
+      config = function()
+         require("transparent").setup({ -- Optional, you don't have to run setup.
+            groups = {                  -- table: default groups
+               'Normal', 'NormalNC', 'Comment', 'Constant', 'Special', 'Identifier',
+               'Statement', 'PreProc', 'Type', 'Underlined', 'Todo', 'String', 'Function',
+               'Conditional', 'Repeat', 'Operator', 'Structure', 'LineNr', 'NonText',
+               'SignColumn', 'CursorLineNr', 'EndOfBuffer',
+            },
+            {
+               extra_groups = {
+                  "NormalFloat", -- plugins which have float panel such as Lazy, Mason, LspInfo
+                  "NvimTreeNormal", -- NvimTree
+                  "Neo-Tree",
+
+               },
+            },
+            exclude_groups = {}, -- table: groups you don't want to clear
+         })
+      end
    }
 }
