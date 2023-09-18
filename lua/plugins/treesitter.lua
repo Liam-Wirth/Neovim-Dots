@@ -24,7 +24,7 @@ return {
       },
       ---@type TSConfig
       opts = {
-         highlight = { enable = true, additional_vim_regex_highlighting = false, },
+         highlight = { enable = true, additional_vim_regex_highlighting = false, disable = {"latex"},},
          indent = { enable = true },
          ensure_installed = {
             "bash",

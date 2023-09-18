@@ -10,14 +10,18 @@ return {
       dependencies = { 'williamboman/mason-lspconfig.nvim' },
       cmd = "Mason",
       lazy = false,
-      keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+      keys = { { "<leader>em", "<cmd>Mason<cr>", desc = "Mason" } },
       build = ":MasonUpdate",
       opts = {
          ensure_installed = {
             "stylua",
             "shfmt",
             "lua-language-server",
-            -- "flake8",
+            "texlab",
+            --"latexindent",
+            "bibtex-tidy",
+            "misspell",
+           -- "flake8",
          },
       },
       config = function(_, opts)
@@ -54,7 +58,7 @@ return {
                vim.fn.sign_define(opts.name, {
                   texthl = opts.name,
                   text = opts.text,
-                  numhl = ''
+                  --numhl = 
                })
             end
             sign({ name = 'DiagnosticSignError', text = glyphs.diagnostics.BoldError })
@@ -163,6 +167,18 @@ return {
             capabilities = capabilities,
             on_attach = on_attach
          })
+         lspconfig.texlab.setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+         })
+         lspconfig.grammarly.setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+         })
+        -- lspconfig.misspell.setup({
+        --    capabilities = capabilities,
+        --    on_attach = on_attach,
+        -- })
       end
    }
 }

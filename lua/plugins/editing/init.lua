@@ -110,7 +110,7 @@ return {
                filter = function(buf)
                   return vim.b[buf].neo_tree_source == "git_status"
                end,
-               pinned = true,
+               pinned = false,
                open = "Neotree position=right git_status",
             },
             {
@@ -124,12 +124,35 @@ return {
             },
             {
                ft = "Outline",
-               pinned = true,
+               pinned = false,
                open = "SymbolsOutlineOpen",
             },
             -- any other neo-tree windows
             "neo-tree",
          },
+      },
+   },
+
+   {
+      "folke/todo-comments.nvim",
+      lazy = true,
+      event = { "BufReadPost", "BufNewFile" },
+      dependencies = { "nvim-lua/plenary.nvim" },
+      opts = {
+         -- your configuration comes here
+         -- or leave it empty to use the default settings
+         -- refer to the configuration section below
+      }
+   },
+   {
+      "folke/trouble.nvim",
+      dependencies = { "nvim-tree/nvim-web-devicons" },
+      event = { "BufReadPost", "BufNewFile" },
+      lazy = true,
+      opts = {
+         -- your configuration comes here
+         -- or leave it empty to use the default settings
+         -- refer to the configuration section below
       },
    },
    {
@@ -145,7 +168,6 @@ return {
          lazy = true,
          event = { "BufReadPost", "BufNewFile" },
          opts = {
-            -- char = "▏",
             filetype_exclude = {
                "help",
                "alpha",
@@ -169,23 +191,23 @@ return {
             local hl5 = ("highlight IndentBlankLineIndent5 guifg=" .. colors.magenta .. " gui=nocombine")
             local hl6 = ("highlight IndentBlankLineIndent6 guifg=" .. colors.orange .. " gui=nocombine")
             require("indent_blankline").setup({
-               vim.cmd(hl1),
-               vim.cmd(hl2),
-               vim.cmd(hl3),
-               vim.cmd(hl4),
-               vim.cmd(hl5),
-               vim.cmd(hl6),
-               space_char_blankline = glyphs.ui.LineLeft,
+               --   vim.cmd(hl1),
+               --   vim.cmd(hl2),
+               --   vim.cmd(hl3),
+               --   vim.cmd(hl4),
+               --   vim.cmd(hl5),
+               --   vim.cmd(hl6),
+               --space_char_blankline = glyphs.ui.LineLeft,
                show_current_context = true,
                show_current_context_start = true,
-               char_highlight_list = {
-                  "IndentBlanklineIndent1",
-                  "IndentBlanklineIndent2",
-                  "IndentBlanklineIndent3",
-                  "IndentBlanklineIndent4",
-                  "IndentBlanklineIndent5",
-                  "IndentBlanklineIndent6",
-               },
+               --   char_highlight_list = {
+               --      "IndentBlanklineIndent1",
+               --      "IndentBlanklineIndent2",
+               --      "IndentBlanklineIndent3",
+               --      "IndentBlanklineIndent4",
+               --      "IndentBlanklineIndent5",
+               --      "IndentBlanklineIndent6",
+               --   },
                use_treesitter = true,
                use_treesitter_scope = true,
             })
