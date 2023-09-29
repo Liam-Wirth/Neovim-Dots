@@ -21,7 +21,7 @@ return {
             --"latexindent",
             "bibtex-tidy",
             "misspell",
-           -- "flake8",
+            -- "flake8",
          },
       },
       config = function(_, opts)
@@ -40,7 +40,7 @@ return {
          else
             ensure_installed()
          end
-         require('mason-lspconfig').setup({})
+         require('mason-lspconfig').setup()
          -- manually add some configuration
          local lspconfig = require("lspconfig");
          -- we need to advertise aditional capabilities for nvim-ufo
@@ -58,7 +58,7 @@ return {
                vim.fn.sign_define(opts.name, {
                   texthl = opts.name,
                   text = opts.text,
-                  --numhl = 
+                  --numhl =
                })
             end
             sign({ name = 'DiagnosticSignError', text = glyphs.diagnostics.BoldError })
@@ -73,6 +73,9 @@ return {
             --   update_in_insert = true,
             -- })
          end
+         local lsp_flags = {
+            debounce_text_changes = 150,
+         }
          lspconfig.lua_ls.setup {
             capabilities = capabilities,
             on_attach = on_attach,
@@ -175,10 +178,34 @@ return {
             capabilities = capabilities,
             on_attach = on_attach,
          })
-        -- lspconfig.misspell.setup({
-        --    capabilities = capabilities,
-        --    on_attach = on_attach,
-        -- })
+         lspconfig.gopls.setup {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+            init_options = {
+               usePlaceholders = true,
+               linkTarget = "pkg.go.dev",
+               completionDocumentation = true,
+               completeUnimported = true,
+               deepCompletion = true,
+               matcher = "CaseSensitive",
+               symbolMatcher = "CaseSensitive",
+            },
+         }
+         lspconfig.solargraph.setup {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+         }
+         lspconfig.pyright.setup {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+         }
+         -- lspconfig.misspell.setup({
+         --    capabilities = capabilities,
+         --    on_attach = on_attach,
+         -- })
       end
    }
 }
