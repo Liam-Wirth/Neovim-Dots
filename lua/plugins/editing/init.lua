@@ -213,5 +213,8 @@ return {
             })
          end,
       },
+   },
+   {
+      'mbbill/undotree',
    }
 }
