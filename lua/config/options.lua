@@ -56,6 +56,9 @@ vim.o.syntax = on
 vim.o.completeopt = "menuone,noselect"
 vim.o.undofile = true;
 vim.cmd([[
+" vimscript config found here:
+" https://vi.stackexchange.com/questions/6/how-can-i-use-the-undofile
+" credit to user: D Ben Knoble
 " Let's save undo info!
 if !isdirectory($HOME."/.vim")
     call mkdir($HOME."/.vim", "", 0770)
