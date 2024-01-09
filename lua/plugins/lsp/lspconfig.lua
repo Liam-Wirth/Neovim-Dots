@@ -21,6 +21,8 @@ return {
             --"latexindent",
             "bibtex-tidy",
             "misspell",
+            "svls",
+            "verible",
             -- "flake8",
          },
       },
