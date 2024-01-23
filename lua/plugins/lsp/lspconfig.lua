@@ -27,6 +27,9 @@ return {
             "clang-format",
             "cpplint",
             "clangd",
+            "asm-lsp",
+            "asmfmt",
+            
             -- "flake8",
          },
       },
