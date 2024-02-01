@@ -11,16 +11,20 @@ return {
          { "hrsh7th/cmp-path" },
          { "hrsh7th/cmp-cmdline" },
          { "hrsh7th/cmp-calc" },
-         { "rafamadriz/friendly-snippets" },
+         {
+            "rafamadriz/friendly-snippets",
+            config = function()
+               require("luasnip.loaders.from_vscode").lazy_load()
+            end,
+         },
          { "saadparwaiz1/cmp_luasnip" },
          { "hrsh7th/cmp-omni" },
-         { "onsails/lspkind-nvim",        module = "lspkind" }
+         { "onsails/lspkind-nvim",    module = "lspkind" }
       },
       opts = function()
          -- Add additional capabilities supported by nvim-cmp
 
          local capabilities = require("cmp_nvim_lsp").default_capabilities()
-         
          local luasnip = require("luasnip")
          local lspkind = require("lspkind")
          lspkind.init({
@@ -45,7 +49,7 @@ return {
             completion = {
                completeopt = "menu,menuone,noinsert",
             },
- 
+
             snippet = {
                expand = function(args)
                   require("luasnip").lsp_expand(args.body)
@@ -160,9 +164,12 @@ return {
                ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
                ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i",
                   "c" }),
-               ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
-               ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
-               ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i", "c" }),
+               ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+                  { "i", "c" }),
+               ["<C-j>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+                  { "i", "c" }),
+               ["<C-k>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+                  { "i", "c" }),
                ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
                ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
                ["<C-e>"] = cmp.mapping({

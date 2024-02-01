@@ -216,5 +216,6 @@ return {
    },
    {
       'mbbill/undotree',
-   }
+   },
 }
+
