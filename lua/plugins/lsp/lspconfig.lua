@@ -27,12 +27,9 @@ return {
             "clang-format",
             "cpplint",
             "clangd",
-<<<<<<< HEAD
             "asmfmt",
             "asm-lsp",
 
-=======
->>>>>>> parent of 6097679 (Installed assembly lsp and assembly formatter with mason)
             -- "flake8",
          },
       },
