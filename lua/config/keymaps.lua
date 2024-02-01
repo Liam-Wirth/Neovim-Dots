@@ -129,29 +129,9 @@ vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true 
 vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
 vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
 --TODO might be cool to make a specific keybinding here that when pressed pulls up a little window in which you can type the number of the tab you want to go to. but that's a super fringe case IMO
-
---GIT:
-vim.keymap.set('n', '<leader>gco', '<Plug>(git-conflict-ours)')
-vim.keymap.set('n', '<leader>gct', '<Plug>(git-conflict-theirs)')
-vim.keymap.set('n', '<leader>gcb', '<Plug>(git-conflict-both)')
-vim.keymap.set('n', '<leader>gc0', '<Plug>(git-conflict-none)')
-vim.keymap.set('n', '<leader>gc]', '<Plug>(git-conflict-prev-conflict)')
-vim.keymap.set('n', '<leader>gc[', '<Plug>(git-conflict-next-conflict)')
 --FIX: For some reason these aren't actually getting loaded /setup for which key :(
 wk.register({
-   g = { name = "Git",
-      c = {
-      name = "Conflict",
-         o = {name = "Our conflicts"},
-         t = {name = "Their conflicts"},
-         b = {name = "Both"},
-      --'0'= {name = "None"},
-       --  ']' = {name = "Next Conflict"},
-        --  '[' = {name = "Previous Conflict"},
-   },
-   },
-   
-
+   g = { name = "Git" },
    c = { name = "Config" },
    f = { name = "Find" },
    q = { name = "Session Management" },
@@ -165,7 +145,5 @@ wk.register({
    o = { name = "Org Mode"},
    x = { name = "ToggleTerm and list"}
 }, { prefix = "<leader>", noremap = true })
-
-
 return M
 
