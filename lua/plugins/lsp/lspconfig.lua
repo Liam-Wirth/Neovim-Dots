@@ -27,6 +27,12 @@ return {
             "clang-format",
             "cpplint",
             "clangd",
+<<<<<<< HEAD
+            "asmfmt",
+            "asm-lsp",
+
+=======
+>>>>>>> parent of 6097679 (Installed assembly lsp and assembly formatter with mason)
             -- "flake8",
          },
       },
@@ -46,7 +52,7 @@ return {
          else
             ensure_installed()
          end
-         require('mason-lspconfig').setup()
+         require('mason-lspconfig').setup({})
          -- manually add some configuration
          local lspconfig = require("lspconfig");
          -- we need to advertise aditional capabilities for nvim-ufo
