@@ -217,31 +217,5 @@ return {
    {
       'mbbill/undotree',
    },
-   {
-      "L3MON4D3/LuaSnip",
-      dependencies = {
-         "rafamadriz/friendly-snippets",
-      },
-      version = "v2.1", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-      opts = {
-         history = true,
-         delete_check_events = "TextChanged",
-      },
-      -- stylua: ignore
-      keys = {
-         {
-            "<S-tab>",
-            function()
-               return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<S-tab>"
-            end,
-            expr = true,
-            silent = true,
-            mode = "i",
-         },
-         { "<S-tab>", function() require("luasnip").jump(1) end,  mode = "s" },
-         { "<S-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
-      },
-      build = "make install_jsregexp",
-   },
 }
 
