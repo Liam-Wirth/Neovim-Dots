@@ -113,7 +113,7 @@ map("n", "<leader><tab>d", "<cmd>BufferLine<cr>", { desc = "Close Tab" })
 map("n", "<leader><tab>[", "<cmd>BufferLineMovePrev<cr>", { desc = "Previous Tab" })
 
 map("n", "<leader>et", "<cmd>Neotree<cr>", { desc = "Toggle Filetree" })
-map("n", "<leader>ee", "<cmd>TroubleToggle", {desc = "Open/Close Trouble"})
+map("n", "<leader>ee", "<cmd>TroubleToggle<cr>", {desc = "Open/Close Trouble"})
 map("n", "<leader>eu", "<cmd>lua require('undotree').toggle() <cr>", { desc = "Toggle Visual undotree" })
 map("n", "<leader>ea", "<cmd> AerialToggle <cr>", { desc = "Toggle Aerial (File overview)" })
 
