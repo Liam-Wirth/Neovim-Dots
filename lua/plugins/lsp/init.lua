@@ -69,7 +69,7 @@ local ret = {
                'RainbowDelimiterViolet',
                'RainbowDelimiterCyan',
             },
-            blacklist = { 'c', 'cpp' },
+            blacklist = { 'c' },
          }
       end
    },
