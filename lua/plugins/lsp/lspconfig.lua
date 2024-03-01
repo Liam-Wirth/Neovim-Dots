@@ -1,3 +1,4 @@
+-- NOTE: The error regarding lspconfig being weird and mason servers not loading right might be here
 local glyphs = require('util.glyphs')
 return {
    {
@@ -29,19 +30,20 @@ return {
             "clangd",
             "asmfmt",
             "asm-lsp",
-
-            -- "flake8",
+            "black",
+            "flake8",
          },
       },
-      config = function(_, opts)
-         require("mason").setup(opts)
+      config = function(_, confopts)
+         require("mason").setup(confopts)
          local mr = require("mason-registry")
          local function ensure_installed()
-            for _, tool in ipairs(opts.ensure_installed) do
+            for _, tool in ipairs(confopts.ensure_installed) do
                local p = mr.get_package(tool)
                if not p:is_installed() then
                   p:install()
                end
+               require('mason-lspconfig').setup({})
             end
          end
          if mr.refresh then
@@ -49,7 +51,6 @@ return {
          else
             ensure_installed()
          end
-         require('mason-lspconfig').setup({})
          -- manually add some configuration
          local lspconfig = require("lspconfig");
          -- we need to advertise aditional capabilities for nvim-ufo
