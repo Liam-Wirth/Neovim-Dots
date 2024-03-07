@@ -1,5 +1,6 @@
 local vim = vim
 return {
+
    {
       "hrsh7th/nvim-cmp",
       version = false, -- last release is way too old
@@ -23,7 +24,6 @@ return {
       },
       opts = function()
          -- Add additional capabilities supported by nvim-cmp
-
          local capabilities = require("cmp_nvim_lsp").default_capabilities()
          local luasnip = require("luasnip")
          local lspkind = require("lspkind")
@@ -34,6 +34,7 @@ return {
          })
          --CMP setup
          local cmp = require("cmp")
+
          cmp.setup({
             preselect = cmp.PreselectMode.None, --Don't automatically select a completion
             -- disable completion in comments
@@ -175,6 +176,7 @@ return {
                ["<C-e>"] = cmp.mapping({
                   i = cmp.mapping.abort(),
                   c = cmp.mapping.close(),
+
                }),
                ["<Tab>"] = cmp.mapping(
                   cmp.mapping.confirm({
@@ -183,6 +185,27 @@ return {
                   }),
                   { "i", "c" }
                ),
+               ["<C-p>"] = cmp.mapping({
+                  i = function()
+                     if cmp.visible() then
+                        cmp.abort()
+                        require("plugins.others").toggle_completion()
+                     else
+                        cmp.complete()
+                        require("plugins.others").toggle_completion()
+                     end
+                  end,
+               }),
+               ["<CR>"] = cmp.mapping({
+                  i = function(fallback)
+                     if cmp.visible() then
+                        cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                        require("util").toggle_completion()
+                     else
+                        fallback()
+                     end
+                  end,
+               }),
             },
          })
          -----------------------------------------------------------------------------------------------------------------------------------------
