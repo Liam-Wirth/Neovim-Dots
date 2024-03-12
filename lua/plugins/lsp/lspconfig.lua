@@ -5,10 +5,6 @@ return {
       "neovim/nvim-lspconfig",
       lazy = false,
    },
-   {
-      "williamboman/mason-lspconfig",
-      lazy = false
-   },
    -- lsp-installer | manages installing our lsp servers for us
    {
       'williamboman/mason.nvim',
@@ -40,7 +36,6 @@ return {
       },
       config = function(_, confopts)
          require("mason").setup(confopts)
-         require('mason-lspconfig').setup()
          local mr = require("mason-registry")
          local function ensure_installed()
             for _, tool in ipairs(confopts.ensure_installed) do
@@ -48,6 +43,7 @@ return {
                if not p:is_installed() then
                   p:install()
                end
+               require('mason-lspconfig').setup({})
             end
          end
          if mr.refresh then
