@@ -1,3 +1,5 @@
+local kind_icons = require("util.glyphs").kind_icons
+local glyphs = require('util.glyphs')
 local ret = {
    {
       'utilyre/barbecue.nvim',
@@ -109,6 +111,17 @@ local ret = {
                -- The highlight group priority for extmark
                priority = 100,
             },
+            ast = {
+               kind_icons = {
+                  Compound = "",
+                  Recovery = "",
+                  TranslationUnit = "",
+                  PackExpansion = "",
+                  TemplateTypeParm = "",
+                  TemplateTemplateParm = "",
+                  TemplateParamObject = "",
+               }
+            }
             vim.keymap.set('n', '<leader>bi', '<cmd>ClangdSymbolInfo<CR>')
          })
       end

@@ -196,7 +196,7 @@ return {
                      end
                   end,
                }),
-               ["<CR>"] = cmp.mapping({
+               ["<C-<CR>>"] = cmp.mapping({
                   i = function(fallback)
                      if cmp.visible() then
                         cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
