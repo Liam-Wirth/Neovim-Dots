@@ -163,7 +163,32 @@ return {
 
          lspconfig.clangd.setup({
             capabilities = capabilities,
-            on_attach = on_attach,
+            on_attatch = function(client)
+               -- attach illuminate
+               require('illuminate').on_attach(client)
+               local sign = function(opts)
+                  vim.fn.sign_define(opts.name, {
+                     texthl = opts.name,
+                     text = opts.text,
+                     --numhl =
+                  })
+               end
+               sign({ name = 'DiagnosticSignError', text = glyphs.diagnostics.BoldError })
+               sign({ name = 'DiagnosticSignWarn', text = glyphs.diagnostics.BoldWarning })
+               sign({ name = 'DiagnosticSignHint', text = glyphs.diagnostics.BoldHint })
+               sign({ name = 'DiagnosticSignInfo', text = glyphs.diagnostics.BoldInformation })
+               -- update while in insert mode
+               -- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+               --   virtual_text = false,
+               --   signs = true,
+               --   underline = true,
+               --   update_in_insert = true,
+               -- })
+               require("clangd_extensions.inlay_hints").setup_autocmd()
+               require("clangd_extensions.inlay_hints").set_inlay_hints()
+
+               vim.keymap.set("n", "<leader>bi","<cmd>ClangdSymbolInfo<CR>")
+            end,
          })
 
          lspconfig.tailwindcss.setup({
