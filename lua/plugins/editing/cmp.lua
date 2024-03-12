@@ -189,10 +189,10 @@ return {
                   i = function()
                      if cmp.visible() then
                         cmp.abort()
-                        require("plugins.others").toggle_completion()
+                        require("util.init").toggle_completion()
                      else
                         cmp.complete()
-                        require("plugins.others").toggle_completion()
+                        require("util.init").toggle_completion()
                      end
                   end,
                }),
