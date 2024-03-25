@@ -121,7 +121,7 @@ local ret = {
                   TemplateTemplateParm = "",
                   TemplateParamObject = "",
                }
-            }
+            },
             vim.keymap.set('n', '<leader>bi', '<cmd>ClangdSymbolInfo<CR>')
          })
       end
