@@ -122,6 +122,29 @@ return {
    "nvim-tree/nvim-web-devicons",
 
    {
+      'nvim-focus/focus.nvim',
+      version = '*',
+      config = function()
+         require("focus").setup({
+            ui = {
+               number = true,             -- Display line numbers in the focussed window only
+               relativenumber = false,     -- Display relative line numbers in the focussed window only
+               hybridnumber = true,       -- Display hybrid line numbers in the focussed window only
+               absolutenumber_unfocussed = false, -- Preserve absolute numbers in the unfocussed windows
+
+               cursorline = true,          -- Display a cursorline in the focussed window only
+               cursorcolumn = false,       -- Display cursorcolumn in the focussed window only
+               colorcolumn = {
+                  enable = false,          -- Display colorcolumn in the foccused window only
+                  list = '+1',             -- Set the comma-saperated list for the colorcolumn
+               },
+               signcolumn = true,          -- Display signcolumn in the focussed window only
+               winhighlight = true,       -- Auto highlighting for focussed/unfocussed windows
+            }
+         })
+      end,
+   },
+   {
       "akinsho/bufferline.nvim",
       lazy = true,
       event = { "BufReadPost", "BufNewFile" },
@@ -383,7 +406,7 @@ return {
             },
             {
                extra_groups = {
-                  "NormalFloat", -- plugins which have float panel such as Lazy, Mason, LspInfo
+                  "NormalFloat",    -- plugins which have float panel such as Lazy, Mason, LspInfo
                   "NvimTreeNormal", -- NvimTree
                   "Neo-Tree",
 
