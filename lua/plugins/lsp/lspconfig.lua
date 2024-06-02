@@ -32,6 +32,7 @@ return {
             "asm-lsp",
             "black",
             "flake8",
+            "bash-language-server",
          },
       },
       config = function(_, confopts)
@@ -53,6 +54,8 @@ return {
          end
          -- manually add some configuration
          local lspconfig = require("lspconfig");
+         local notify = require("notify")
+         notify("called", 0)
          -- we need to advertise aditional capabilities for nvim-ufo
          local capabilities = vim.lsp.protocol.make_client_capabilities()
          capabilities.textDocument.foldingRange = {
@@ -86,6 +89,7 @@ return {
          local lsp_flags = {
             debounce_text_changes = 150,
          }
+
          lspconfig.lua_ls.setup {
             capabilities = capabilities,
             on_attach = on_attach,
@@ -247,6 +251,7 @@ return {
             flags = lsp_flags,
             capabilities = capabilities,
          }
+         --lspconfig.prolog_lsp.setup {}
          -- lspconfig.misspell.setup({
          --    capabilities = capabilities,
          --    on_attach = on_attach,
