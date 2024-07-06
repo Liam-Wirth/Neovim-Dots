@@ -76,7 +76,7 @@ return {
                },
             }),
             experimental = {
-               ghost_text = true,
+               ghost_text = false,
             },
             window = {
                completion = cmp.config.window.bordered({
