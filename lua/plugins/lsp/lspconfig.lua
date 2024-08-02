@@ -35,6 +35,7 @@ return {
             "flake8",
             "bash-language-server",
             "biome",
+            "astro-language-server",
          },
       },
       config = function(_, confopts)
@@ -141,6 +142,7 @@ return {
                },
             }
          }
+         require 'lspconfig'.astro.setup {}
          lspconfig.rust_analyzer.setup {
             capabilities = capabilities,
             on_attach = on_attach,
