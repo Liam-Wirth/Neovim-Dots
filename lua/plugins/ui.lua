@@ -39,14 +39,23 @@ local modeColor = function()
 end
 return {
    {
-      --TODO: Register the directory names for a lot of my keybind groups here
       "folke/which-key.nvim",
+      event = "VeryLazy",
       opts = {
-         icons = {
-            group = "󰋃  ",
+
+      },
+      keys = {
+         {
+            "<leader>?",
+            function()
+               require("which-key").show({ global = false })
+            end,
+            desc = "Buffer Local Keymaps (which-key)",
          },
       },
-      event = "BufReadPost",
+      win = {
+         border = "1"
+      }
    },
    -- Better `vim.notify()`
    -- FIX: This literally just wont work
@@ -127,19 +136,19 @@ return {
       config = function()
          require("focus").setup({
             ui = {
-               number = true,             -- Display line numbers in the focussed window only
-               relativenumber = false,     -- Display relative line numbers in the focussed window only
-               hybridnumber = true,       -- Display hybrid line numbers in the focussed window only
+               number = true,                     -- Display line numbers in the focussed window only
+               relativenumber = false,            -- Display relative line numbers in the focussed window only
+               hybridnumber = true,               -- Display hybrid line numbers in the focussed window only
                absolutenumber_unfocussed = false, -- Preserve absolute numbers in the unfocussed windows
 
-               cursorline = true,          -- Display a cursorline in the focussed window only
-               cursorcolumn = false,       -- Display cursorcolumn in the focussed window only
+               cursorline = true,                 -- Display a cursorline in the focussed window only
+               cursorcolumn = false,              -- Display cursorcolumn in the focussed window only
                colorcolumn = {
-                  enable = false,          -- Display colorcolumn in the foccused window only
-                  list = '+1',             -- Set the comma-saperated list for the colorcolumn
+                  enable = false,                 -- Display colorcolumn in the foccused window only
+                  list = '+1',                    -- Set the comma-saperated list for the colorcolumn
                },
-               signcolumn = true,          -- Display signcolumn in the focussed window only
-               winhighlight = true,       -- Auto highlighting for focussed/unfocussed windows
+               signcolumn = true,                 -- Display signcolumn in the focussed window only
+               winhighlight = true,               -- Auto highlighting for focussed/unfocussed windows
             }
          })
       end,

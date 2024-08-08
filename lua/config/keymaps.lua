@@ -6,30 +6,25 @@ vim.cmd([[tnoremap <Esc> <C-\><C-n>]])
 --NOTE: this will be helpful later, basically ensuring that if we are in vscode environment (I.E, Vscode-NVIM, remapping will not take place (so as to help not interfere with vscode keybinds))
 M.is_vscode = vim.g.vscode
 M.defaultOpts = {
-	remap = false,
-	silent = true,
-	desc = nil,
+   remap = false,
+   silent = true,
+   desc = nil,
 }
 function M.map(mode, lhs, rhs, opts)
-	--Merge provided options with defaults, ensuring provided opts takes priority over defaults
-	opts = vim.tbl_extend("keep", opts or {}, M.defaultOpts)
-	opts.remap = not M.is_vscode
-	opts.silent = opts.silent ~= false
+   --Merge provided options with defaults, ensuring provided opts takes priority over defaults
+   opts = vim.tbl_extend("keep", opts or {}, M.defaultOpts)
+   opts.remap = not M.is_vscode
+   opts.silent = opts.silent ~= false
 
-	-- Register the keybinding with Which-Key
-	if vim.fn.exists(":WhichKey") == 2 then
-		local wk = require("which-key")
-		wk.add({
-			[lhs] = { rhs, opts.desc },
-		}, {
-			mode = mode,
-		})
-	end
-
-	-- Perform the remapping if opts.remap is truthy
-	if opts.remap then
-		vim.keymap.set(mode, lhs, rhs, opts)
-	end
+   -- Register the keybinding with Which-Key
+   if opts.remap then
+      wk.add({
+         [lhs] = { rhs, opts.desc },
+      }, {
+         mode = mode,
+         triggers = opts.triggers,
+      })
+   end
 end
 
 local map = M.map
@@ -130,20 +125,29 @@ vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true 
 vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
 vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
 --TODO might be cool to make a specific keybinding here that when pressed pulls up a little window in which you can type the number of the tab you want to go to. but that's a super fringe case IMO
---FIX: For some reason these aren't actually getting loaded /setup for which key :(
-wk.register({
-	g = { name = "Git" },
-	c = { name = "Config" },
-	f = { name = "Find" },
-	q = { name = "Session Management" },
-	s = { name = "Dismiss Notifications" },
-	w = { name = "Window Management" },
-	b = { name = "[LSP] Buffer Stuff" },
-	Tab = { name = "Tab Navigation" },
-	e = { name = "Open Auxiliary Windows" },
-	r = { name = "Rename" },
-	t = { name = "Telescope" },
-	o = { name = "Org Mode" },
-	x = { name = "ToggleTerm and list" },
+
+-- TODO: use icons with these
+
+wk.add({
+  { "<leader>g", group = "Git" },
+  { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" },
+  { "<leader>fb", function() print("hello") end, desc = "Foobar" },
+  { "<leader>fn", desc = "New File" },
+  { "<leader>f1", hidden = true },
+  { "<leader>w", group = "Window Management", proxy = "<c-w>" },
+  { "<leader>b", group = "Buffers", expand = function()
+      return require("which-key.extras").expand.buf()
+    end
+  },
+  { "<leader>c", group = "Config" },
+  { "<leader>q", group = "Session Management" },
+  { "<leader>s", group = "Dismiss Notifications" },
+  { "<leader><tab>", group = "Tab Navigation" },
+  { "<leader>e", group = "Open Auxiliary Windows" },
+  { "<leader>r", group = "Rename" },
+  { "<leader>t", group = "Telescope" },
+  { "<leader>o", group = "Org Mode" },
+  { "<leader>x", group = "ToggleTerm and list" },
+  { "<leader>d", group = "Debug" },
 }, { prefix = "<leader>", noremap = true })
 return M
