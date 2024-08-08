@@ -82,7 +82,7 @@ map("v", "<", "<gv")
 map("v", ">", ">gv")
 -- open lazy
 map("n", "<leader>el", "<cmd>Lazy<cr>", { desc = "Lazy" })
-
+--
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
 

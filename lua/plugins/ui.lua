@@ -382,7 +382,24 @@ return {
             },
             cond = conditions.hide_in_width,
          })
+         ins_right({
+            function()
+               if vim.g.copilot_enabled == 1 then
+                  return "󱚣" -- Icon when Copilot is enabled
+               else
+                  return "󱚧" -- Icon when Copilot is disabled
+               end
+            end,
+            color = function()
+               if vim.g.copilot_enabled == 1 then
 
+                  return { fg = colors.green } -- Color when Copilot is enabled
+               else
+                  return { fg = colors.red } -- Color when Copilot is disabled
+               end
+            end,
+            cond = conditions.hide_in_width, -- Optional: hide if window width is too narrow
+         })
          ins_right({
             function()
                return "▊"
