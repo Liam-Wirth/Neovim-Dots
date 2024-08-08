@@ -40,6 +40,26 @@ return {
    { 'wakatime/vim-wakatime', lazy = false },
    --fuck I am finally caving in
    -- TODO: Setup a copilot section with keybinds and stuff, I want it disabled by DEFAULT and stuff
-   {'github/copilot.vim', lazy = true}
-    
+   {
+      'github/copilot.vim',
+      lazy = true,
+      event = { "BufReadPre", "BufNewFile", "BufEnter" },
+      config = function()
+         -- configure the plugin here
+         vim.g.copilot_enabled = 0 -- disable Copilot by default
+         vim.keymap.set("n", "<leader>ce", function()
+            if vim.g.copilot_enabled == 1 then
+               vim.g.copilot_enabled = 0
+               vim.notify("Copilot Disabled")
+            else
+               vim.g.copilot_enabled = 1
+               vim.notify("Copilot Enabled")
+            end
+         end)
+         vim.keymap.set("n", "<leader>cp", function()
+
+         end)
+      end
+   }
+
 }
