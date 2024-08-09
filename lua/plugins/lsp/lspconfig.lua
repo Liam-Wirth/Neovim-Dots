@@ -1,3 +1,4 @@
+wk = require("which-key")
 -- NOTE: The error regarding lspconfig being weird and mason servers not loading right might be here
 local glyphs = require('util.glyphs')
 return {
@@ -97,6 +98,7 @@ return {
             capabilities = capabilities,
             on_attach = on_attach,
             settings = {
+               globals = { "vim", "nvim" },
                workspace = {
                   checkThirdParty = false,
                   library = vim.api.nvim_get_runtime_file("", true),
@@ -128,7 +130,6 @@ return {
                      ["unused"] = "Opened",
                   },
                   unusedLocalExclude = { "_*" },
-                  globals = { "vim", "nvim" }
                },
                format = {
                   enable = true,
@@ -143,19 +144,19 @@ return {
             }
          }
          require 'lspconfig'.astro.setup {}
-         lspconfig.rust_analyzer.setup {
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = {
-               ['rust_analyzer'] = {
-                  cargo = { allFeatures = true },
-                  checkOnSave = {
-                     command = "clippy",
-                     extraArgs = { "--no-deps" },
-                  }
-               },
-            }
-         }
+         --         lspconfig.rust_analyzer.setup { commenting out for rustacean vim
+         --            capabilities = capabilities,
+         --            on_attach = on_attach,
+         --            settings = {
+         --               ['rust_analyzer'] = {
+         --                  cargo = { allFeatures = true },
+         --                  checkOnSave = {
+         --                     command = "clippy",
+         --                     extraArgs = { "--no-deps" },
+         --                  }
+         --               },
+         --            }
+         --         }
          lspconfig.tsserver.setup({
             capabilities = capabilities,
             on_attach = on_attach,
@@ -204,7 +205,9 @@ return {
                require("clangd_extensions.inlay_hints").set_inlay_hints()
 
                -- Add keymap for Clangd symbol info
-               vim.keymap.set("n", "<leader>bi", "<cmd>ClangdSymbolInfo<CR>")
+               wk.add({
+                  ["<leader>bi"] = "Clangd Symbol Info",
+               })
             end,
          })
 
