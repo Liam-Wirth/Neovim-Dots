@@ -10,123 +10,113 @@ M.defaultOpts = {
    silent = true,
    desc = nil,
 }
-function M.map(mode, lhs, rhs, opts)
-   --Merge provided options with defaults, ensuring provided opts takes priority over defaults
-   opts = vim.tbl_extend("keep", opts or {}, M.defaultOpts)
-   opts.remap = not M.is_vscode
-   opts.silent = opts.silent ~= false
-
-   -- Register the keybinding with Which-Key
-   if opts.remap then
-      wk.add({
-         [lhs] = { rhs, opts.desc },
-      }, {
-         mode = mode,
-         triggers = opts.triggers,
-      })
-   end
-end
-
-local map = M.map
--- better up/down
-map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-
--- Move to window using the <ctrl> hjkl keys
-map("n", "<C-h>", "<C-w>h", { desc = "Go to left window", remap = true })
-map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window", remap = true })
-map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window", remap = true })
-map("n", "<C-l>", "<C-w>l", { desc = "Go to right window", remap = true })
-
--- Resize window using <ctrl> arrow keys
-map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
-map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
-map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
-map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
-
--- Move Lines
-map("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
-map("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move up" })
-map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
-map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
-
--- Clear search with <esc>
---map({ "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
-
-map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
-
--- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
-map("n", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
-map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
-map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
-map("n", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
-map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
-map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
-
--- Add undo break-points
---[[
-map("i", ",", ",<c-g>u")
-map("i", ".", ".<c-g>u")
-map("i", ";", ";<c-g>u")
---]]
--- redundantsave file
-map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
-
--- noh
-map({ "v", "n" }, "<leader>h", "<cmd>noh<cr>", { desc = "Clear Highlight" })
---keywordprg
-map("n", "<leader>K", "<cmd>norm! K<cr>", { desc = "Keywordprg" })
-
--- better indenting
-map("v", "<", "<gv")
-map("v", ">", ">gv")
--- open lazy
-map("n", "<leader>el", "<cmd>Lazy<cr>", { desc = "Lazy" })
---
--- new file
-map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
-
---TODO: what this do
-map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
-map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
-
--- quit
-map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })
-
--- windows
-map("n", "<leader>ww", "<C-W>p", { desc = "Other window", remap = true })
-map("n", "<leader>wd", "<C-W>c", { desc = "Delete window", remap = true })
-map("n", "<leader>w-", "<C-W>s", { desc = "Split window below", remap = true })
-map("n", "<leader>w|", "<C-W>v", { desc = "Split window right", remap = true })
-map("n", "<leader>-", "<C-W>s", { desc = "Split window below", remap = true })
-map("n", "<leader>|", "<C-W>v", { desc = "Split window right", remap = true })
-
--- tabs
-map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
-map("n", "<leader><tab>]", "<cmd>BufferLineMoveNext<cr>", { desc = "Next Tab" })
-map("n", "<leader><tab>d", "<cmd>BufferLine<cr>", { desc = "Close Tab" })
-map("n", "<leader><tab>[", "<cmd>BufferLineMovePrev<cr>", { desc = "Previous Tab" })
-
-map("n", "<leader>et", "<cmd>Neotree<cr>", { desc = "Toggle Filetree" })
-map("n", "<leader>ee", "<cmd>TroubleToggle<cr>", { desc = "Open/Close Trouble" })
-map("n", "<leader>eu", "<cmd>lua require('undotree').toggle() <cr>", { desc = "Toggle Visual undotree" })
-map("n", "<leader>ea", "<cmd> AerialToggle <cr>", { desc = "Toggle Aerial (File overview)" })
-
-map("n", "<leader>be", vim.diagnostic.open_float, { desc = "Open Float", remap = true, silent = true })
-map("n", "<leader>b[", vim.diagnostic.goto_prev, { desc = "Go to next Diagnostic", remap = true, silent = true })
-map("n", "<leader>b]", vim.diagnostic.goto_next, { desc = "go to previous diagnostic", remap = true, silent = true })
-map("n", "<leader>bq", vim.diagnostic.setloclist, { desc = "Set Local List", remap = true, silent = true })
-vim.keymap.set("n", "<C-a>", require("dial.map").inc_normal(), { noremap = true })
-vim.keymap.set("n", "<C-x>", require("dial.map").dec_normal(), { noremap = true })
-vim.keymap.set("n", "g<C-a>", require("dial.map").inc_gnormal(), { noremap = true })
-vim.keymap.set("n", "g<C-x>", require("dial.map").dec_gnormal(), { noremap = true })
-vim.keymap.set("v", "<C-a>", require("dial.map").inc_visual(), { noremap = true })
-vim.keymap.set("v", "<C-x>", require("dial.map").dec_visual(), { noremap = true })
-vim.keymap.set("v", "g<C-a>", require("dial.map").inc_gvisual(), { noremap = true })
-vim.keymap.set("v", "g<C-x>", require("dial.map").dec_gvisual(), { noremap = true })
---TODO might be cool to make a specific keybinding here that when pressed pulls up a little window in which you can type the number of the tab you want to go to. but that's a super fringe case IMO
 
 -- TODO: use icons with these
+wk.add({
+  -- Basic key mappings
+  { "<Esc>", "<C-\\><C-n>", desc = "Escape terminal mode", mode = "t" },
+
+  -- Better up/down
+  { "j", "v:count == 0 ? 'gj' : 'j'", desc = "Better down movement", mode = { "n", "x" }, expr = true, silent = true },
+  { "k", "v:count == 0 ? 'gk' : 'k'", desc = "Better up movement", mode = { "n", "x" }, expr = true, silent = true },
+
+  -- Move to window using <ctrl> hjkl keys
+  { "<C-h>", "<C-w>h", desc = "Go to left window", mode = "n", remap = true },
+  { "<C-j>", "<C-w>j", desc = "Go to lower window", mode = "n", remap = true },
+  { "<C-k>", "<C-w>k", desc = "Go to upper window", mode = "n", remap = true },
+  { "<C-l>", "<C-w>l", desc = "Go to right window", mode = "n", remap = true },
+
+  -- Resize window using <ctrl> arrow keys
+  { "<C-Up>", "<cmd>resize +2<cr>", desc = "Increase window height", mode = "n" },
+  { "<C-Down>", "<cmd>resize -2<cr>", desc = "Decrease window height", mode = "n" },
+  { "<C-Left>", "<cmd>vertical resize -2<cr>", desc = "Decrease window width", mode = "n" },
+  { "<C-Right>", "<cmd>vertical resize +2<cr>", desc = "Increase window width", mode = "n" },
+
+  -- Move Lines
+  { "<A-j>", "<cmd>m .+1<cr>==", desc = "Move down", mode = "n" },
+  { "<A-k>", "<cmd>m .-2<cr>==", desc = "Move up", mode = "n" },
+  { "<A-j>", ":m '>+1<cr>gv=gv", desc = "Move down", mode = "v" },
+  { "<A-k>", ":m '<-2<cr>gv=gv", desc = "Move up", mode = "v" },
+
+  -- Clear search with <esc>
+  { "<esc>", "<cmd>noh<cr><esc>", desc = "Escape and clear hlsearch", mode = "n" },
+
+  -- Search word under cursor
+  { "gw", "*N", desc = "Search word under cursor", mode = { "n", "x" } },
+
+  -- Better search result navigation
+  { "n", "'Nn'[v:searchforward]", desc = "Next search result", mode = { "n", "x", "o" }, expr = true },
+  { "N", "'nN'[v:searchforward]", desc = "Prev search result", mode = { "n", "x", "o" }, expr = true },
+
+  -- Save file
+  { "<C-s>", "<cmd>w<cr><esc>", desc = "Save file", mode = { "i", "v", "n", "s" } },
+
+  -- Clear highlight
+  { "<leader>h", "<cmd>noh<cr>", desc = "Clear Highlight", mode = { "v", "n" } },
+
+  -- Keywordprg
+  { "<leader>K", "<cmd>norm! K<cr>", desc = "Keywordprg", mode = "n" },
+
+  -- Better indenting
+  { "<", "<gv", desc = "Indent left", mode = "v" },
+  { ">", ">gv", desc = "Indent right", mode = "v" },
+
+  -- Open lazy.nvim
+  { "<leader>el", "<cmd>Lazy<cr>", desc = "Open Lazy", mode = "n" },
+
+  -- New file
+  { "<leader>fn", "<cmd>enew<cr>", desc = "New File", mode = "n" },
+
+  -- Location and Quickfix List
+  { "<leader>xl", "<cmd>lopen<cr>", desc = "Location List", mode = "n" },
+  { "<leader>xq", "<cmd>copen<cr>", desc = "Quickfix List", mode = "n" },
+
+  -- Quit all
+  { "<leader>qq", "<cmd>qa<cr>", desc = "Quit all", mode = "n" },
+
+  -- Window management
+  { "<leader>ww", "<C-W>p", desc = "Other window", mode = "n", remap = true },
+  { "<leader>wd", "<C-W>c", desc = "Delete window", mode = "n", remap = true },
+  { "<leader>w-", "<C-W>s", desc = "Split window below", mode = "n", remap = true },
+  { "<leader>w|", "<C-W>v", desc = "Split window right", mode = "n", remap = true },
+  { "<leader>-", "<C-W>s", desc = "Split window below", mode = "n", remap = true },
+  { "<leader>|", "<C-W>v", desc = "Split window right", mode = "n", remap = true },
+
+  -- Tab management
+  { "<leader><tab><tab>", "<cmd>tabnew<cr>", desc = "New Tab", mode = "n" },
+  { "<leader><tab>]", "<cmd>BufferLineMoveNext<cr>", desc = "Next Tab", mode = "n" },
+  { "<leader><tab>d", "<cmd>BufferLine<cr>", desc = "Close Tab", mode = "n" },
+  { "<leader><tab>[", "<cmd>BufferLineMovePrev<cr>", desc = "Previous Tab", mode = "n" },
+
+  -- Auxiliary windows
+  { "<leader>et", "<cmd>Neotree<cr>", desc = "Toggle Filetree", mode = "n" },
+  { "<leader>ee", "<cmd>TroubleToggle<cr>", desc = "Open/Close Trouble", mode = "n" },
+  { "<leader>eu", "<cmd>lua require('undotree').toggle()<cr>", desc = "Toggle Visual undotree", mode = "n" },
+  { "<leader>ea", "<cmd>AerialToggle<cr>", desc = "Toggle Aerial (File overview)", mode = "n" },
+
+  -- Diagnostic
+  { "<leader>be", vim.diagnostic.open_float, desc = "Open Float", mode = "n", remap = true, silent = true },
+  { "<leader>b[", vim.diagnostic.goto_prev, desc = "Go to previous Diagnostic", mode = "n", remap = true, silent = true },
+  { "<leader>b]", vim.diagnostic.goto_next, desc = "Go to next Diagnostic", mode = "n", remap = true, silent = true },
+  { "<leader>bq", vim.diagnostic.setloclist, desc = "Set Local List", mode = "n", remap = true, silent = true },
+
+  -- Dial
+  { "<C-a>", require("dial.map").inc_normal(), desc = "Increment", mode = "n", noremap = true },
+  { "<C-x>", require("dial.map").dec_normal(), desc = "Decrement", mode = "n", noremap = true },
+  { "g<C-a>", require("dial.map").inc_gnormal(), desc = "Increment", mode = "n", noremap = true },
+  { "g<C-x>", require("dial.map").dec_gnormal(), desc = "Decrement", mode = "n", noremap = true },
+  { "<C-a>", require("dial.map").inc_visual(), desc = "Increment", mode = "v", noremap = true },
+  { "<C-x>", require("dial.map").dec_visual(), desc = "Decrement", mode = "v", noremap = true },
+  { "g<C-a>", require("dial.map").inc_gvisual(), desc = "Increment", mode = "v", noremap = true },
+  { "g<C-x>", require("dial.map").dec_gvisual(), desc = "Decrement", mode = "v", noremap = true },
+
+  -- Git
+  { "<leader>g", group = "Git" },
+
+  -- Telescope
+  { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" },
+
+})
 
 wk.add({
   { "<leader>g", group = "Git" },
@@ -149,5 +139,6 @@ wk.add({
   { "<leader>o", group = "Org Mode" },
   { "<leader>x", group = "ToggleTerm and list" },
   { "<leader>d", group = "Debug" },
+  { "<leader>f", group = "Telescope/Find" },
 }, { prefix = "<leader>", noremap = true })
 return M

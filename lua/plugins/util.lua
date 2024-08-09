@@ -47,15 +47,18 @@ return {
       config = function()
          -- configure the plugin here
          vim.g.copilot_enabled = 0 -- disable Copilot by default
-         vim.keymap.set("n", "<leader>ce", function()
-            if vim.g.copilot_enabled == 1 then
-               vim.g.copilot_enabled = 0
-               vim.notify("Copilot Disabled")
-            else
-               vim.g.copilot_enabled = 1
-               vim.notify("Copilot Enabled")
-            end
-         end)
+         require("which-key").add({
+            { "<leader>ec", function()
+               if vim.g.copilot_enabled == 1 then
+                  vim.g.copilot_enabled = 0
+                  vim.notify("Copilot Disabled")
+               else
+                  vim.g.copilot_enabled = 1
+                  vim.notify("Copilot Enabled")
+               end
+            end, desc = "Toggle Copilot"
+            }
+         })
          vim.keymap.set("n", "<leader>cp", function()
 
          end)

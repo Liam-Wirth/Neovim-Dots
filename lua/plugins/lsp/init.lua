@@ -122,7 +122,9 @@ local ret = {
                   TemplateParamObject = "",
                }
             },
-            vim.keymap.set('n', '<leader>bi', '<cmd>ClangdSymbolInfo<CR>')
+            wk.add({
+               ["<leader>bi"] = "Clangd Symbol Info",
+            })
          })
       end
    },
@@ -133,8 +135,10 @@ local ret = {
       opts = {
          backends = { 'lsp', 'treesitter', 'markdown', 'man' },
          on_attach = function(bufnr)
-            vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', { buffer = bufnr })
-            vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr })
+            wk.add({
+               {"{", "<cmd> AerialPrev<CR>", { buffer = bufnr, noremap = true, silent = true }, desc = "AerialPrev"},
+               {"}", "<cmd> AerialNext<CR>", { buffer = bufnr, noremap = true, silent = true }, desc = "AerialNext"},
+            })
          end,
          default_direction = "prefer_left",
       },
