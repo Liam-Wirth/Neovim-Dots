@@ -123,7 +123,7 @@ local ret = {
                }
             },
             wk.add({
-               ["<leader>bi"] = "Clangd Symbol Info",
+         {"<leader>bi", desc="Clangd Symbol Info",}
             })
          })
       end

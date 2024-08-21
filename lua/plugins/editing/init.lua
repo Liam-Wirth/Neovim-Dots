@@ -218,4 +218,3 @@ return {
       'mbbill/undotree',
    },
 }
-
