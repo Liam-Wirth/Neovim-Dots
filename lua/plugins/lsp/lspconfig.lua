@@ -205,9 +205,6 @@ return {
                require("clangd_extensions.inlay_hints").set_inlay_hints()
 
                -- Add keymap for Clangd symbol info
-               wk.add({
-                  ["<leader>bi"] = "Clangd Symbol Info",
-               })
             end,
          })
 
