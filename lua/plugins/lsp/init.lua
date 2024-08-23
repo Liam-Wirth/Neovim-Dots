@@ -186,6 +186,11 @@ local ret = {
                   cyclic = true,
                },
                augend.constant.new {
+                  elements = { "hidden", "shown"},
+                  word = true,
+                  cyclic = true,
+               },
+               augend.constant.new {
                   elements = { "+=", "-=" },
                   word = false,
                   cyclic = true,
