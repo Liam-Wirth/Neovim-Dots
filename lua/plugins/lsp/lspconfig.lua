@@ -255,6 +255,11 @@ return {
             flags = lsp_flags,
             capabilities = capabilities,
          }
+         lspconfig.biome.setup {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities,
+         }
          --lspconfig.prolog_lsp.setup {}
          -- lspconfig.misspell.setup({
          --    capabilities = capabilities,
