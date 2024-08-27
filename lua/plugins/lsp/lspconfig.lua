@@ -37,6 +37,7 @@ return {
             "bash-language-server",
             "biome",
             "astro-language-server",
+            "omnisharp-mono",
          },
       },
       config = function(_, confopts)
@@ -259,6 +260,11 @@ return {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities,
+         }
+         require('lspconfig').omnisharp.setup {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities
          }
          --lspconfig.prolog_lsp.setup {}
          -- lspconfig.misspell.setup({

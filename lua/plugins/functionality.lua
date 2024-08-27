@@ -278,7 +278,7 @@ return {
    --Auto Session by default stores sessions in vim.fn.stdpath('data').."/sessions/".
    {
       "rmagatti/auto-session",
-      lazy = false,
+      lazy = true,
       config = function()
          vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
          require("auto-session").setup({
