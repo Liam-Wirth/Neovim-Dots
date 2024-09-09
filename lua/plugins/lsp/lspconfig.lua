@@ -38,6 +38,8 @@ return {
             "biome",
             "astro-language-server",
             "omnisharp-mono",
+            "intelephense",
+
          },
       },
       config = function(_, confopts)
@@ -265,6 +267,12 @@ return {
             on_attach = on_attach,
             flags = lsp_flags,
             capabilities = capabilities
+         }
+         require('lspconfig').intelephense.setup {
+            on_attach = on_attach,
+            flags = lsp_flags,
+            capabilities = capabilities
+
          }
          --lspconfig.prolog_lsp.setup {}
          -- lspconfig.misspell.setup({
