@@ -6,7 +6,6 @@ return {
       "neovim/nvim-lspconfig",
       lazy = false,
    },
-   -- lsp-installer | manages installing our lsp servers for us
    {
       'williamboman/mason.nvim',
       dependencies = { 'williamboman/mason-lspconfig.nvim' },
@@ -20,7 +19,6 @@ return {
             "shfmt",
             "lua-language-server",
             "texlab",
-            --"latexindent",
             "bibtex-tidy",
             "misspell",
             "svls",
@@ -30,6 +28,7 @@ return {
             "clangd",
             "prettier",
             "cpplint",
+            "basedpyright",
             "asmfmt",
             "asm-lsp",
             "black",
@@ -38,6 +37,13 @@ return {
             "biome",
             "astro-language-server",
             "omnisharp-mono",
+            "solargraph",
+            "tsserver",
+            "jsonls",
+            "eslint",
+            "tailwindcss",
+            "gopls",
+            "svelte",
             "intelephense",
 
          },
@@ -147,19 +153,6 @@ return {
             }
          }
          require 'lspconfig'.astro.setup {}
-         --         lspconfig.rust_analyzer.setup { commenting out for rustacean vim
-         --            capabilities = capabilities,
-         --            on_attach = on_attach,
-         --            settings = {
-         --               ['rust_analyzer'] = {
-         --                  cargo = { allFeatures = true },
-         --                  checkOnSave = {
-         --                     command = "clippy",
-         --                     extraArgs = { "--no-deps" },
-         --                  }
-         --               },
-         --            }
-         --         }
          lspconfig.tsserver.setup({
             capabilities = capabilities,
             on_attach = on_attach,
@@ -210,29 +203,26 @@ return {
                -- Add keymap for Clangd symbol info
             end,
          })
+         lspconfig.black.setup{}
+         lspconfig.tailwindcss.setup{}
 
-         lspconfig.tailwindcss.setup({
+         lspconfig.jsonls.setup{
             capabilities = capabilities,
             on_attach = on_attach,
-         })
+         }
 
-         lspconfig.jsonls.setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-         })
-
-         lspconfig.eslint.setup({
+         lspconfig.eslint.setup {
             capabilities = capabilities,
             on_attach = on_attach
-         })
-         lspconfig.texlab.setup({
+         }
+         lspconfig.texlab.setup {
             capabilities = capabilities,
             on_attach = on_attach,
-         })
-         lspconfig.grammarly.setup({
+         }
+         lspconfig.grammarly.setup{
             capabilities = capabilities,
             on_attach = on_attach,
-         })
+         }
 
          lspconfig.gopls.setup {
             on_attach = on_attach,
@@ -253,11 +243,7 @@ return {
             flags = lsp_flags,
             capabilities = capabilities,
          }
-         lspconfig.pyright.setup {
-            on_attach = on_attach,
-            flags = lsp_flags,
-            capabilities = capabilities,
-         }
+         lspconfig.basedpyright.setup {}
          lspconfig.biome.setup {
             on_attach = on_attach,
             flags = lsp_flags,
@@ -274,6 +260,7 @@ return {
             capabilities = capabilities
 
          }
+         lspconfig.bashls.setup {}
          --lspconfig.prolog_lsp.setup {}
          -- lspconfig.misspell.setup({
          --    capabilities = capabilities,

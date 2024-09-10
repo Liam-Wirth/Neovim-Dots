@@ -46,6 +46,7 @@ return {
             "vim",
             "vimdoc",
             "yaml",
+            "bash",
          },
          incremental_selection = {
             enable = true,
