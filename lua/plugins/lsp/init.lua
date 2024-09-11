@@ -264,12 +264,6 @@ local ret = {
          ]])
       end
    },
-   {
-      "mharington/formatter.nvim"
-     lazy = true, 
-      event = { "BufreadPost", "BufreadPre" },
-
-   },
 }
 
 return ret
