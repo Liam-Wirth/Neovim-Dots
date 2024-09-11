@@ -277,40 +277,6 @@ return {
    },
    --Auto Session by default stores sessions in vim.fn.stdpath('data').."/sessions/".
    {
-      "rmagatti/auto-session",
-      lazy = true,
-      config = function()
-         vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
-         require("auto-session").setup({
-            log_level = "error",
-            auto_session_enabled = true,
-            auto_session_last_session_dir = require('auto-session').conf.auto_session_last_session_dir,
-            auto_session_root_dir = require('auto-session').conf.auto_session_root_dir,
-            auto_session_suppress_dirs = { "~/", "~/Downloads" },
-            cwd_change_handling = {
-               restore_upcoming_session = false,  -- I believe that this disables the session being auto-restored on startup with no arguments
-               post_cwd_changed_hook = function() -- example refreshing the lualine status line _after_ the cwd changes
-               end,
-            },
-            auto_session_enable_last_session = false,
-            auto_restore_enabled = false,
-         })
-      end,
-   },
-   {
-      "rmagatti/session-lens",
-      lazy = false,
-      dependencies = { 'rmagatti/auto-session', 'nvim-telescope/telescope.nvim' },
-      config = function()
-         require("session-lens").setup({
-            prompt_title = "Sessions",
-            theme = dropdown,
-            theme_conf = { border = true },
-            previewer = false,
-         })
-      end,
-   },
-   {
       'akinsho/toggleterm.nvim',
       version = "*",
       lazy = true,
