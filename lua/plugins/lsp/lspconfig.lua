@@ -2,42 +2,39 @@ wk = require("which-key")
 -- NOTE: The error regarding lspconfig being weird and mason servers not loading right might be here
 local glyphs = require('util.glyphs')
 
-local on_attach = function(_, bufnr)
-   -- NOTE: Remember that lua is a real programming language, and as such it is possible
-   -- to define small helper and utility functions so you don't have to repeat yourself
-   -- many times.
-   --
-   -- In this case, we create a function that lets us more easily define mappings specific
-   -- for LSP related items. It sets the mode, buffer and description for us each time.
+local on_attach = function(client, bufnr)
+   -- Define a function to easily set key mappings for LSP-related items
    local nmap = function(keys, func, desc)
       if desc then
          desc = 'LSP: ' .. desc
       end
-
       vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-      -- attach illuminate
- if client.server_capabilities.documentHighlightProvider then
-        require('illuminate').on_attach(client)
-    end
-      local sign = function(opts)
-         vim.fn.sign_define(opts.name, {
-            texthl = opts.name,
-            text = opts.text,
-            --numhl =
-         })
-      end
-      sign({ name = 'DiagnosticSignError', text = glyphs.diagnostics.BoldError })
-      sign({ name = 'DiagnosticSignWarn', text = glyphs.diagnostics.BoldWarning })
-      sign({ name = 'DiagnosticSignHint', text = glyphs.diagnostics.BoldHint })
-      sign({ name = 'DiagnosticSignInfo', text = glyphs.diagnostics.BoldInformation })
-      -- update while in insert mode
-      -- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      --   virtual_text = false,
-      --   signs = true,
-      --   underline = true,
-      --   update_in_insert = true,
-      -- })
    end
+
+   -- Attach illuminate if the client supports documentHighlight
+   if client.server_capabilities.documentHighlightProvider then
+      require('illuminate').on_attach(client)
+   end
+
+   -- Define diagnostic signs
+   local sign = function(opts)
+      vim.fn.sign_define(opts.name, {
+         texthl = opts.name,
+         text = opts.text,
+      })
+   end
+
+   sign({ name = 'DiagnosticSignError', text = glyphs.diagnostics.BoldError })
+   sign({ name = 'DiagnosticSignWarn', text = glyphs.diagnostics.BoldWarning })
+   sign({ name = 'DiagnosticSignHint', text = glyphs.diagnostics.BoldHint })
+   sign({ name = 'DiagnosticSignInfo', text = glyphs.diagnostics.BoldInformation })
+
+   -- Define key mappings
+   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+
 
    nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
@@ -69,7 +66,6 @@ local on_attach = function(_, bufnr)
       end
    end, { desc = 'Format current buffer with LSP' })
 end
-
 -- Setup mason so it can manage external tooling
 require('mason').setup()
 local servers = {
