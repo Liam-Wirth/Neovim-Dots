@@ -26,4 +26,5 @@ require('lazy').setup({
 --require("lua.plugins.colorscheme")
 require("plugins.colorscheme")
 
+require("plugins.lsp.lspconfig")
 require("config")

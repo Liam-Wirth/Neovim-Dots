@@ -1,20 +1,56 @@
 wk = require("which-key")
 -- NOTE: The error regarding lspconfig being weird and mason servers not loading right might be here
 local glyphs = require('util.glyphs')
-return {
-   {
-      "neovim/nvim-lspconfig",
-      lazy = false,
-   },
-   {
-      'williamboman/mason.nvim',
-      dependencies = { 'williamboman/mason-lspconfig.nvim' },
-      cmd = "Mason",
-      lazy = false,
-      keys = { { "<leader>em", "<cmd>Mason<cr>", desc = "Mason" } },
-      build = ":MasonUpdate",
-      opts = {
-         ensure_installed = {
+
+local on_attach = function(_, bufnr)
+  -- NOTE: Remember that lua is a real programming language, and as such it is possible
+  -- to define small helper and utility functions so you don't have to repeat yourself
+  -- many times.
+  --
+  -- In this case, we create a function that lets us more easily define mappings specific
+  -- for LSP related items. It sets the mode, buffer and description for us each time.
+  local nmap = function(keys, func, desc)
+    if desc then
+      desc = 'LSP: ' .. desc
+    end
+
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  end
+
+  nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+  -- See `:help K` for why this keymap
+  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+  -- Lesser used LSP functionality
+  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  nmap('<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, '[W]orkspace [L]ist Folders')
+
+  -- Create a command `:Format` local to the LSP buffer
+  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+    if vim.lsp.buf.format then
+      vim.lsp.buf.format()
+    elseif vim.lsp.buf.formatting then
+      vim.lsp.buf.formatting()
+    end
+  end, { desc = 'Format current buffer with LSP' })
+end
+
+-- Setup mason so it can manage external tooling
+require('mason').setup()
+        local servers = {
             "stylua",
             "shfmt",
             "lua-language-server",
@@ -46,215 +82,90 @@ return {
             "svelte",
             "intelephense",
             "css-lsp",
-
          },
-      },
-      -- config = function(_, confopts)
-      --    require("mason").setup(confopts)
-      --    local mr = require("mason-registry")
-      --    local function ensure_installed()
-      --       for _, tool in ipairs(confopts.ensure_installed) do
-      --          local p = mr.get_package(tool)
-      --          if not p:is_installed() then
-      --             p:install()
-      --          end
-      --          require('mason-lspconfig').setup({})
-      --       end
-      --    end
-      --    if mr.refresh then
-      --       mr.refresh(ensure_installed)
-      --    else
-      --       ensure_installed()
-      --    end
-      --    -- manually add some configuration
-      --    local lspconfig = require("lspconfig");
-      --    local notify = require("notify")
-      --    notify("called", 0)
-      --    -- we need to advertise aditional capabilities for nvim-ufo
-      --    local capabilities = vim.lsp.protocol.make_client_capabilities()
-      --    capabilities.textDocument.foldingRange = {
-      --       dynamicRegistration = false,
-      --       lineFoldingOnly = true
-      --    }
-      --    capabilities = require('cmp_nvim_lsp').up
-      --
-      --    local function on_attach(client)
-      --       -- attach illuminate
-      --       require('illuminate').on_attach(client)
-      --       local sign = function(opts)
-      --          vim.fn.sign_define(opts.name, {
-      --             texthl = opts.name,
-      --             text = opts.text,
-      --             --numhl =
-      --          })
-      --       end
-      --       sign({ name = 'DiagnosticSignError', text = glyphs.diagnostics.BoldError })
-      --       sign({ name = 'DiagnosticSignWarn', text = glyphs.diagnostics.BoldWarning })
-      --       sign({ name = 'DiagnosticSignHint', text = glyphs.diagnostics.BoldHint })
-      --       sign({ name = 'DiagnosticSignInfo', text = glyphs.diagnostics.BoldInformation })
-      --       -- update while in insert mode
-      --       -- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      --       --   virtual_text = false,
-      --       --   signs = true,
-      --       --   underline = true,
-      --       --   update_in_insert = true,
-      --       -- })
-      --    end
-      --    local lsp_flags = {
-      --       debounce_text_changes = 150,
-      --    }
-      --
-      --    lspconfig.lua_ls.setup {
-      --       capabilities = capabilities,
-      --       on_attach = on_attach,
-      --       settings = {
-      --          globals = { "vim", "nvim" },
-      --          workspace = {
-      --             checkThirdParty = false,
-      --             library = vim.api.nvim_get_runtime_file("", true),
-      --          },
-      --          completion = {
-      --             workspaceWord = true,
-      --             callSnippet = "Both",
-      --          },
-      --          runtime = { version = "LuaJIT" },
-      --          telemetry = { enable = false },
-      --          diagnostics = {
-      --             enable = true,
-      --             groupSeverity = {
-      --                strong = "Warning",
-      --                strict = "Warning",
-      --             },
-      --             groupFileStatus = {
-      --                ["ambiguity"] = "Opened",
-      --                ["await"] = "Opened",
-      --                ["codestyle"] = "None",
-      --                ["duplicate"] = "Opened",
-      --                ["global"] = "Opened",
-      --                ["luadoc"] = "Opened",
-      --                ["redefined"] = "Opened",
-      --                ["strict"] = "Opened",
-      --                ["strong"] = "Opened",
-      --                ["type-check"] = "Opened",
-      --                ["unbalanced"] = "Opened",
-      --                ["unused"] = "Opened",
-      --             },
-      --             unusedLocalExclude = { "_*" },
-      --          },
-      --          format = {
-      --             enable = true,
-      --             defaultConfig = {
-      --                indent_style = "space",
-      --                indent_size = "2",
-      --                continuation_indent = "2",
-      --                quote_style = "double",
-      --                continuation_indent_size = "2",
-      --             },
-      --          },
-      --       }
-      --    }
-      --    require 'lspconfig'.astro.setup {}
-      --
-      --    lspconfig.clangd.setup({
-      --       -- by default, clang-tidy use -checks=clang-diagnostic-*,clang-analyzer-*
-      --       -- to add more `checks`, create  a `.clang-tidy` file in the root directory
-      --       -- SEE: https://clang.llvm.org/extra/clang-tidy
-      --       capabilities = capabilities,
-      --       cmd = { "clangd", "--clang-tidy", "--header-insertion=iwyu", "--cross-file-rename" },
-      --       settings = {
-      --          ["compilationDatabaseCommand"] = "/home/liam/.config/clangd/config.yaml",
-      --       },
-      --       on_attach = function(client)
-      --          -- Attach illuminate
-      --          require('illuminate').on_attach(client)
-      --          local sign = function(opts)
-      --             vim.fn.sign_define(opts.name, {
-      --                texthl = opts.name,
-      --                text = opts.text,
-      --             })
-      --          end
-      --          sign({ name = 'DiagnosticSignError', text = glyphs.diagnostics.BoldError })
-      --          sign({ name = 'DiagnosticSignWarn', text = glyphs.diagnostics.BoldWarning })
-      --          sign({ name = 'DiagnosticSignHint', text = glyphs.diagnostics.BoldHint })
-      --          sign({ name = 'DiagnosticSignInfo', text = glyphs.diagnostics.BoldInformation })
-      --
-      --          -- update while in insert mode
-      --          -- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      --          --   virtual_text = false,
-      --          --   signs = true,
-      --          --   underline = true,
-      --          --   update_in_insert = true,
-      --          -- })
-      --          -- Setup Clangd extensions
-      --          require("clangd_extensions.inlay_hints").setup_autocmd()
-      --          require("clangd_extensions.inlay_hints").set_inlay_hints()
-      --
-      --          -- Add keymap for Clangd symbol info
-      --       end,
-      --    })
-      --    lspconfig.black.setup{}
-      --    lspconfig.tailwindcss.setup{}
-      --
-      --    lspconfig.jsonls.setup{
-      --       capabilities = capabilities,
-      --       on_attach = on_attach,
-      --    }
-      --
-      --    lspconfig.eslint.setup {
-      --       capabilities = capabilities,
-      --       on_attach = on_attach
-      --    }
-      --    lspconfig.texlab.setup {
-      --       capabilities = capabilities,
-      --       on_attach = on_attach,
-      --    }
-      --    lspconfig.grammarly.setup{
-      --       capabilities = capabilities,
-      --       on_attach = on_attach,
-      --    }
-      --
-      --    lspconfig.gopls.setup {
-      --       on_attach = on_attach,
-      --       flags = lsp_flags,
-      --       capabilities = capabilities,
-      --       init_options = {
-      --          usePlaceholders = true,
-      --          linkTarget = "pkg.go.dev",
-      --          completionDocumentation = true,
-      --          completeUnimported = true,
-      --          deepCompletion = true,
-      --          matcher = "CaseSensitive",
-      --          symbolMatcher = "CaseSensitive",
-      --       },
-      --    }
-      --    lspconfig.solargraph.setup {
-      --       on_attach = on_attach,
-      --       flags = lsp_flags,
-      --       capabilities = capabilities,
-      --    }
-      --    lspconfig.basedpyright.setup {}
-      --    lspconfig.biome.setup {
-      --       on_attach = on_attach,
-      --       flags = lsp_flags,
-      --       capabilities = capabilities,
-      --    }
-      --    require('lspconfig').omnisharp.setup {
-      --       on_attach = on_attach,
-      --       flags = lsp_flags,
-      --       capabilities = capabilities
-      --    }
-      --    require('lspconfig').intelephense.setup {
-      --       on_attach = on_attach,
-      --       flags = lsp_flags,
-      --       capabilities = capabilities
-      --
-      --    }
-      --    lspconfig.bashls.setup {}
-      --    --lspconfig.prolog_lsp.setup {}
-      --    -- lspconfig.misspell.setup({
-      --    --    capabilities = capabilities,
-      --    --    on_attach = on_attach,
-      --    -- })
-      -- end
-   }
+
+-- Ensure the servers above are installed
+require('mason-lspconfig').setup {
+  ensure_installed = servers,
 }
+
+-- nvim-cmp supports additional completion capabilities
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+for _, lsp in ipairs(servers) do
+  require('lspconfig')[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
+end
+
+-- Turn on lsp status information
+require('fidget').setup()
+
+-- Example custom configuration for lua
+--
+-- Make runtime files discoverable to the server
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
+
+require('lspconfig').lua_ls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+       globals = { "vim", "nvim" },
+       workspace = {
+          checkThirdParty = false,
+          library = vim.api.nvim_get_runtime_file("", true),
+       },
+       completion = {
+          workspaceWord = true,
+          callSnippet = "Both",
+       },
+       runtime = { version = "LuaJIT" },
+       telemetry = { enable = false },
+       diagnostics = {
+          enable = true,
+          groupSeverity = {
+             strong = "Warning",
+             strict = "Warning",
+          },
+          groupFileStatus = {
+             ["ambiguity"] = "Opened",
+             ["await"] = "Opened",
+             ["codestyle"] = "None",
+             ["duplicate"] = "Opened",
+             ["global"] = "Opened",
+             ["luadoc"] = "Opened",
+             ["redefined"] = "Opened",
+             ["strict"] = "Opened",
+             ["strong"] = "Opened",
+             ["type-check"] = "Opened",
+             ["unbalanced"] = "Opened",
+             ["unused"] = "Opened",
+          },
+          unusedLocalExclude = { "_*" },
+       },
+       format = {
+          enable = true,
+          defaultConfig = {
+             indent_style = "space",
+             indent_size = "2",
+             continuation_indent = "2",
+             quote_style = "double",
+             continuation_indent_size = "2",
+          },
+       },
+    }
+}
+
+vim.api.nvim_create_autocmd('FileType', {
+pattern = 'sh',
+callback = function()
+vim.lsp.start({
+name = 'bash-language-server',
+cmd = { 'bash-language-server', 'start' },
+})
+end,
+})
