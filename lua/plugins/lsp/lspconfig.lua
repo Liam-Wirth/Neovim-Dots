@@ -153,18 +153,18 @@ return {
             }
          }
          require 'lspconfig'.astro.setup {}
-     --    lspconfig.tsserver.setup({
-     --       capabilities = capabilities,
-     --       on_attach = on_attach,
-     --       settings = {
-     --          init_options = {
-     --             preferences = { -- i don't remember why but this is very important
-     --                importModuleSpecifierEnding = "js",
-     --                importModuleSpecifierPreference = "relative",
-     --             }
-     --          }
-     --       }
-     --    })
+         lspconfig.tsserver.setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = {
+               init_options = {
+                  preferences = { -- i don't remember why but this is very important
+                     importModuleSpecifierEnding = "js",
+                     importModuleSpecifierPreference = "relative",
+                  }
+               }
+            }
+         })
 
          lspconfig.clangd.setup({
             -- by default, clang-tidy use -checks=clang-diagnostic-*,clang-analyzer-*
