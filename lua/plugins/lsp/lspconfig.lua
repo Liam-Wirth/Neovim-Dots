@@ -100,6 +100,7 @@ local servers = {
    "svelte",
    "intelephense",
    "astro",
+   "yamlls"
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -124,6 +125,22 @@ end
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
+
+require('lspconfig').basedpyright.setup {
+   capabilities = capabilities,
+   on_attach = on_attach,
+   settings = {
+      basedpyright = {
+         analysis = {
+            typeCheckingMode = "standard", -- off, basic, standard, strict, all
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            autoImportCompletions = true,
+            diagnosticMode = "workspace",
+         },
+      },
+   },
+}
 require('lspconfig').lua_ls.setup {
    capabilities = capabilities,
    on_attach = on_attach,
