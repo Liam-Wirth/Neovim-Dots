@@ -207,10 +207,10 @@ local ret = {
                   cyclic = true,
                },
                augend.constant.new {
-                  elements = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o","p","q", "r", "s", "t","u", "v", "w", "x", "y", "z"},
+                  elements = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" },
                   word = true,
                   cyclic = true,
-               }
+               },
                augend.constant.new {
                   elements = { "++", "--" },
                   word = false,
@@ -354,10 +354,10 @@ local ret = {
                default_settings = {
                   -- rust-analyzer language server configuration
                   ['rust-analyzer'] = {
-                     cargo = {allFeatures = true},
+                     cargo = { allFeatures = true },
                      checkOnSave = {
                         command = "clippy",
-                        extraArgs = {"--no-deps"}
+                        extraArgs = { "--no-deps" }
                      },
                      diagnostics = {
                      }
