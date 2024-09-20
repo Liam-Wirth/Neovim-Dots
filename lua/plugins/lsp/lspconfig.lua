@@ -58,13 +58,25 @@ local on_attach = function(client, bufnr)
    end, '[W]orkspace [L]ist Folders')
 
    -- Create a command `:Format` local to the LSP buffer
-   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-      if vim.lsp.buf.format then
-         vim.lsp.buf.format()
-      elseif vim.lsp.buf.formatting then
-         vim.lsp.buf.formatting()
-      end
-   end, { desc = 'Format current buffer with LSP' })
+   if client.server_capabilities.documentFormattingProvider or client.server_capabilities.documentRangeFormattingProvider then
+      vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+         if vim.lsp.buf.format then
+            vim.lsp.buf.format()
+         elseif vim.lsp.buf.formatting then
+            vim.lsp.buf.formatting()
+         end
+      end, { desc = 'Format current buffer with LSP' })
+   else
+      vim.cmd[[
+      echo POOP
+      ]]
+      vim.api.nvim_create_autocmd("BufWritePre", {
+         pattern = "*",
+         callback = function(args)
+            require("conform").format({ bufnr = args.buf })
+         end,
+      })
+   end
 end
 -- Setup mason so it can manage external tooling
 require('mason').setup()
@@ -100,7 +112,8 @@ local servers = {
    "svelte",
    "intelephense",
    "astro",
-   "yamlls"
+   "yamlls",
+   "fortls"
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -1,5 +1,3 @@
-local kind_icons = require("util.glyphs").kind_icons
-local glyphs = require('util.glyphs')
 local ret = {
    {
       'utilyre/barbecue.nvim',
@@ -15,17 +13,14 @@ local ret = {
          show_basename = false,
          symbols = {
             ---Modification indicator.
-            ---
             ---@type string
             modified = "●",
 
             ---Truncation indicator.
-            ---
             ---@type string
             ellipsis = "…",
 
             ---Entry separator.
-            ---
             ---@type string
             separator = "",
          },
@@ -154,7 +149,7 @@ local ret = {
          })
       end
    },
-   -- 'jose-elias-alvarez/null-ls.nvim',
+   -- 'jose-elias-alvarez/null-ls.nvim', rip :(
    {
       'stevearc/aerial.nvim',
       lazy = true,
@@ -301,6 +296,13 @@ local ret = {
       "AstroNvim/astrolsp",
       opts = {
       }
+   },
+   {
+      'stevearc/conform.nvim',
+      opts = {},
+      config = function()
+         require('plugins.lsp.formatting')
+      end
    },
    {
       'mrcjkb/rustaceanvim',
