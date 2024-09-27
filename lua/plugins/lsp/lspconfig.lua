@@ -67,9 +67,6 @@ local on_attach = function(client, bufnr)
          end
       end, { desc = 'Format current buffer with LSP' })
    else
-      vim.cmd[[
-      echo POOP
-      ]]
       vim.api.nvim_create_autocmd("BufWritePre", {
          pattern = "*",
          callback = function(args)

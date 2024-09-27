@@ -54,7 +54,7 @@ return {
                   vim.notify("Copilot Disabled")
                else
                   vim.g.copilot_enabled = 1
-                  vim.notify("Copilot Enabled")
+                  vim.notify("Copilot Enabled, (dumbass) ")
                end
             end, desc = "Toggle Copilot"
             }
