@@ -10,8 +10,6 @@ return {
             end,
             desc = "Explorer NeoTree (cwd)",
          },
-         --{ "<leader>e", "<leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
-         --{ "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
       },
       branch = "v3.x",
       dependencies = {
@@ -40,13 +38,6 @@ return {
          sort_case_insensitive = false,                                 -- used when sorting files and directories in the tree
          sort_function = nil,                                           -- use a custom function for sorting files and directories in the tree
          enable_containter_fade = false,
-         -- sort_function = function (a,b)
-         --       if a.type == b.type then
-         --           return a.path > b.path
-         --       else
-         --           return a.type > b.type
-         --       end
-         --   end , -- this sorts files and directories descendantly
          sources = {
             "filesystem",
             "document_symbols",
@@ -92,7 +83,6 @@ return {
             },
             git_status = {
                symbols = {
-                  -- Change type
                   added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
                   modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
                   deleted   = "✖", -- this can only be used in the git_status source
@@ -105,7 +95,6 @@ return {
                   conflict  = "",
                }
             },
-            -- If you don't want to use these columns, you can set `enabled = false` for each of them individually
             file_size = {
                enabled = true,
                required_width = 64, -- min width of window required to show this column
@@ -126,9 +115,6 @@ return {
                enabled = false,
             },
          },
-         -- A list of functions, each representing a global custom command
-         -- that will be available in all sources (if not overridden in `opts[source_name].commands`)
-         -- see `:h neo-tree-custom-commands-global`
          commands = {},
          window = {
             position = "left",

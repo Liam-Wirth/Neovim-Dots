@@ -48,13 +48,17 @@ ret = {
             contrast = "hard",   -- can be "hard", "soft" or empty string
             palette_overrides = {},
             overrides = {
-               SignColumn = { bg = "#ff9900" }
             },
             dim_inactive = false,
-            --transparent_mode = vim.g.transparent_enabled,
+            -- transparent_mode = vim.g.transparent_enabled,
             transparent_mode = true,
          })
       end,
    },
 }
+
+vim.cmd [[
+"highlight! link Normal GruvboxBG0
+"highlight! link NeotreeNormalNC GruvboxBG0
+]]
 return ret
