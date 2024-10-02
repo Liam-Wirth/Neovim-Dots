@@ -11,6 +11,15 @@ M.defaultOpts = {
    desc = nil,
 }
 
+local function copilottoggle()
+   local output = ""
+   if vim.g.copilot_enabled == 1 then
+      output = "<cmd>CopilotChatToggle<cr>"
+   else
+      vim.g.copilot_enabled = 1
+   end
+end
+
 -- TODO: use icons with these
 wk.add({
   -- Basic key mappings
@@ -93,6 +102,8 @@ wk.add({
   { "<leader>ee", "<cmd>TroubleToggle<cr>", desc = "Open/Close Trouble", mode = "n" },
   { "<leader>eu", "<cmd>lua require('undotree').toggle()<cr>", desc = "Toggle Visual undotree", mode = "n" },
   { "<leader>ea", "<cmd>AerialToggle<cr>", desc = "Toggle Aerial (File overview)", mode = "n" },
+  { "<leader>eg", "<cmd><cr>", desc = "Toggle Aerial (File overview)", mode = "n" },
+   -- {"<leader>eg", ""}
 
   -- Diagnostic
   { "<leader>be", vim.diagnostic.open_float, desc = "Open Float", mode = "n", remap = true, silent = true },
