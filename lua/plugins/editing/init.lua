@@ -139,9 +139,6 @@ return {
       event = { "BufReadPost", "BufNewFile" },
       dependencies = { "nvim-lua/plenary.nvim" },
       opts = {
-         -- your configuration comes here
-         -- or leave it empty to use the default settings
-         -- refer to the configuration section below
       }
    },
    {
@@ -150,9 +147,6 @@ return {
       event = { "BufReadPost", "BufNewFile" },
       lazy = true,
       opts = {
-         -- your configuration comes here
-         -- or leave it empty to use the default settings
-         -- refer to the configuration section below
       },
    },
    {
@@ -161,58 +155,32 @@ return {
       tag = "legacy",
       event = "LspAttach",
       opts = {
-         -- options
-      },
-      {
-         "lukas-reineke/indent-blankline.nvim",
-         lazy = true,
-         event = { "BufReadPost", "BufNewFile" },
-         opts = {
-            filetype_exclude = {
-               "help",
-               "alpha",
-               "dashboard",
-               "neo-tree",
-               "Trouble",
-               "lazy",
-               "mason",
-               "notify",
-               "toggleterm",
-               "lazyterm",
+         notification = {
+            view = {
+               stack_upwards = true, -- Display notification items from bottom to top
+               icon_separator = " ", -- Separator between group name and icon
+               group_separator = "---", -- Separator between notification groups
+               group_separator_hl = -- Highlight group used for group separator
+               "Comment",
+               render_message = -- How to render notification messages
+                   function(msg, cnt)
+                      return cnt == 1 and msg or string.format("(%dx) %s", cnt, msg)
+                   end,
             },
-         },
-         config = function()
-            local colors = require("util.doomcolors").dark
-            local glyphs = require("util.glyphs")
-            local hl1 = ("highlight IndentBlankLineIndent1 guifg=" .. colors.red)
-            local hl2 = ("highlight IndentBlankLineIndent2 guifg=" .. colors.yellow .. " gui=nocombine")
-            local hl3 = ("highlight IndentBlankLineIndent3 guifg=" .. colors.cyan .. " gui=nocombine")
-            local hl4 = ("highlight IndentBlankLineIndent4 guifg=" .. colors.green .. " gui=nocombine")
-            local hl5 = ("highlight IndentBlankLineIndent5 guifg=" .. colors.magenta .. " gui=nocombine")
-            local hl6 = ("highlight IndentBlankLineIndent6 guifg=" .. colors.orange .. " gui=nocombine")
-            require("indent_blankline").setup({
-               --   vim.cmd(hl1),
-               --   vim.cmd(hl2),
-               --   vim.cmd(hl3),
-               --   vim.cmd(hl4),
-               --   vim.cmd(hl5),
-               --   vim.cmd(hl6),
-               --space_char_blankline = glyphs.ui.LineLeft,
-               show_current_context = true,
-               show_current_context_start = true,
-               --   char_highlight_list = {
-               --      "IndentBlanklineIndent1",
-               --      "IndentBlanklineIndent2",
-               --      "IndentBlanklineIndent3",
-               --      "IndentBlanklineIndent4",
-               --      "IndentBlanklineIndent5",
-               --      "IndentBlanklineIndent6",
-               --   },
-               use_treesitter = true,
-               use_treesitter_scope = true,
-            })
-         end,
-      },
+            window = {
+               normal_hl = "Warning", -- Base highlight group in the notification window
+               winblend = 0,          -- Background color opacity in the notification window
+               border = "rounded",    -- Border around the notification window
+               zindex = 45,           -- Stacking priority of the notification window
+               max_width = 0,         -- Maximum width of the notification window
+               max_height = 0,        -- Maximum height of the notification window
+               x_padding = 1,         -- Padding from right edge of window boundary
+               y_padding = 0,         -- Padding from bottom edge of window boundary
+               align = "top",      -- How to align the notification window
+               relative = "editor",   -- What the notification window position is relative to
+            },
+         }
+      }
    },
    {
       'mbbill/undotree',
