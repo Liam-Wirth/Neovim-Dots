@@ -18,9 +18,9 @@ end
 local clip = '/mnt/c/Windows/System32/clip.exe' -- change this path according to your mount point
 
 -- Check if we are in WSL
-local is_wsl = os.getenv("is_wsl")
+IS_WSL = os.getenv("is_wsl")
 
-if is_wsl and vim.fn.executable(clip) == 1 then
+if IS_WSL and vim.fn.executable(clip) == 1 then
     -- Set up clipboard to use clip.exe
     vim.api.nvim_set_option('clipboard', 'unnamedplus')
 
