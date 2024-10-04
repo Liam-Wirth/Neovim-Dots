@@ -1,4 +1,40 @@
 local wk = require("which-key")
+local servers = {
+   -- "stylua",
+   -- "shfmt",
+   -- "lua-language-server",
+   "texlab",
+   -- "bibtex-tidy",
+   -- "misspell",
+   -- "svls",
+   "verible",
+   -- "cpptools",
+   -- "clang-format",
+   "clangd",
+   -- "prettier",
+   -- "cpplint",
+   "basedpyright",
+   -- "asmfmt",
+   -- "asm-lsp",
+   -- "black",
+   -- "flake8",
+   -- "bash-language-server",
+   "biome",
+   -- "astro-language-server",
+   -- "omnisharp-mono",
+   -- "solargraph",
+   -- "tsserver",
+   "jsonls",
+   "eslint",
+   "tailwindcss",
+   "gopls",
+   "svelte",
+   "intelephense",
+   "astro",
+   "yamlls",
+   "fortls",
+   "marksman"
+}
 -- NOTE: The error regarding lspconfig being weird and mason servers not loading right might be here
 local glyphs = require('util.glyphs')
 
@@ -80,42 +116,6 @@ local on_attach = function(client, bufnr)
 end
 -- Setup mason so it can manage external tooling
 require('mason').setup()
-local servers = {
-   -- "stylua",
-   -- "shfmt",
-   -- "lua-language-server",
-   "texlab",
-   -- "bibtex-tidy",
-   -- "misspell",
-   -- "svls",
-   "verible",
-   -- "cpptools",
-   -- "clang-format",
-   "clangd",
-   -- "prettier",
-   -- "cpplint",
-   "basedpyright",
-   -- "asmfmt",
-   -- "asm-lsp",
-   -- "black",
-   -- "flake8",
-   -- "bash-language-server",
-   "biome",
-   -- "astro-language-server",
-   -- "omnisharp-mono",
-   -- "solargraph",
-   -- "tsserver",
-   "jsonls",
-   "eslint",
-   "tailwindcss",
-   "gopls",
-   "svelte",
-   "intelephense",
-   "astro",
-   "yamlls",
-   "fortls",
-   "marksman"
-}
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
