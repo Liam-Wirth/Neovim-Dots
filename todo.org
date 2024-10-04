@@ -25,7 +25,7 @@ make the bar with the numbers be a bit darker
 * TODO todo-comments
 * TODO mini.nvim
 * TODO spellsitter
-* TODO presence.nvim
+* TODO pglobaleresence.nvim
 * TODO shade.nvim
 * TODO *TODO orgmode.nvim
 * TODO TODO orgmode.nvim

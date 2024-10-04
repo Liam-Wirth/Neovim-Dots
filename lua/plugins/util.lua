@@ -13,6 +13,11 @@ return {
    {
       'andweeb/presence.nvim',
       lazy = false,
+      cond = function()
+         -- if we are in WSL or just plain windows, don't load this plugin
+         return os.getenv("WSL_DISTRO_NAME") == nil -- will eval true if and only if we are not in WSL (hopefully)
+
+      end,
       opts = {
          -- General options
          auto_update         = true,                                                     -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)

@@ -1,4 +1,4 @@
-wk = require("which-key")
+local wk = require("which-key")
 -- NOTE: The error regarding lspconfig being weird and mason servers not loading right might be here
 local glyphs = require('util.glyphs')
 
@@ -67,7 +67,7 @@ local on_attach = function(client, bufnr)
          end
       end, { desc = 'Format current buffer with LSP' })
    else
-      vim.cmd[[
+      vim.cmd [[
       echo POOP
       ]]
       vim.api.nvim_create_autocmd("BufWritePre", {
@@ -159,7 +159,6 @@ require('lspconfig').lua_ls.setup {
    capabilities = capabilities,
    on_attach = on_attach,
    settings = {
-      globals = { "vim", "nvim" },
       workspace = {
          checkThirdParty = false,
          library = vim.api.nvim_get_runtime_file("", true),
@@ -172,6 +171,7 @@ require('lspconfig').lua_ls.setup {
       telemetry = { enable = false },
       diagnostics = {
          enable = true,
+         globals = { "vim", "nvim" },
          groupSeverity = {
             strong = "Warning",
             strict = "Warning",
