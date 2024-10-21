@@ -26,7 +26,7 @@ return {
                require('neo-tree.command').execute({
                   toggle = true,
                   source = "gitstatus",
-                  position = "float"
+                  position = "left"
                })
             end,
             desc = "Open floating git status (neotree)"
