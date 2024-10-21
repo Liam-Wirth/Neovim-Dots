@@ -1,6 +1,5 @@
 local vim = vim
 return {
-
    {
       "hrsh7th/nvim-cmp",
       version = false, -- last release is way too old
@@ -266,39 +265,6 @@ return {
             },
          })
          local doomcolors = require("util.doomcolors").dark
-         --TODO: have these highlights dynamically change dependant on the colorscheme being used. they where previously hardcoded for doom-one, but now I want to use gruvbox
-         -- -- Customization for Pmenu
-         -- vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#282C34", fg = "NONE" })
-         -- vim.api.nvim_set_hl(0, "Pmenu", { fg = "#C5CDD9", bg = "#22252A" })
-         -- vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecated", { fg = "#7E8294", bg = "NONE", strikethrough = true })
-         -- vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { fg = "#82AAFF", bg = "NONE", bold = true })
-         -- vim.api.nvim_set_hl(0, "CmpItemAbbrMatchFuzzy", { fg = "#82AAFF", bg = "NONE", bold = true })
-         -- vim.api.nvim_set_hl(0, "CmpItemMenu", { fg = "#C792EA", bg = "NONE", italic = true })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindField", { fg = "#EED8DA", bg = doomcolors.red })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindProperty", { fg = "#EED8DA", bg = doomcolors.red })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindEvent", { fg = "#EED8DA", bg = doomcolors.red })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindText", { fg = "#EED8DA", bg = doomcolors.green })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindEnum", { fg = "#EED8DA", bg = doomcolors.green })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindKeyword", { fg = "#EED8DA", bg = doomcolors.green })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindConstant", { fg = "#EED8DA", bg = doomcolors.yellow })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindConstructor", { fg = "#EED8DA", bg = doomcolors.yellow })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindReference", { fg = "#EED8DA", bg = doomcolors.yellow })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindFunction", { fg = "#EADFF0", bg = "#A377BF" })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindStruct", { fg = "#EADFF0", bg = "#A377BF" })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindClass", { fg = "#EADFF0", bg = "#A377BF" })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindModule", { fg = "#EADFF0", bg = "#A377BF" })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindOperator", { fg = "#EADFF0", bg = "#A377BF" })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindVariable", { fg = "#C5CDD9", bg = "#7E8294" })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindFile", { fg = "#C5CDD9", bg = "#7E8294" })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindUnit", { fg = "#F5EBD9", bg = doomcolors.orange })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindSnippet", { fg = "#F5EBD9", bg = doomcolors.orange })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindFolder", { fg = "#F5EBD9", bg = doomcolors.orange })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindMethod", { fg = "#DDE5F5", bg = doomcolors.blue })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindValue", { fg = "#DDE5F5", bg = doomcolors.blue })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindEnumMember", { fg = "#DDE5F5", bg = doomcolors.blue })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindInterface", { fg = "#D8EEEB", bg = doomcolors.teal })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindColor", { fg = "#D8EEEB", bg = doomcolors.teal })
-         -- vim.api.nvim_set_hl(0, "CmpItemKindTypeParameter", { fg = "#D8EEEB", bg = doomcolors.teal })
       end,
 
    }
