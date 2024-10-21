@@ -86,3 +86,11 @@ set signcolumn=yes
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 ]])
 
+
+
+-- vim.g settings and stuff
+--
+
+vim.g.loaded_python3_provider = 0
+
+
