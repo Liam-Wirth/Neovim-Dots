@@ -89,7 +89,7 @@ wk.add({
   { "<leader><tab>[", "<cmd>BufferLineMovePrev<cr>", desc = "Previous Tab", mode = "n" },
 
   -- Auxiliary windows
-  { "<leader>et", "<cmd>Neotree<cr>", desc = "Toggle Filetree", mode = "n" },
+  -- { "<leader>et", "<cmd>Neotree<cr>", desc = "Toggle Filetree", mode = "n" },
   { "<leader>ee", "<cmd>TroubleToggle<cr>", desc = "Open/Close Trouble", mode = "n" },
   { "<leader>eu", "<cmd>lua require('undotree').toggle()<cr>", desc = "Toggle Visual undotree", mode = "n" },
   { "<leader>ea", "<cmd>AerialToggle<cr>", desc = "Toggle Aerial (File overview)", mode = "n" },
