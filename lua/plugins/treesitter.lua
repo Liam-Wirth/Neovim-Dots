@@ -9,9 +9,6 @@ return {
          {
             "nvim-treesitter/nvim-treesitter-textobjects",
             init = function()
-               -- disable rtp plugin, as we only need its queries for mini.ai
-               -- In case other textobject modules are enabled, we will load them
-               -- once nvim-treesitter is loaded
                require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
                load_textobjects = true
             end,
@@ -22,31 +19,13 @@ return {
          { "<c-space>", desc = "Increment selection" },
          { "<bs>",      desc = "Decrement selection", mode = "x" },
       },
-      ---@type TSConfig
       opts = {
-         highlight = { enable = true, additional_vim_regex_highlighting = false, disable = {"latex"},},
+         highlight = { enable = true, additional_vim_regex_highlighting = false, disable = { "latex" }, },
          indent = { enable = true },
          ensure_installed = {
-            "bash",
-            "c",
-            "html",
-            "javascript",
-            "jsdoc",
-            "json",
-            "lua",
-            "luadoc",
-            "luap",
-            "markdown",
-            "markdown_inline",
-            "python",
-            "query",
-            "regex",
-            "tsx",
-            "typescript",
-            "vim",
-            "vimdoc",
-            "yaml",
-            "bash",
+            "bash", "c", "html", "javascript", "jsdoc", "json", "lua", "luadoc", "luap",
+            "markdown", "markdown_inline", "python", "query", "regex", "tsx", "typescript",
+            "vim", "vimdoc", "yaml", "bash",
          },
          incremental_selection = {
             enable = true,
@@ -58,7 +37,6 @@ return {
             },
          },
       },
-      ---@param opts TSConfig
       config = function(_, opts)
          if type(opts.ensure_installed) == "table" then
             ---@type table<string, boolean>
@@ -74,7 +52,6 @@ return {
          require("nvim-treesitter.configs").setup(opts)
 
          if load_textobjects then
-            -- PERF: no need to load the plugin, if we only need its queries for mini.ai
             if opts.textobjects then
                for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
                   if opts.textobjects[mod] and opts.textobjects[mod].enable then
@@ -91,8 +68,8 @@ return {
    },
    {
       "nvim-treesitter/nvim-treesitter-textobjects",
-       lazy = true,
-      event = {"BufNewFile", "BufReadPost"},
+      lazy = true,
+      event = { "BufNewFile", "BufReadPost" },
       init = function()
          -- disable rtp plugin, as we only need its queries for mini.ai
          -- In case other textobject modules are enabled, we will load them
@@ -101,9 +78,4 @@ return {
          load_textobjects = true
       end,
    },
-   {
-     -- "nvim-treesitter/nvim-treesitter-context",
-     -- lazy = true,
-     -- event = { "BufReadPost", "BufNewFile" },
-   }
 }

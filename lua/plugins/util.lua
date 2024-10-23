@@ -1,6 +1,4 @@
 return {
-
-   -- measure startuptime
    {
       "dstein64/vim-startuptime",
       cmd = "StartupTime",
@@ -21,7 +19,7 @@ return {
       opts = {
          -- General options
          auto_update         = true,                                                     -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
-         neovim_image_text   = "that one text editor that fucking LOSERS use! HAHAHAHA", -- Text displayed when hovered over the Neovim image
+         neovim_image_text   = "that one text editor that LOSERS use! HAHAHAHA", -- Text displayed when hovered over the Neovim image
          main_image          = "neovim",                                                 -- Main image display (either "neovim" or "file")
          client_id           = "793271441293967371",                                     -- Use your own Discord application client id (not recommended)
          log_level           = nil,                                                      -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
@@ -33,17 +31,16 @@ return {
          show_time           = true,                                                     -- Show the timer
 
          -- Rich Presence text options
-         editing_text        = "Editing %s",         -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
-         file_explorer_text  = "Browsing %s",        -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
+         editing_text        = "Editing a file",         -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
+         file_explorer_text  = "Browsing files",        -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
          git_commit_text     = "Committing changes", -- Format string rendered when committing changes in git (either string or function(filename: string): string)
          plugin_manager_text = "Managing plugins",   -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
-         reading_text        = "Reading %s",         -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
-         workspace_text      = "Working on %s",      -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
+         reading_text        = "Reading",         -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
+         workspace_text      = "Working on a project",      -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
          line_number_text    = "Line %s out of %s",  -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
       }
    },
    { 'wakatime/vim-wakatime', lazy = false },
-   --fuck I am finally caving in
    -- TODO: Setup a copilot section with keybinds and stuff, I want it disabled by DEFAULT and stuff
    {
       'github/copilot.vim',
@@ -76,13 +73,20 @@ return {
       { "github/copilot.vim" }, -- or github/copilot.vim
       { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
     },
-    -- build = "make tiktoken", -- Only on MacOS or Linux
     opts = {
       debug = true, -- Enable debugging
       -- See Configuration section for rest
     },
-    -- See Commands section for default commands if you want to lazy load on them
   },
+   -- {
+   --    "antonk52/bad-practices.nvim",
+   --    lazy = false,
+   --    opts = {
+   --       most_splits = 4,
+   --       most_tabs = 4,
+   --       max_hjkl = 100,
+   --    }
+   -- }
 }
 
 

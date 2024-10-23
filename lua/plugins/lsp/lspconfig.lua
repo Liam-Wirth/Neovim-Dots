@@ -1,29 +1,10 @@
 local wk = require("which-key")
 local servers = {
-   -- "stylua",
-   -- "shfmt",
-   -- "lua-language-server",
    "texlab",
-   -- "bibtex-tidy",
-   -- "misspell",
-   -- "svls",
    "verible",
-   -- "cpptools",
-   -- "clang-format",
    "clangd",
-   -- "prettier",
-   -- "cpplint",
    "basedpyright",
-   -- "asmfmt",
-   -- "asm-lsp",
-   -- "black",
-   -- "flake8",
-   -- "bash-language-server",
    "biome",
-   -- "astro-language-server",
-   -- "omnisharp-mono",
-   -- "solargraph",
-   -- "tsserver",
    "jsonls",
    "eslint",
    "tailwindcss",
@@ -130,8 +111,6 @@ for _, lsp in ipairs(servers) do
       capabilities = capabilities,
    }
 end
-
--- Turn on lsp status information
 
 -- Example custom configuration for lua
 --

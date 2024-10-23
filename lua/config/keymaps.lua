@@ -17,8 +17,8 @@ wk.add({
   { "<Esc>", "<C-\\><C-n>", desc = "Escape terminal mode", mode = "t" },
 
   -- Better up/down
-  { "j", "v:count == 0 ? 'gj' : 'j'", desc = "Better down movement", mode = { "n", "x" }, expr = true, silent = true },
-  { "k", "v:count == 0 ? 'gk' : 'k'", desc = "Better up movement", mode = { "n", "x" }, expr = true, silent = true },
+  -- { "j", "v:count == 0 ? 'gj' : 'j'", desc = "Better down movement", mode = { "n", "x" }, expr = true, silent = true },
+  -- { "k", "v:count == 0 ? 'gk' : 'k'", desc = "Better up movement", mode = { "n", "x" }, expr = true, silent = true },
 
   -- Move to window using <ctrl> hjkl keys
   { "<C-h>", "<C-w>h", desc = "Go to left window", mode = "n", remap = true },

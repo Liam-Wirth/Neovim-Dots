@@ -99,17 +99,12 @@ return {
 
                   kind.kind = " " .. (strings[1] or "") .. " "
 
-                  -- Kind icons
-                  --vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-                  -- Source
                   local menu_icon = {
                      luasnip = "[LuaSnip]",
                      nvim_lua = "[Lua]",
                      calc = " 󰃬 ",
                   }
                   if entry.source.name == "calc" then
-                     -- Get the custom icon for 'calc' source
-                     -- Replace the kind glyph with the custom icon
                      vim_item.kind = menu_icon.calc
                      vim_item.menu = "Calculator"
                      kind.menu = "Calculator"
@@ -130,34 +125,6 @@ return {
             }, -----------------------------------------------------------------------------------------------------------------------------------------
             --                                                               Mappings                                                              --
             -----------------------------------------------------------------------------------------------------------------------------------------
-            --  mapping = cmp.mapping.preset.insert({
-            --     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-            --     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-            --     ['<C-Space>'] = cmp.mapping.complete(),
-            --     ['<C-e>'] = cmp.mapping.abort(),
-            --     ['<CR>'] = cmp.mapping.confirm({ select = false}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-            --   ["<Tab>"] = cmp.mapping(function(fallback)
-            --     if cmp.visible() then
-            --       cmp.select_next_item()
-            --     elseif luasnip.expand_or_jumpable() then
-            --       luasnip.expand_or_jump()
-            --     elseif has_words_before() then
-            --       cmp.complete()
-            --     else
-            --       fallback()
-            --     end
-            --   end, { "i", "s" }),
-
-            --   ["<S-Tab>"] = cmp.mapping(function(fallback)
-            --     if cmp.visible() then
-            --       cmp.select_prev_item()
-            --     elseif luasnip.jumpable(-1) then
-            --       luasnip.jump(-1)
-            --     else
-            --       fallback()
-            --     end
-            --   end, { "i", "s" }),
-            -- }),
             --TODO: add these bindings to Whichkey
             mapping = {
                ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
@@ -264,8 +231,6 @@ return {
                { name = "buffer" },
             },
          })
-         local doomcolors = require("util.doomcolors").dark
       end,
-
    }
 }

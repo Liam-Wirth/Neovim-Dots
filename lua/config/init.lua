@@ -1,6 +1,5 @@
 require("config.options")
 require("config.autocmds")
-require("config.listchars")
 require("config.keymaps")
 --NOTE: putting this here, probably a bad idea
 vim.opt.termguicolors = true
@@ -32,4 +31,18 @@ if IS_WSL and vim.fn.executable(clip) == 1 then
         augroup END
     ]], false)
 end
-
+local tab = [[,tab:»■ ]]
+local tab2 = [[,tab:→\ ]]
+local tab3 = [[,tab:\ \ ]]
+local extends = [[,extends:❯]]
+local nbsp = [[,nbsp:␣]]
+local precedes = [[,precedes:❮]]
+vim.cmd("set listchars=eol:" .. "↩" .. tab2 .. extends .. precedes .. nbsp)
+vim.opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
+}
