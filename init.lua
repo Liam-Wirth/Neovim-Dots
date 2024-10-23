@@ -13,17 +13,13 @@ end
 vim.loader.enable()
 vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup({
-   --defaults = { },
    performance = {},
    spec = {
       { import = "plugins" },
-      --NOTE: Above could break things cause double import of a plugin, but maybe not
-      --NOTE: Below is how I import from submodules beneath the plugins folder
       { import = "plugins.lsp" },
       { import = "plugins.editing" }
    }
 })
---require("lua.plugins.colorscheme")
 require("plugins.colorscheme")
 
 require("plugins.lsp.lspconfig")

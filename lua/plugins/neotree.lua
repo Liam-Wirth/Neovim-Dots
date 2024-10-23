@@ -20,20 +20,17 @@ return {
             end,
             desc = "Explorer NeoTree (cwd)",
          },
-         {
-            "<leader>eg",
-            function()
-               require('neo-tree.command').execute({
-                  toggle = true,
-                  source = "gitstatus",
-                  position = "left"
-               })
-            end,
-            desc = "Open floating git status (neotree)"
-
-         }
       },
       opts = {
+         -- Neo-tree window options, including width
+         window = {
+            position = "left",
+            width = 20, -- Set the window width here
+            mapping_options = {
+               noremap = true,
+               nowait = true,
+            },
+         },
          event_handlers = {
             {
                event = "after_render",
@@ -49,15 +46,7 @@ return {
                end,
             },
          }
-
-      },
-      window = {
-         position = "left",
-         width = 30,
-         mapping_options = {
-            noremap = true,
-            nowait = true,
-         },
       }
    }
 }
+

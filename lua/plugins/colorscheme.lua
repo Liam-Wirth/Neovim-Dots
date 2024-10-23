@@ -1,4 +1,26 @@
 local vim = vim
+
+GruvColors = {
+   bg = "#282c34",
+   red = "#cc241d",
+   green = "#98971a",
+   yellow = "#d79921",
+   blue = "#458588",
+   purple = "#b16286",
+   aqua = "#689d6a",
+   gray = "#a89984",
+   orange = "#d65d0e",
+   bold_orange = "#af3a03",
+   bold_gray = "#928374",
+   bold_red = "#9d0006",
+   bold_green = "#79740e",
+   bold_yellow = "#b57614",
+   bold_blue = "#076678",
+   bold_purple = "#8f3f71",
+   bold_aqua = "#427b58",
+   bold_fg = "#3c3836",
+   fg = "#282828"
+}
 ret = {
    {
       "NTBBloodbath/doom-one.nvim",

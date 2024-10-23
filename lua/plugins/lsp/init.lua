@@ -103,33 +103,16 @@ local ret = {
          require("clangd_extensions").setup({
             inlay_hints = {
                inline = vim.fn.has("nvim-0.10") == 1,
-               -- Options other than `highlight' and `priority' only work
-               -- if `inline' is disabled
-               -- Only show inlay hints for the current line
                only_current_line = false,
-               -- Event which triggers a refresh of the inlay hints.
-               -- You can make this { "CursorMoved" } or { "CursorMoved,CursorMovedI" } but
-               -- not that this may cause  higher CPU usage.
-               -- This option is only respected when only_current_line and
-               -- autoSetHints both are true.
                only_current_line_autocmd = { "CursorHold" },
-               -- whether to show parameter hints with the inlay hints or not
                show_parameter_hints = true,
-               -- prefix for parameter hints
                parameter_hints_prefix = "<- ",
-               -- prefix for all the other hints (type, chaining)
                other_hints_prefix = "=> ",
-               -- whether to align to the length of the longest line in the file
                max_len_align = false,
-               -- padding from the left if max_len_align is true
                max_len_align_padding = 1,
-               -- whether to align to the extreme right or not
                right_align = false,
-               -- padding from the right if right_align is true
                right_align_padding = 7,
-               -- The color of the hints
                highlight = "Comment",
-               -- The highlight group priority for extmark
                priority = 100,
             },
             ast = {
@@ -166,13 +149,6 @@ local ret = {
       cmd = { 'AerialOpen', 'AerialToggle' },
    },
    {
-      'simrat39/rust-tools.nvim',
-      lazy = true,
-      event = "BufReadPost",
-      config = function()
-      end,
-   },
-   {
       -- lsp_signature | shows the signature of a function when typing parameters
       'ray-x/lsp_signature.nvim',
       lazy = true,
@@ -181,64 +157,6 @@ local ret = {
          require('lsp_signature').setup({
             floating_window = false
          })
-      end
-   },
-   {
-      "monaqa/dial.nvim",
-      lazy = true,
-      event = { "BufreadPost", "BufreadPre" },
-      config = function()
-         local augend = require("dial.augend")
-         require("dial.config").augends:register_group {
-            default = {
-               augend.constant.new {
-                  elements = { "and", "or" },
-                  word = true,   -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
-                  cyclic = true, -- "or" is incremented into "and".
-               },
-               augend.constant.new {
-                  elements = { "&&", "||" },
-                  word = false,
-                  cyclic = true,
-               },
-               augend.constant.new {
-                  elements = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" },
-                  word = true,
-                  cyclic = true,
-               },
-               augend.constant.new {
-                  elements = { "++", "--" },
-                  word = false,
-                  cyclic = true,
-               },
-               augend.constant.new {
-                  elements = { "hidden", "shown" },
-                  word = true,
-                  cyclic = true,
-               },
-               augend.constant.new {
-                  elements = { "+=", "-=" },
-                  word = false,
-                  cyclic = true,
-               },
-               augend.integer.alias.decimal,
-               augend.integer.alias.hex,
-               augend.date.alias["%Y/%m/%d"],
-               augend.constant.alias.bool,
-            },
-            typescript = {
-               augend.integer.alias.decimal,
-               augend.integer.alias.hex,
-               augend.constant.new { elements = { "let", "const" } },
-            },
-            visual = {
-               augend.integer.alias.decimal,
-               augend.integer.alias.hex,
-               augend.date.alias["%Y/%m/%d"],
-               augend.constant.alias.alpha,
-               augend.constant.alias.Alpha,
-            },
-         }
       end
    },
    {
@@ -298,81 +216,31 @@ local ret = {
       }
    },
    {
-      'stevearc/conform.nvim',
-      opts = {},
-      config = function()
-         require('plugins.lsp.formatting')
-      end
+      "L3MON4D3/LuaSnip",
+      dependencies = {
+         "rafamadriz/friendly-snippets",
+         config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+         end,
+      },
+      opts = {
+         history = true,
+         delete_check_events = "TextChanged",
+      },
+      -- stylua: ignore
+      keys = {
+         {
+            "S-<tab>",
+            function()
+               return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "S-<tab>"
+            end,
+            expr = true,
+            silent = true,
+            mode = "i",
+         },
+         { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
+         { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+      },
    },
-   {
-      'mrcjkb/rustaceanvim',
-      version = '^5', -- Recommended
-      lazy = false,   -- This plugin is already lazy
-      config = function(_, opts)
-         vim.g.rustaceanvim = {
-            -- Plugin configuration
-            tools = {
-            },
-            -- LSP configuration
-            server = {
-               on_attach = function(client, bufnr)
-                  require("which-key").add({
-                     { "<leader>r", group = "Rust", desc = "Rust" },
-                     {
-                        "<leader>rc",
-                        function() vim.cmd.RustLsp('openCargo') end,
-                        group = "Rust",
-                        desc =
-                        "Open Cargo.toml"
-                     },
-                     {
-                        "<leader>ba",
-                        function() vim.cmd.RustLsp('codeAction') end,
-                        remap = true,
-                        desc =
-                        "Code Action {Rust}"
-                     },
-                     {
-                        "<leader>re",
-                        function() vim.cmd.RustLsp('explainError') end,
-                        desc =
-                        "Explain Error"
-                     },
-                     {
-                        "<leader>rp",
-                        function() vim.cmd.RustLsp('parentModule') end,
-                        desc =
-                        "Parent Module"
-                     },
-                     {
-                        "<leader>ru",
-                        function() vim.cmd.Rustc('unpretty', 'hir') end,
-                        desc =
-                        "Parent Module"
-                     },
-
-                  })
-               end,
-               default_settings = {
-                  -- rust-analyzer language server configuration
-                  ['rust-analyzer'] = {
-                     cargo = { allFeatures = true },
-                     checkOnSave = {
-                        command = "clippy",
-                        extraArgs = { "--no-deps" }
-                     },
-                     diagnostics = {
-                     }
-                  },
-               },
-            },
-            -- DAP configuration
-            dap = {
-            },
-         }
-      end
-   }
 }
-
-
 return ret
