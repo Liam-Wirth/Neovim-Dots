@@ -56,14 +56,39 @@ return {
          t = colors.red,
       }
 
-      -- Lualine Configuration
+      local gbox = require('lualine.themes.gruvbox')
+
+      local function filetype_with_icons()
+         -- Get the filetype icon and its color
+         local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype)
+
+         -- Get Tree-sitter icon if active
+         local ts_icon = nil
+         if vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] then
+            ts_icon = "󰔱" -- Tree-sitter icon
+         end
+
+         -- Return both icons and apply colors
+         local ft = vim.bo.filetype or "no ft"
+         if ft_icon then
+            if ts_icon then
+               return ft_icon .. " " .. ft .. " " .. ts_icon -- Filetype + Tree-sitter icon
+            else
+               return ft_icon .. " " .. ft                   -- Only filetype icon
+            end
+         else
+            return ft -- No icon, fallback to filetype name
+         end
+      end
+
+
       local config = {
          options = {
             globalstatus = true,
             icons_enabled = true,
             component_separators = { left = "", right = "" },
             section_separators = { left = "", right = "" },
-            disabled_filetypes = { "alpha", "dashboard", "NvimTree", "packer", "Outline", "toggleterm", "TelescopePrompt" },
+            disabled_filetypes = { "alpha", "dashboard", "NvimTree", "packer", "Outline", "TelescopePrompt" },
             theme = {
                normal = {
                   a = { fg = colors.fg, bg = colors.bg },
@@ -118,7 +143,23 @@ return {
             },
 
             ---- LUALINE B
-            lualine_b = {},
+            lualine_b = {
+               {
+                  "branch",
+                  icon = require('util.glyphs').git.Branch,
+                  color = { fg = colors.green },
+               },
+               {
+                  "diff",
+                  symbols = { added = " ", modified = "󰝤 ", removed = " " },
+                  diff_color = {
+                     added = { fg = colors.green },
+                     modified = { fg = colors.orange },
+                     removed = { fg = colors.red },
+                  },
+                  cond = conditions.hide_in_width,
+               },
+            },
 
             --- LUALINE C
             lualine_c = {
@@ -130,10 +171,7 @@ return {
                {
                   "location"
                },
-               {
-                  "progress",
-                  color = { fg = colors.fg, gui = "bold" }
-               },
+               -- TODO: Implement a click feature so that when clicked it brings up the trouble diagnostics
                {
                   "diagnostics",
                   sources = { "nvim_diagnostic" },
@@ -148,6 +186,18 @@ return {
 
             ---- SECTION X
             lualine_x = {
+               -- TODO: eventually update so that when you hover over this or smth it tells you the lsp you are using
+               -- FIX: You need to fix the treesitter icon so it has a green color
+               -- FIX: you need to fix the filetype name to just be the regular fg color separate from the icon color maybe just make the filetype function return a tuple or set some global vars
+               {
+                  filetype_with_icons,
+                  color = function()
+                     local _, ft_color = require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype)
+                     -- If there's no color for the filetype, fallback to default color
+                     return { fg = ft_color or "#ebdbb2", bg = "#282828" }
+                  end,
+                  padding = { left = 1, right = 1 },
+               },
                {
                   function()
                      local msg = "No Active Lsp"
@@ -193,15 +243,9 @@ return {
             },
             lualine_y = {
                {
-                  "diff",
-                  symbols = { added = " ", modified = "󰝤 ", removed = " " },
-                  diff_color = {
-                     added = { fg = colors.green },
-                     modified = { fg = colors.orange },
-                     removed = { fg = colors.red },
-                  },
-                  cond = conditions.hide_in_width,
-               }
+                  "progress",
+                  color = { fg = colors.fg, gui = "bold" }
+               },
             },
             lualine_z = {
                {
