@@ -86,7 +86,7 @@ return {
             elixir = { formatter("mix format", { current_file }, false) },
             go = { formatter("gofmt", { current_file }, true) },
             graphql = { formatter("prettier", prettier_args("graphql"), true) },
-            html = { formatter("prettier", prettier_args("html"), false) },
+            -- html = { formatter("prettier", prettier_args("html"), false) },
             javascript = { formatter("biome", biome_args(), false) },
             --javascript = { formatter("prettier", prettier_args("typescript"), false) },
             json = { formatter("prettier", prettier_args("json"), true) },

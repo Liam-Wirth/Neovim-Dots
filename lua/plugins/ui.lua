@@ -102,8 +102,8 @@ return {
    },
    "nvim-tree/nvim-web-devicons",
    {
-      'nvim-focus/focus.nvim',
-      version = '*',
+      "nvim-focus/focus.nvim",
+      version = "*",
       config = function()
          require("focus").setup({
             ui = {
@@ -116,7 +116,7 @@ return {
                cursorcolumn = false,              -- Display cursorcolumn in the focussed window only
                colorcolumn = {
                   enable = false,                 -- Display colorcolumn in the foccused window only
-                  list = '+1',                    -- Set the comma-saperated list for the colorcolumn
+                  list = "+1",                    -- Set the comma-saperated list for the colorcolumn
                },
                signcolumn = true,                 -- Display signcolumn in the focussed window only
                winhighlight = true,               -- Auto highlighting for focussed/unfocussed windows
@@ -148,27 +148,27 @@ return {
             hover = {
                enabled = true,
                delay = 2,
-               reveal = { 'close' }
+               reveal = { "close" }
             },
             config = function()
-               require('transparent').clear_prefix('BufferLine')
+               require("transparent").clear_prefix("BufferLine")
                vim.g.transparent_groups = vim.list_extend(
                   vim.g.transparent_groups or {},
                   vim.tbl_map(function(v)
                      return v.hl_group
-                  end, vim.tbl_values(require('bufferline.config').highlights))
+                  end, vim.tbl_values(require("bufferline.config").highlights))
                )
             end
          },
       },
    },
    {
-      's1n7ax/nvim-window-picker',
-      name = 'window-picker',
-      event = 'BufReadPost',
-      version = '2.*',
+      "s1n7ax/nvim-window-picker",
+      name = "window-picker",
+      event = "BufReadPost",
+      version = "2.*",
       config = function()
-         require 'window-picker'.setup()
+         require "window-picker".setup()
       end,
    },
    {
@@ -177,10 +177,10 @@ return {
       config = function()
          require("transparent").setup({ -- Optional, you don't have to run setup.
             groups = {                  -- table: default groups
-               'Normal', 'NormalNC', 'Comment', 'Constant', 'Special', 'Identifier',
-               'Statement', 'PreProc', 'Type', 'Underlined', 'Todo', 'String', 'Function',
-               'Conditional', 'Repeat', 'Operator', 'Structure', 'LineNr', 'NonText',
-               'SignColumn', 'CursorLineNr', 'EndOfBuffer',
+               "Normal", "NormalNC", "Comment", "Constant", "Special", "Identifier",
+               "Statement", "PreProc", "Type", "Underlined", "Todo", "String", "Function",
+               "Conditional", "Repeat", "Operator", "Structure", "LineNr", "NonText",
+               "SignColumn", "CursorLineNr", "EndOfBuffer",
             },
             {
                extra_groups = {
@@ -197,7 +197,5 @@ return {
    {
       "lukas-reineke/indent-blankline.nvim",
       main = "ibl",
-      opts = {
-      }
    }
 }
