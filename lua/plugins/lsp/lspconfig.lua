@@ -1,24 +1,98 @@
-local servers = {
-   "texlab",
-   "verible",
-   "clangd",
-   "basedpyright",
-   "biome",
-   "jsonls",
-   "eslint",
-   "tailwindcss",
-   "gopls",
-   "svelte",
-   "intelephense",
-   "astro",
-   "yamlls",
-   "fortls",
-   "marksman"
-}
--- NOTE: The error regarding lspconfig being weird and mason servers not loading right might be here
+-- TODO : Fix this horrendous config, utterly terrible
+-- Initialize which-key
+local wk = require("which-key")
 local glyphs = require('util.glyphs')
 
+-- Keymap to toggle LSP inlay hints
+vim.keymap.set("n", '<leader>i', function()
+   local buf = vim.api.nvim_get_current_buf()
+   local inlay_hint = vim.lsp.buf.inlay_hint
+   if inlay_hint then
+      inlay_hint(buf, nil) -- Toggle inlay hints
+   else
+      require('notify')("Inlay Hints not supported by your current lsp, get that jawn fixed!")
+   end
+end, { desc = "Toggle Inlay Hints" })
+
+-- Require necessary modules
+local wk = require("which-key")
+local lspconfig = require('lspconfig')
+local mason = require('mason')
+local mason_lspconfig = require('mason-lspconfig')
+local cmp_nvim_lsp = require('cmp_nvim_lsp')
+local lspsaga = require('lspsaga')
+
+-- Define servers to ensure they're installed
+local servers = {
+  "texlab",
+  "verible",
+  "clangd",
+  "pyright",
+  "biome",
+  "jsonls",
+  "eslint",
+  "tailwindcss",
+  "gopls",
+  "svelte",
+  "intelephense",
+  "astro",
+  "yamlls",
+  "fortls",
+  "marksman",
+}
+
+-- Setup mason
+mason.setup()
+
+-- Setup mason-lspconfig
+mason_lspconfig.setup {
+  ensure_installed = servers,
+}
+
 local on_attach = function(client, bufnr)
+   local nmap = function(keys, func, desc)
+      if desc then
+         desc = 'LSP: ' .. desc
+      end
+      vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+   end
+
+   -- Use lspsaga for LSP functions
+   nmap('gh', '<cmd>Lspsaga lsp_finder<CR>', 'Finder')
+   nmap('<leader>ca', '<cmd>Lspsaga code_action<CR>', 'Code Action')
+   nmap('gr', '<cmd>Lspsaga rename<CR>', 'Rename')
+   nmap('gd', '<cmd>Lspsaga peek_definition<CR>', 'Peek Definition')
+   nmap('gD', '<cmd>Lspsaga goto_definition<CR>', 'Go to Definition')
+   nmap('K', '<cmd>Lspsaga hover_doc<CR>', 'Hover Documentation')
+   nmap('<C-k>', '<cmd>Lspsaga signature_help<CR>', 'Signature Help')
+   nmap('[e', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Previous Diagnostic')
+   nmap(']e', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Next Diagnostic')
+   nmap('<leader>cd', '<cmd>Lspsaga show_line_diagnostics<CR>', 'Line Diagnostics')
+   nmap('<leader>o', '<cmd>Lspsaga outline<CR>', 'Toggle Outline')
+
+   -- For visual mode code action
+   vim.keymap.set('v', '<leader>ca', '<cmd>Lspsaga range_code_action<CR>', { buffer = bufnr, desc = 'LSP: Code Action' })
+
+   -- Attach illuminate if available
+   if client.server_capabilities.documentHighlightProvider then
+      require('illuminate').on_attach(client)
+   end
+   local sign = function(opts)
+      vim.fn.sign_define(opts.name, {
+         texthl = opts.name,
+         text = opts.text,
+      })
+   end
+
+   sign({ name = 'DiagnosticSignError', text = glyphs.diagnostics.BoldError })
+   sign({ name = 'DiagnosticSignWarn', text = glyphs.diagnostics.BoldWarning })
+   sign({ name = 'DiagnosticSignHint', text = glyphs.diagnostics.BoldHint })
+   sign({ name = 'DiagnosticSignInfo', text = glyphs.diagnostics.BoldInformation })
+end
+
+-- NOTE: The error regarding lspconfig being weird and mason servers not loading right might be here
+
+local oldon_attach = function(client, bufnr)
    -- Define a function to easily set key mappings for LSP-related items
    local nmap = function(keys, func, desc)
       if desc then
@@ -33,18 +107,6 @@ local on_attach = function(client, bufnr)
    end
 
    -- Define diagnostic signs
-   local sign = function(opts)
-      vim.fn.sign_define(opts.name, {
-         texthl = opts.name,
-         text = opts.text,
-      })
-   end
-
-   sign({ name = 'DiagnosticSignError', text = glyphs.diagnostics.BoldError })
-   sign({ name = 'DiagnosticSignWarn', text = glyphs.diagnostics.BoldWarning })
-   sign({ name = 'DiagnosticSignHint', text = glyphs.diagnostics.BoldHint })
-   sign({ name = 'DiagnosticSignInfo', text = glyphs.diagnostics.BoldInformation })
-
    -- Define key mappings
    -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
@@ -83,9 +145,6 @@ local on_attach = function(client, bufnr)
          end
       end, { desc = 'Format current buffer with LSP' })
    else
-      vim.cmd [[
-      echo POOP
-      ]]
       vim.api.nvim_create_autocmd("BufWritePre", {
          pattern = "*",
          callback = function(args)
