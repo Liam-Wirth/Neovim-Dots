@@ -53,9 +53,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
          },
 
          { "<space>bD",   vim.lsp.buf.type_definition, desc = "Type Definition", mode = "n" },
-         { "<space>br",   vim.lsp.buf.rename,          desc = "Rename Symbol",   mode = "n" },
-         { "<space>ba",   vim.lsp.buf.code_action,     desc = "Code Action",     mode = { "n", "v" } },
-         { "<leader>bgr", vim.lsp.buf.references,      desc = "List References", mode = "n" },
+         { "<space>br",   desc = "Rename Symbol",   mode = "n" },
+         { "<space>ba",   desc = "Code Action",        mode = { "n", "v" } },
          {
             "<space>.",
             function()
