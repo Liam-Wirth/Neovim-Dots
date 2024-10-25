@@ -1,33 +1,32 @@
- 
 local ret = {
-   -- {
-   --    'utilyre/barbecue.nvim',
-   --    lazy = true,
-   --    event = "BufReadPost",
-   --    name = 'barbecue',
-   --    version = '*',
-   --    dependencies = {
-   --       'SmiteshP/nvim-navic',
-   --       'nvim-tree/nvim-web-devicons',
-   --    },
-   --    opts = {
-   --       show_basename = false,
-   --       symbols = {
-   --          ---Modification indicator.
-   --          ---@type string
-   --          modified = "●",
-   --
-   --          ---Truncation indicator.
-   --          ---@type string
-   --          ellipsis = "…",
-   --
-   --          ---Entry separator.
-   --          ---@type string
-   --          separator = "",
-   --       },
-   --       context_follow_icon_color = true,
-   --    },
-   -- },
+   {
+      "utilyre/barbecue.nvim", -- TODO: Eventually phase out for lspsaga
+      lazy = true,
+      event = "BufReadPost",
+      name = "barbecue",
+      version = "*",
+      dependencies = {
+         "SmiteshP/nvim-navic",
+         "nvim-tree/nvim-web-devicons",
+      },
+      opts = {
+         show_basename = false,
+         symbols = {
+            ---Modification indicator.
+            ---@type string
+            modified = "●",
+
+            ---Truncation indicator.
+            ---@type string
+            ellipsis = "…",
+
+            ---Entry separator.
+            ---@type string
+            separator = "",
+         },
+         context_follow_icon_color = true,
+      },
+   },
    {
       "neovim/nvim-lspconfig",
       dependencies = {
@@ -72,33 +71,33 @@ local ret = {
       event = "BufReadPost",
       config = function()
          -- This module contains a number of default definitions
-         local rainbow_delimiters = require 'rainbow-delimiters'
+         local rainbow_delimiters = require "rainbow-delimiters"
 
          vim.g.rainbow_delimiters = {
             strategy = {
-               [''] = rainbow_delimiters.strategy['global'],
-               commonlisp = rainbow_delimiters.strategy['local'],
+               [""] = rainbow_delimiters.strategy["global"],
+               commonlisp = rainbow_delimiters.strategy["local"],
             },
             query = {
-               [''] = 'rainbow-delimiters',
-               lua = 'rainbow-blocks',
-               latex = 'rainbow-blocks',
+               [""] = "rainbow-delimiters",
+               lua = "rainbow-blocks",
+               latex = "rainbow-blocks",
             },
             highlight = {
-               'RainbowDelimiterRed',
-               'RainbowDelimiterYellow',
-               'RainbowDelimiterBlue',
-               'RainbowDelimiterOrange',
-               'RainbowDelimiterGreen',
-               'RainbowDelimiterViolet',
-               'RainbowDelimiterCyan',
+               "RainbowDelimiterRed",
+               "RainbowDelimiterYellow",
+               "RainbowDelimiterBlue",
+               "RainbowDelimiterOrange",
+               "RainbowDelimiterGreen",
+               "RainbowDelimiterViolet",
+               "RainbowDelimiterCyan",
             },
-            blacklist = { 'c' },
+            blacklist = { "c" },
          }
       end
    },
    {
-      'p00f/clangd_extensions.nvim',
+      "p00f/clangd_extensions.nvim",
       lazy = false,
       config = function()
          require("clangd_extensions").setup({
@@ -135,10 +134,10 @@ local ret = {
    },
    -- 'jose-elias-alvarez/null-ls.nvim', rip :(
    {
-      'stevearc/aerial.nvim',
+      "stevearc/aerial.nvim",
       lazy = true,
       opts = {
-         backends = { 'lsp', 'treesitter', 'markdown', 'man' },
+         backends = { "lsp", "treesitter", "markdown", "man" },
          on_attach = function(bufnr)
             wk.add({
                { "{", "<cmd> AerialPrev<CR>", { buffer = bufnr, noremap = true, silent = true }, desc = "AerialPrev" },
@@ -147,52 +146,52 @@ local ret = {
          end,
          default_direction = "prefer_left",
       },
-      cmd = { 'AerialOpen', 'AerialToggle' },
+      cmd = { "AerialOpen", "AerialToggle" },
    },
    {
       -- lsp_signature | shows the signature of a function when typing parameters
-      'ray-x/lsp_signature.nvim',
+      "ray-x/lsp_signature.nvim",
       lazy = true,
       event = "BufReadPost",
       config = function()
-         require('lsp_signature').setup({
+         require("lsp_signature").setup({
             floating_window = false
          })
       end
    },
    {
-      'nvim-orgmode/orgmode',
+      "nvim-orgmode/orgmode",
       dependencies = {
-         { 'nvim-treesitter/nvim-treesitter', lazy = true },
-         { 'akinsho/org-bullets.nvim',        lazy = true },
+         { "nvim-treesitter/nvim-treesitter", lazy = true },
+         { "akinsho/org-bullets.nvim",        lazy = true },
       },
-      event = 'VeryLazy',
+      event = "VeryLazy",
       config = function()
          -- Load treesitter grammar for org
 
          -- Setup treesitter
-         require('nvim-treesitter.configs').setup({
+         require("nvim-treesitter.configs").setup({
             highlight = {
                enable = true,
-               additional_vim_regex_highlighting = { 'org' },
+               additional_vim_regex_highlighting = { "org" },
             },
-            ensure_installed = { 'org' },
+            ensure_installed = { "org" },
          })
 
          -- Setup orgmode
-         require('orgmode').setup({
-            org_agenda_files = '~/orgfiles/**/*',
-            org_default_notes_file = '~/orgfiles/refile.org',
+         require("orgmode").setup({
+            org_agenda_files = "~/orgfiles/**/*",
+            org_default_notes_file = "~/orgfiles/refile.org",
          })
       end,
    },
    {
-      'lukas-reineke/headlines.nvim',
+      "lukas-reineke/headlines.nvim",
       dependencies = "nvim-treesitter/nvim-treesitter",
       config = true, -- or `opts = {}`
    },
    {
-      'bfrg/vim-cpp-modern',
+      "bfrg/vim-cpp-modern",
       lazy = false,
       config = function()
          vim.cmd([[
@@ -217,8 +216,8 @@ local ret = {
       }
    },
    {
-      'mrcjkb/rustaceanvim',
-      version = '^5', -- Recommended
+      "mrcjkb/rustaceanvim",
+      version = "^5", -- Recommended
       lazy = false,   -- This plugin is already lazy
       config = function(_, opts)
          vim.g.rustaceanvim = {
@@ -232,33 +231,33 @@ local ret = {
                      { "<leader>r", group = "Rust", desc = "Rust" },
                      {
                         "<leader>rc",
-                        function() vim.cmd.RustLsp('openCargo') end,
+                        function() vim.cmd.RustLsp("openCargo") end,
                         group = "Rust",
                         desc =
                         "Open Cargo.toml"
                      },
                      {
                         "<leader>ba",
-                        function() vim.cmd.RustLsp('codeAction') end,
+                        function() vim.cmd.RustLsp("codeAction") end,
                         remap = true,
                         desc =
                         "Code Action {Rust}"
                      },
                      {
                         "<leader>re",
-                        function() vim.cmd.RustLsp('explainError') end,
+                        function() vim.cmd.RustLsp("explainError") end,
                         desc =
                         "Explain Error"
                      },
                      {
                         "<leader>rp",
-                        function() vim.cmd.RustLsp('parentModule') end,
+                        function() vim.cmd.RustLsp("parentModule") end,
                         desc =
                         "Parent Module"
                      },
                      {
                         "<leader>ru",
-                        function() vim.cmd.Rustc('unpretty', 'hir') end,
+                        function() vim.cmd.Rustc("unpretty", "hir") end,
                         desc =
                         "Parent Module"
                      },
@@ -267,7 +266,7 @@ local ret = {
                end,
                default_settings = {
                   -- rust-analyzer language server configuration
-                  ['rust-analyzer'] = {
+                  ["rust-analyzer"] = {
                      cargo = { allFeatures = true },
                      checkOnSave = {
                         command = "clippy",
