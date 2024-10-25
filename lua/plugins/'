@@ -89,12 +89,9 @@ return {
    --       max_hjkl = 100,
    --    }
    -- }
- --  {
- --     "ThePrimeagen/harpoon",
- --     branch = "harpoon2",
- --     dependencies = { "nvim-lua/plenary.nvim" },
- --     opts = function ()
-
- --     end,
- --  }
+   {
+      "ThePrimeagen/harpoon",
+      branch = "harpoon2",
+      dependencies = { "nvim-lua/plenary.nvim" },
+   }
 }

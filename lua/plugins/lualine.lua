@@ -30,6 +30,7 @@ return {
          grey = "#928374",
          blue = "#458588",
          red = "#cc241d",
+         treesitter = "#8ec07c", -- Green color for Tree-sitter icon
       }
 
       -- Mode Colors
@@ -56,31 +57,21 @@ return {
          t = colors.red,
       }
 
-      local gbox = require('lualine.themes.gruvbox')
-
+      -- Function to return filetype icon and name separately
       local function filetype_with_icons()
-         -- Get the filetype icon and its color
          local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype)
-
-         -- Get Tree-sitter icon if active
          local ts_icon = nil
          if vim.treesitter.highlighter.active[vim.api.nvim_get_current_buf()] then
             ts_icon = "󰔱" -- Tree-sitter icon
          end
-
-         -- Return both icons and apply colors
          local ft = vim.bo.filetype or "no ft"
-         if ft_icon then
-            if ts_icon then
-               return ft_icon .. " " .. ft .. " " .. ts_icon -- Filetype + Tree-sitter icon
-            else
-               return ft_icon .. " " .. ft                   -- Only filetype icon
-            end
-         else
-            return ft -- No icon, fallback to filetype name
-         end
-      end
 
+         -- Setting this as a global variable so that I can use it in other segments while only calling this function once
+         vim.g.ft_icon = ft_icon
+         vim.g.ft_color = ft_color
+         vim.g.ts_color = "#afdb89"
+         return ft_icon, ft, ft_color, ts_icon
+      end
 
       local config = {
          options = {
@@ -103,12 +94,11 @@ return {
             }
          },
          sections = {
-            ---- LUALINE A
             lualine_a = {
                {
                   function() return "▊" end,
                   color = function() return { fg = mode_color[vim.fn.mode()], bg = mode_color[vim.fn.mode()] } end,
-                  padding = { left = 0, right = 0 }
+                  padding = { left = -1, right = -1 }
                },
                {
                   function()
@@ -123,15 +113,12 @@ return {
                      local mode = mode_name[vim.fn.mode()] or "Unknown"
                      local total_width = 4
                      local mode_length = #mode
-
                      if mode_length > total_width then
                         mode = mode:sub(1, total_width)
                      end
-
                      local padding = math.max(total_width - mode_length, 0)
                      local left_padding = math.floor(padding / 2)
                      local right_padding = padding - left_padding
-                     -- Center the mode name with spaces
                      return string.rep(" ", left_padding) .. mode .. string.rep(" ", right_padding)
                   end,
                   color = function()
@@ -141,8 +128,6 @@ return {
                }
 
             },
-
-            ---- LUALINE B
             lualine_b = {
                {
                   "branch",
@@ -160,18 +145,13 @@ return {
                   cond = conditions.hide_in_width,
                },
             },
-
-            --- LUALINE C
             lualine_c = {
                {
                   "fancy_cwd",
                   cond = conditions.buffer_not_empty,
                   color = { fg = colors.magenta, gui = "bold" },
+                  path = 0,
                },
-               {
-                  "location"
-               },
-               -- TODO: Implement a click feature so that when clicked it brings up the trouble diagnostics
                {
                   "diagnostics",
                   sources = { "nvim_diagnostic" },
@@ -181,22 +161,21 @@ return {
                      color_warn = { fg = colors.yellow },
                      color_info = { fg = colors.cyan },
                   },
+                  on_click = function() vim.cmd("TroubleToggle") end, -- TODO click event to open trouble
                },
             },
-
-            ---- SECTION X
             lualine_x = {
-               -- TODO: eventually update so that when you hover over this or smth it tells you the lsp you are using
-               -- FIX: You need to fix the treesitter icon so it has a green color
-               -- FIX: you need to fix the filetype name to just be the regular fg color separate from the icon color maybe just make the filetype function return a tuple or set some global vars
                {
-                  filetype_with_icons,
-                  color = function()
-                     local _, ft_color = require("nvim-web-devicons").get_icon_color_by_filetype(vim.bo.filetype)
-                     -- If there's no color for the filetype, fallback to default color
-                     return { fg = ft_color or "#ebdbb2", bg = "#282828" }
+                  function()
+                     local ft_icon, ft, ft_color, ts_icon = filetype_with_icons()
+
+                     local result = (ft_icon or "")
+                     return result
                   end,
-                  padding = { left = 1, right = 1 },
+                  color = function()
+                     local _, _, ft_color = filetype_with_icons()
+                     return { fg = ft_color or colors.fg, bg = colors.bg }
+                  end,
                },
                {
                   function()
@@ -219,9 +198,8 @@ return {
                {
                   "fileformat",
                   fmt = string.upper,
-                  icons_enabled = false,
+                  icons_enabled = true,
                   color = { fg = colors.green, gui = "bold" },
-                  padding = { left = 1 }
                },
                {
                   function()
@@ -233,9 +211,9 @@ return {
                   end,
                   color = function()
                      if vim.g.copilot_enabled == 1 then
-                        return { fg = colors.green }
+                        return { fg = colors.green, gui = "bold" }
                      else
-                        return { fg = colors.red }
+                        return { fg = colors.red, gui = "bold" }
                      end
                   end,
                   cond = conditions.hide_in_width,
@@ -244,8 +222,12 @@ return {
             lualine_y = {
                {
                   "progress",
-                  color = { fg = colors.fg, gui = "bold" }
+                  color = { fg = colors.fg, gui = "bold" },
+                  padding = { right = 0, left = 0}
                },
+               {
+                  "fancy_location",
+               }
             },
             lualine_z = {
                {
