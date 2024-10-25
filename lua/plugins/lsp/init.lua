@@ -1,32 +1,32 @@
 local ret = {
-   {
-      'utilyre/barbecue.nvim',
-      lazy = true,
-      event = "BufReadPost",
-      name = 'barbecue',
-      version = '*',
-      dependencies = {
-         'SmiteshP/nvim-navic',
-         'nvim-tree/nvim-web-devicons',
-      },
-      opts = {
-         show_basename = false,
-         symbols = {
-            ---Modification indicator.
-            ---@type string
-            modified = "●",
-
-            ---Truncation indicator.
-            ---@type string
-            ellipsis = "…",
-
-            ---Entry separator.
-            ---@type string
-            separator = "",
-         },
-         context_follow_icon_color = true,
-      },
-   },
+   -- {
+   --    'utilyre/barbecue.nvim',
+   --    lazy = true,
+   --    event = "BufReadPost",
+   --    name = 'barbecue',
+   --    version = '*',
+   --    dependencies = {
+   --       'SmiteshP/nvim-navic',
+   --       'nvim-tree/nvim-web-devicons',
+   --    },
+   --    opts = {
+   --       show_basename = false,
+   --       symbols = {
+   --          ---Modification indicator.
+   --          ---@type string
+   --          modified = "●",
+   --
+   --          ---Truncation indicator.
+   --          ---@type string
+   --          ellipsis = "…",
+   --
+   --          ---Entry separator.
+   --          ---@type string
+   --          separator = "",
+   --       },
+   --       context_follow_icon_color = true,
+   --    },
+   -- },
    {
       "neovim/nvim-lspconfig",
       dependencies = {

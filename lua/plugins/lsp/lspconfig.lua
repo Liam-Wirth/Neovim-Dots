@@ -1,8 +1,3 @@
-local wk = require("which-key")
-vim.keymap.set("n", '<leader>i',
-   function()
-      vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
-   end)
 local servers = {
    "texlab",
    "verible",
@@ -51,14 +46,14 @@ local on_attach = function(client, bufnr)
    sign({ name = 'DiagnosticSignInfo', text = glyphs.diagnostics.BoldInformation })
 
    -- Define key mappings
-   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+   -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
    nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
 
 
-   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+   -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+   -- nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
    nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
    nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
