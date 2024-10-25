@@ -1,4 +1,4 @@
--- TODO: Configure so that lsp uses this 
+-- TODO: Configure so that lsp uses this
 return {
    "mhartington/formatter.nvim",
    config = function()
@@ -27,7 +27,7 @@ return {
       local biome_args = function()
          return {
             "format",
-            "--write",
+            -- "--write",
             current_file,
          }
       end
@@ -98,11 +98,8 @@ return {
             scss = { formatter("prettier", prettier_args("scss"), true) },
             sql = { formatter("sql-formatter", sql_args, true) },
             typescript = { formatter("biome", biome_args(), false) },
-            --typescript = { formatter("prettier", prettier_args("typescript"), false) },
-            --typescriptreact = { formatter("biome", biome_args(), false) },
             vue = { formatter("prettier", vue_args, true) },
          },
       })
-
    end,
 }
