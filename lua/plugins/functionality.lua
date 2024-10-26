@@ -122,7 +122,8 @@ return {
             'css',
             'javascript',
             html = { mode = 'background' },
-         }, { mode = 'foreground' })
-      end
-   },
+         }, { mode = 'background' })
+      end,
+      keys = {
+         "<leader>p", "<cmd>ColorizerToggle<CR>", desc = "Toggle Colorizer" } },
 }
