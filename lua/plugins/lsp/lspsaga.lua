@@ -3,12 +3,13 @@ return {
    {
       'nvimdev/lspsaga.nvim',
       lazy = true,
+      after = 'nvim-lspconfig',
       event = "LspAttach",
       keys = {
          { 'gh',          '<cmd>Lspsaga finder imp+def+ref<CR>',   silent = true },
          { '<leader>bfi', '<cmd>Lspsaga finder imp<CR>',           silent = true },
          { '<leader>bfr', '<cmd>Lspsaga finder ref<CR>',           silent = true },
-         { '<leader>ba',  '<cmd>Lspsaga code_action<CR>',          mode = { 'n', 'v' }, silent = true },
+         { '<leader>bA',  '<cmd>Lspsaga code_action<CR>',          mode = { 'n', 'v' }, silent = true, desc = "LSPSaga Code Action" },
          { '<leader>rn',  '<cmd>Lspsaga rename<CR>',               silent = true },
          { '<leader>bgD', '<cmd>Lspsaga peek_definition<CR>',      silent = true },
          { '<leader>bgT', '<cmd>Lspsaga peek_type_definition<CR>', silent = true },
@@ -80,7 +81,7 @@ return {
             },
          },
          ui = {
-            border = 'single',
+            border = 'rounded',
             code_action = '',
             diagnostic = '',
             max_width = 0.6,

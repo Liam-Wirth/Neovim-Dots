@@ -182,20 +182,50 @@ return {
                "Conditional", "Repeat", "Operator", "Structure", "LineNr", "NonText",
                "SignColumn", "CursorLineNr", "EndOfBuffer",
             },
-            {
-               extra_groups = {
-                  "NormalFloat",    -- plugins which have float panel such as Lazy, Mason, LspInfo
-                  "NvimTreeNormal", -- NvimTree
-                  "Neo-Tree",
-
-               },
+            extra_groups = {
+               "NvimTreeNormal",    -- NvimTree
+               "Neo-Tree",
             },
-            exclude_groups = {}, -- table: groups you don't want to clear
+            exclude_groups = { "NormalFloat", "FloatBorder" }, -- table: groups you don't want to clear
          })
       end
    },
    {
+      "hiphish/rainbow-delimiters.nvim",
+      lazy = false,
+      -- event = "BufReadPost",
+      config = function()
+         -- This module contains a number of default definitions
+         local rainbow_delimiters = require "rainbow-delimiters"
+
+         vim.g.rainbow_delimiters = {
+            strategy = {
+               [""] = rainbow_delimiters.strategy["global"],
+               commonlisp = rainbow_delimiters.strategy["local"],
+            },
+            query = {
+               [""] = "rainbow-delimiters",
+               lua = "rainbow-blocks",
+               latex = "rainbow-blocks",
+            },
+            highlight = {
+               "RainbowDelimiterRed",
+               "RainbowDelimiterYellow",
+               "RainbowDelimiterBlue",
+               "RainbowDelimiterOrange",
+               "RainbowDelimiterGreen",
+               "RainbowDelimiterViolet",
+               "RainbowDelimiterCyan",
+            },
+            blacklist = { "c" },
+         }
+      end
+   },
+   {
       "lukas-reineke/indent-blankline.nvim",
-      main = "ibl",
+      main   = "ibl",
+      config = function() require("plugins.configs.indent-blankline") end,
+      before = "gruvbox.nvim",
+      after  = "rainow-delimiters.nvim"
    }
 }

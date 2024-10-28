@@ -82,7 +82,7 @@ return {
       },
    },
    {
-      'akinsho/toggleterm.nvim',
+      "akinsho/toggleterm.nvim",
       version = "*",
       lazy = true,
       event = { "BufReadPost", "BufNewFile" },
@@ -114,16 +114,27 @@ return {
       }
    },
    {
-      'norcalli/nvim-colorizer.lua',
+      "norcalli/nvim-colorizer.lua",
       lazy = true,
       event = { "BufReadPost", "BufNewFile" },
       config = function()
-         require 'colorizer'.setup({
-            'css',
-            'javascript',
-            html = { mode = 'background' },
-         }, { mode = 'background' })
+         require "colorizer".setup({
+            "css",
+            "javascript",
+            html = { mode = "background" },
+         }, { mode = "background" })
       end,
       keys = {
-         "<leader>p", "<cmd>ColorizerToggle<CR>", desc = "Toggle Colorizer" } },
+         "<leader>p", "<cmd>ColorizerToggle<CR>", desc = "Toggle Colorizer" }
+   },
+   {
+      "kdheepak/lazygit.nvim",
+      keys = {
+         { "<Leader>eg", ":LazyGit<CR>", silent = true }
+      },
+      config = function()
+         vim.g.lazygit_floating_window_scaling_factor = 1
+      end,
+   }
+
 }
