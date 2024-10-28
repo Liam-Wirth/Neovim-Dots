@@ -1,14 +1,15 @@
-local wk = require("which-key")
 local glyphs = require("util.glyphs")
 
+local M = {}
+
 -- Keymap to toggle LSP inlay hints
+
 vim.keymap.set("n", "<leader>i", function()
    local buf = vim.api.nvim_get_current_buf()
-   local inlay_hint = vim.lsp.buf.inlay_hint
-   if inlay_hint then
-      inlay_hint(buf, nil) -- Toggle inlay hints
+   if vim.lsp.buf.inlay_hint then
+      vim.lsp.buf.inlay_hint(buf, nil) -- Toggle inlay hints
    else
-      require("notify")("Inlay Hints not supported by your current lsp, get that jawn fixed!")
+      require("notify")("Inlay Hints not supported by your current LSP, get that jawn fixed!")
    end
 end, { desc = "Toggle Inlay Hints" })
 
@@ -34,7 +35,7 @@ local servers = {
    "lua_ls",
 }
 
-local on_attach = function(client, bufnr)
+M.on_attach = function(client, bufnr)
    -- Define a function to easily set key mappings for LSP-related items
    local nmap = function(keys, func, desc)
       if desc then
@@ -42,7 +43,6 @@ local on_attach = function(client, bufnr)
       end
       vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
    end
-
    -- Attach illuminate if the client supports documentHighlight
    if client.server_capabilities.documentHighlightProvider then
       require("illuminate").on_attach(client)
@@ -61,24 +61,36 @@ local on_attach = function(client, bufnr)
    sign({ name = "DiagnosticSignHint", text = glyphs.diagnostics.BoldHint })
    sign({ name = "DiagnosticSignInfo", text = glyphs.diagnostics.BoldInformation })
 
-   -- Define key mappings
-   nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-   nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-   nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-   nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
-   nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
-   nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-   nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
 
-   -- See `:help K` for why this keymap
-   nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+   if client.server_capabilities.inlayHintProvider then
+      vim.lsp.inlay_hint.enable(true)
+   end
+
+   local filetype = vim.bo.filetype
+   if vim.tbl_contains({ "rust" }, filetype) then
+      vim.keymap.set("n", "K", "<cmd>lua require'rustaceanvim'.hover_actions.hover_actions()<CR>")
+      vim.keymap.set("n", "<space>ba", function() vim.cmd.RustLsp("codeAction") end)
+   else
+      nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+      nmap("<leader>ba", vim.lsp.buf.code_action, "Code Action")
+   end
+
+
+   nmap("bgd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+   nmap("bgr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+   nmap("bgI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+   nmap("<leader>bD", vim.lsp.buf.type_definition, "Type [D]efinition")
+   nmap("<leader>bd", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+   nmap("<leader>bws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+
+
    nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 
    -- Lesser used LSP functionality
-   nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-   nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
-   nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
-   nmap("<leader>wl", function()
+   nmap("bgD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+   nmap("<leader>bwa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
+   nmap("<leader>bwr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
+   nmap("<leader>bwl", function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
    end, "[W]orkspace [L]ist Folders")
 end
@@ -159,7 +171,7 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 -- Configure LSP servers
 for _, lsp in ipairs(servers) do
    require("lspconfig")[lsp].setup {
-      on_attach = on_attach,
+      on_attach = M.on_attach,
       capabilities = capabilities,
    }
 end
@@ -167,7 +179,7 @@ end
 -- Example custom configuration for basedpyright (assuming it's a valid LSP server)
 require("lspconfig").basedpyright.setup {
    capabilities = capabilities,
-   on_attach = on_attach,
+   on_attach = M.on_attach,
    settings = {
       basedpyright = {
          analysis = {
@@ -184,7 +196,7 @@ require("lspconfig").basedpyright.setup {
 -- Custom configuration for lua_ls
 require("lspconfig").lua_ls.setup {
    capabilities = capabilities,
-   on_attach = on_attach,
+   on_attach = M.on_attach,
    settings = {
       Lua = {
          workspace = {
@@ -226,8 +238,7 @@ require("lspconfig").lua_ls.setup {
                indent_style = "space",
                indent_size = "2",
                continuation_indent = "2",
-               quote_style = "double",
-               continuation_indent_size = "2",
+               quote_style = "double", continuation_indent_size = "2",
             },
          },
       },
@@ -248,3 +259,5 @@ vim.api.nvim_create_autocmd("FileType", {
 require("notify").setup({
    background_colour = "#000000",
 })
+
+return M
