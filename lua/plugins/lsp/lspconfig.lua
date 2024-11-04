@@ -33,6 +33,7 @@ local servers = {
    "fortls",
    "marksman",
    "lua_ls",
+   "asm_lsp",
 }
 
 M.on_attach = function(client, bufnr)
