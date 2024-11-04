@@ -99,6 +99,7 @@ return {
             sql = { formatter("sql-formatter", sql_args, true) },
             typescript = { formatter("biome", biome_args(), false) },
             vue = { formatter("prettier", vue_args, true) },
+            asm = { formatter("asmfmt", { current_file }, true) },
          },
       })
    end,
