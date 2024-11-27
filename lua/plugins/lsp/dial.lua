@@ -36,6 +36,16 @@ return {
                word = false,
                cyclic = true,
             },
+            augend.constant.new {
+               elements = { "<", ">"},
+               word = false,
+               cyclic = true,
+            },
+            augend.constant.new {
+               elements = { "<=", ">="},
+               word = false,
+               cyclic = true,
+            },
             augend.integer.alias.decimal,
             augend.integer.alias.hex,
             augend.date.alias["%Y/%m/%d"],
