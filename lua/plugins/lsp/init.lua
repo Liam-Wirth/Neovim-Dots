@@ -1,4 +1,4 @@
-local wk = require("which-key")
+-- local wk = require("which-key")
 local ret = {
    {
       "utilyre/barbecue.nvim", -- TODO: Eventually phase out for lspsaga
@@ -104,21 +104,20 @@ local ret = {
       }
    },
    -- 'jose-elias-alvarez/null-ls.nvim', rip :(
-   {
-      "stevearc/aerial.nvim",
-      lazy = true,
-      opts = {
-         backends = { "lsp", "treesitter", "markdown", "man" },
-         on_attach = function(bufnr)
-            wk.add({
-               { "{", "<cmd> AerialPrev<CR>", { buffer = bufnr, noremap = true, silent = true }, desc = "AerialPrev" },
-               { "}", "<cmd> AerialNext<CR>", { buffer = bufnr, noremap = true, silent = true }, desc = "AerialNext" },
-            })
-         end,
-         default_direction = "prefer_left",
-      },
-      cmd = { "AerialOpen", "AerialToggle" },
-   },
+   -- {
+   --    "stevearc/aerial.nvim",
+   --    lazy = true,
+   --    opts = {
+   --       backends = { "lsp", "treesitter", "markdown", "man" },
+   --       -- TODO: Fix
+   --          -- wk.add({
+   --             -- { "{", "<cmd> AerialPrev<CR>", { buffer = bufnr, noremap = true, silent = true }, desc = "AerialPrev" },
+   --             -- { "}", "<cmd> AerialNext<CR>", { buffer = bufnr, noremap = true, silent = true }, desc = "AerialNext" },
+   --          -- })
+   --       default_direction = "prefer_left",
+   --    },
+   --    cmd = { "AerialOpen", "AerialToggle" },
+   -- },
    {
       -- lsp_signature | shows the signature of a function when typing parameters
       "ray-x/lsp_signature.nvim",
@@ -132,11 +131,12 @@ local ret = {
    },
    {
       "nvim-orgmode/orgmode",
+      lazy = true,
       dependencies = {
          { "nvim-treesitter/nvim-treesitter", lazy = true },
          { "akinsho/org-bullets.nvim",        lazy = true },
       },
-      event = "VeryLazy",
+      ft = {"org","norg"},
       config = function()
          -- Load treesitter grammar for org
 
@@ -183,6 +183,7 @@ local ret = {
    },
    {
       "AstroNvim/astrolsp",
+      ft = "astro",
       opts = {
       }
    },

@@ -24,7 +24,7 @@ GruvColors = {
 ret = {
    {
       "NTBBloodbath/doom-one.nvim",
-      lazy = false,
+      lazy = true,
       init = function()
          vim.g.doom_one_cursor_coloring = true
          vim.g.doom_one_terminal_colors = true
