@@ -116,6 +116,13 @@ wk.add({
   -- Telescope
   { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" },
 
+
+   -- focus (auto window resizing, sometimes it's a bit annoying)
+
+   { "<leader>wf", "<cmd>FocusToggle<CR>", desc = "Toggle Focus auto-resizing", mode = "n" },
+
+
+
 })
 
 wk.add({

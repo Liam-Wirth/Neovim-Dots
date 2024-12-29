@@ -93,4 +93,11 @@ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 
 vim.g.loaded_python3_provider = 0
 
+vim.filetype.add({
+    extension = {
+        inc = "nasm",
+        asm = "nasm",
+    },
+})
+
 

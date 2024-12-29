@@ -34,7 +34,38 @@ local servers = {
    "marksman",
    "lua_ls",
    "asm_lsp",
+
 }
+
+-- TODO: Fix
+require("conform").setup({
+   formatters_by_ft = {
+      lua = { "stylua" },
+      python = { "black" },
+      javascript = { "prettier" },
+      typescript = { "prettier" },
+      go = { "gofmt" },
+      json = { "prettier" },
+      yaml = { "prettier" },
+      c = { "clang_format" },
+      cpp = { "clang_format" },
+      svelte = { "prettier" },
+   },
+   vim.keymap.set({ "n", "v" }, "<leader>.", function()
+      require("conform").format({
+         lsp_fallback = true,
+         async = false,
+         timeout_ms = 500,
+      })
+   end, { desc = "Format file or range (in visual mode)" }),
+})
+
+vim.api.nvim_create_user_command("Format", function()
+   require("conform").format({
+      timeout_ms = 500,
+      lsp_fallback = true,
+   })
+end, { desc = "Format current buffer with conform.nvim" })
 
 M.on_attach = function(client, bufnr)
    -- Define a function to easily set key mappings for LSP-related items
@@ -62,7 +93,6 @@ M.on_attach = function(client, bufnr)
    sign({ name = "DiagnosticSignHint", text = glyphs.diagnostics.BoldHint })
    sign({ name = "DiagnosticSignInfo", text = glyphs.diagnostics.BoldInformation })
 
-
    if client.server_capabilities.inlayHintProvider then
       vim.lsp.inlay_hint.enable(true)
    end
@@ -70,12 +100,13 @@ M.on_attach = function(client, bufnr)
    local filetype = vim.bo.filetype
    if vim.tbl_contains({ "rust" }, filetype) then
       vim.keymap.set("n", "K", "<cmd>lua require'rustaceanvim'.hover_actions.hover_actions()<CR>")
-      vim.keymap.set("n", "<space>ba", function() vim.cmd.RustLsp("codeAction") end)
+      vim.keymap.set("n", "<space>ba", function()
+         vim.cmd.RustLsp("codeAction")
+      end)
    else
       nmap("K", vim.lsp.buf.hover, "Hover Documentation")
       nmap("<leader>ba", vim.lsp.buf.code_action, "Code Action")
    end
-
 
    nmap("bgd", vim.lsp.buf.definition, "[G]oto [D]efinition")
    nmap("bgr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
@@ -83,7 +114,6 @@ M.on_attach = function(client, bufnr)
    nmap("<leader>bD", vim.lsp.buf.type_definition, "Type [D]efinition")
    nmap("<leader>bd", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
    nmap("<leader>bws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
-
 
    nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 
@@ -96,74 +126,10 @@ M.on_attach = function(client, bufnr)
    end, "[W]orkspace [L]ist Folders")
 end
 
--- Setup formatter.nvim
-require("formatter").setup({
-   logging = false,
-   filetype = {
-      lua = {
-         require("formatter.filetypes.lua").stylua,
-      },
-      python = {
-         require("formatter.filetypes.python").black,
-      },
-      javascript = {
-         require("formatter.filetypes.javascript").prettier,
-      },
-      typescript = {
-         require("formatter.filetypes.typescript").prettier,
-      },
-      go = {
-         require("formatter.filetypes.go").gofmt,
-      },
-      json = {
-         require("formatter.filetypes.json").prettier,
-      },
-      yaml = {
-         require("formatter.filetypes.yaml").prettier,
-      },
-      c = {
-         require("formatter.filetypes.c").clangformat,
-      },
-      cpp = {
-         require("formatter.filetypes.cpp").clangformat,
-      },
-      svelte = {
-         require("formatter.filetypes.svelte").prettier,
-      },
-      -- Add other filetypes and their formatters here
-   },
-})
-
--- Create a command `:Format` to format the current buffer
-vim.api.nvim_create_user_command("Format", function()
-   local buf = vim.api.nvim_get_current_buf()
-   local clients = vim.lsp.get_active_clients({ bufnr = buf })
-   for _, client in ipairs(clients) do
-      if client.server_capabilities.documentFormattingProvider then
-         if vim.lsp.buf.format then
-            vim.lsp.buf.format({ bufnr = buf })
-         elseif vim.lsp.buf.formatting then
-            vim.lsp.buf.formatting()
-         end
-         return
-      end
-   end
-   -- If no LSP supports formatting, use formatter.nvim
-   vim.cmd("Format")
-end, { desc = "Format current buffer with LSP or formatter.nvim" })
-
--- Auto-format on save
--- vim.api.nvim_create_autocmd("BufWritePre", {
---    pattern = "*",
---    callback = function()
---       vim.cmd("Format")
---    end,
--- })
-
 -- Setup mason-lspconfig
-require("mason-lspconfig").setup {
+require("mason-lspconfig").setup({
    ensure_installed = servers,
-}
+})
 
 -- Setup capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -171,14 +137,14 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 -- Configure LSP servers
 for _, lsp in ipairs(servers) do
-   require("lspconfig")[lsp].setup {
+   require("lspconfig")[lsp].setup({
       on_attach = M.on_attach,
       capabilities = capabilities,
-   }
+   })
 end
 
 -- Example custom configuration for basedpyright (assuming it's a valid LSP server)
-require("lspconfig").basedpyright.setup {
+require("lspconfig").basedpyright.setup({
    capabilities = capabilities,
    on_attach = M.on_attach,
    settings = {
@@ -192,10 +158,10 @@ require("lspconfig").basedpyright.setup {
          },
       },
    },
-}
+})
 
 -- Custom configuration for lua_ls
-require("lspconfig").lua_ls.setup {
+require("lspconfig").lua_ls.setup({
    capabilities = capabilities,
    on_attach = M.on_attach,
    settings = {
@@ -239,12 +205,69 @@ require("lspconfig").lua_ls.setup {
                indent_style = "space",
                indent_size = "2",
                continuation_indent = "2",
-               quote_style = "double", continuation_indent_size = "2",
+               quote_style = "double",
+               continuation_indent_size = "2",
             },
          },
       },
    },
-}
+})
+
+require("lspconfig").asm_lsp.setup({
+   cmd = { "asm-lsp" },
+   filetypes = { "asm", "s", "S", "nasm" },
+   root_dir = require("lspconfig").util.root_pattern("Makefile"),
+   settings = {
+      nasm = {
+         executable = "nasm",
+         args = { "-f", "elf64", "-F", "dwarf", "-g" },
+      },
+   },
+})
+
+require("lspconfig").basedpyright.setup({
+   capabilities = capabilities,
+   on_attach = M.on_attach,
+   settings = {
+      python = {
+         analysis = {
+            typeCheckingMode = "off", -- Set to "off" to disable type checking warnings
+            diagnosticMode = "openFilesOnly",
+            useLibraryCodeForTypes = true,
+            autoImportCompletions = true,
+            diagnosticSeverityOverrides = {
+               -- Optionally override specific diagnostic severities
+               reportMissingTypeStubs = "none",
+               reportUnknownMemberType = "none",
+               reportUnknownParameterType = "none",
+               reportUnknownVariableType = "none",
+               reportMissingTypeArgument = "none",
+            },
+         },
+      },
+   },
+})
+
+require("lspconfig").clangd.setup({
+   on_attach = M.on_attach,
+   capabilities = capabilities,
+   cmd = {
+      "clangd",
+      "--background-index",
+      "--pch-storage=memory",
+      "--all-scopes-completion",
+      "--pretty",
+      "--header-insertion=never",
+      "-j=4",
+      "--inlay-hints",
+      "--header-insertion-decorators",
+      "--function-arg-placeholders",
+      "--completion-style=detailed",
+   },
+   filetypes = { "c", "cpp", "objc", "objcpp" },
+   root_dir = require("lspconfig").util.root_pattern("src"),
+   init_options = { fallbackFlags = { "-std=c++2a" } },
+})
 
 -- Start bash-language-server for sh files
 vim.api.nvim_create_autocmd("FileType", {
