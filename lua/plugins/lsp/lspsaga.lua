@@ -9,7 +9,7 @@ return {
          { 'gh',          '<cmd>Lspsaga finder imp+def+ref<CR>',   silent = true },
          { '<leader>bfi', '<cmd>Lspsaga finder imp<CR>',           silent = true },
          { '<leader>bfr', '<cmd>Lspsaga finder ref<CR>',           silent = true },
-         { '<leader>bA',  '<cmd>Lspsaga code_action<CR>',          mode = { 'n', 'v' }, silent = true, desc = "LSPSaga Code Action" },
+         { '<leader>ba',  '<cmd>Lspsaga code_action<CR>',          mode = { 'n', 'v' }, silent = true, desc = "LSPSaga Code Action" },
          { '<leader>rn',  '<cmd>Lspsaga rename<CR>',               silent = true },
          { '<leader>bgD', '<cmd>Lspsaga peek_definition<CR>',      silent = true },
          { '<leader>bgT', '<cmd>Lspsaga peek_type_definition<CR>', silent = true },

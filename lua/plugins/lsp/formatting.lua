@@ -1,106 +1,84 @@
 -- TODO: Configure so that lsp uses this
 return {
-   "mhartington/formatter.nvim",
+   "stevearc/conform.nvim",
+   event = { "BufWritePre" },
+   cmd = { "ConformInfo" },
    config = function()
-      local current_file = vim.api.nvim_buf_get_name(0)
+      local conform = require("conform")
 
-      local formatter = function(formatter, args, stdin)
-         return function()
-            return {
-               exe = formatter,
-               args = args,
-               stdin = stdin,
-            }
-         end
-      end
-
-      -- Args definitions
-      local prettier_args = function(parser)
-         return {
-            "--write",
-            current_file,
-            "--parser",
-            parser,
-         }
-      end
-
-      local biome_args = function()
-         return {
-            "format",
-            -- "--write",
-            current_file,
-         }
-      end
-
-      local php_args = {
-         "--single-quote",
-         "--stdin-filepath",
-         current_file,
-         "--print-width",
-         80,
-         "--parser",
-         "php",
-         "--php-version",
-         "7.1",
-         "--tab-width",
-         4,
-      }
-
-      local sql_args = {
-         "--config",
-         current_file,
-      }
-
-      local lua_args = {
-         "--column-width",
-         120,
-         "--line-endings",
-         "Unix",
-         "--indent-type",
-         "Tabs",
-         "--indent-width",
-         2,
-         "--quote-style",
-         "AutoPreferDouble",
-      }
-
-      local rust_args = {
-         "--emit=stdout",
-         "--edition=2021",
-      }
-
-      local python_args = {
-         "%",
-      }
-
-      local prisma_args = {
-         "prisma",
-         "format",
-         "--schema=" .. current_file,
-      }
-
-      require("formatter").setup({
-         logging = false,
-         filetype = {
-            css = { formatter("prettier", prettier_args("css"), true) },
-            elixir = { formatter("mix format", { current_file }, false) },
-            go = { formatter("gofmt", { current_file }, true) },
-            graphql = { formatter("prettier", prettier_args("graphql"), true) },
-            -- html = { formatter("prettier", prettier_args("html"), false) },
-            javascript = { formatter("biome", biome_args(), false) },
-            --javascript = { formatter("prettier", prettier_args("typescript"), false) },
-            json = { formatter("prettier", prettier_args("json"), true) },
-            lua = { formatter("stylua", lua_args, false) },
-            php = { formatter("prettier", php_args, true) },
-            prisma = { formatter("npx", prisma_args, false) },
-            python = { formatter("!black", python_args, true) },
-            rust = { formatter("rustfmt", rust_args, true) },
-            scss = { formatter("prettier", prettier_args("scss"), true) },
-            sql = { formatter("sql-formatter", sql_args, true) },
-            typescript = { formatter("biome", biome_args(), false) },
-            vue = { formatter("prettier", vue_args, true) },
-            asm = { formatter("asmfmt", { current_file }, true) },
+      conform.setup({
+         formatters_by_ft = {
+            css = { "prettier" },
+            elixir = { "mix" },
+            go = { "gofmt" },
+            graphql = { "prettier" },
+            javascript = { "biome" }, -- or "prettier" if you prefer
+            json = { "prettier" },
+            lua = { "stylua" },
+            php = { "prettier" },
+            prisma = { "prisma-fmt" },
+            python = { "black" },
+            rust = { "rustfmt" },
+            scss = { "prettier" },
+            sql = { "sql_formatter" },
+            typescript = { "biome" }, -- or "prettier" if you prefer
+            vue = { "prettier" },
+            asm = { "asmfmt" },
          },
+
+         -- Formatter-specific settings
+         formatters = {
+            prettier = {
+               -- Your prettier settings
+               prepend_args = {
+                  "--single-quote",
+                  "--print-width",
+                  "80",
+               },
+            },
+            stylua = {
+               -- Your stylua settings
+               prepend_args = {
+                  "--column-width",
+                  "120",
+                  "--line-endings",
+                  "Unix",
+                  "--indent-type",
+                  "Spaces",
+                  "--indent-width",
+                  "3",
+                  "--quote-style",
+                  "AutoPreferDouble",
+               },
+            },
+            rustfmt = {
+               -- Your rustfmt settings
+               prepend_args = {
+                  "--emit=stdout",
+                  "--edition=2021",
+               },
+            },
+            black = {
+               prepend_args = {},
+            },
+            biome = {
+               -- Your biome settings
+               prepend_args = {
+                  "format",
+               },
+            },
+         },
+         -- For format on key mapping (optional)
+         format_after_save = false,
       })
+
+      -- Optional: Add key mappings
+      vim.keymap.set({ "n", "v" }, "<leader>.", function()
+         conform.format({
+            lsp_fallback = true,
+            async = false,
+            timeout_ms = 500,
+         })
+      end, { desc = "Format file or range (in visual mode)" })
    end,
 }
