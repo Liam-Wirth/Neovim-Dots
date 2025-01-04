@@ -43,7 +43,8 @@ return {
          },
          request_timeout = 2500,
          symbol_in_winbar = {
-            enable = false, -- showing symbols in feline
+            -- TODO: Maybe move? 
+            enable = false, -- Showing symbols in LuaLine
             separator = '  ',
             hide_keyword = true,
             show_file = false,
