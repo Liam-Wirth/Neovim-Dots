@@ -1,3 +1,4 @@
+-- TODO: get lspsaga tree to dock or something below neotree
 return {
    {
       "nvim-neo-tree/neo-tree.nvim",
@@ -7,6 +8,7 @@ return {
          "nvim-lua/plenary.nvim",
          "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
          "MunifTanjim/nui.nvim",
+         "s1n7ax/nvim-window-picker",
       },
       keys = {
          {
@@ -25,11 +27,14 @@ return {
          -- Neo-tree window options, including width
          window = {
             position = "left",
-            width = 20, -- Set the window width here
+            width = 15, -- NOTE: Width is handled by edgy
             mapping_options = {
                noremap = true,
                nowait = true,
             },
+            mappings = {
+               ["<cr>"] = "open_with_window_picker"
+            }
          },
          event_handlers = {
             {

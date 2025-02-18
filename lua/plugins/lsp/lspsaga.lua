@@ -1,4 +1,4 @@
--- TODO: fix this God-Awful config
+-- TODO: make it so lspsaga outline docks below neotree
 return {
    {
       'nvimdev/lspsaga.nvim',
