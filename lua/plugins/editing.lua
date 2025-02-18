@@ -6,6 +6,7 @@ return {
       lazy = false,
    },
    { "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
+   -- Handles size of buffer splits and stuff is nice
    {
       "folke/edgy.nvim",
       lazy = false,
@@ -56,7 +57,7 @@ return {
                filter = function(buf)
                   return vim.b[buf].neo_tree_source == "filesystem"
                end,
-               size = { height = 0.5, width = 0.3 },
+               size = { height = 0.5, width = 0.2 },
             },
             {
                title = "Neo-Tree Git",
@@ -122,7 +123,7 @@ return {
       }
    },
    {
-      'mbbill/undotree',
+      "mbbill/undotree",
    },
    { "echasnovski/mini.comment",                    version = false, lazy = true, event = { "BufEnter" } },
    {
@@ -148,4 +149,30 @@ return {
       event = "BufEnter",
       opts = {},
    },
+   {
+      "LunarVim/bigfile.nvim",
+      lazy = false,
+      opts = {
+         filesize = 2,   -- size of the file in MiB, the plugin round file sizes to the closest MiB
+         pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
+         features = {    -- features to disable
+            "indent_blankline",
+            "illuminate",
+            "lsp",
+            "treesitter",
+            "syntax",
+            "matchparen",
+            "vimopts",
+            "filetype",
+         },
+      }
+   }
 }
+-- TODO:
+-- BUG:
+-- HACK:
+-- NOTE:
+-- WARN:
+-- FIX:
+-- TEST:
+-- PERF:
