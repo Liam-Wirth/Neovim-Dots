@@ -103,21 +103,6 @@ local ret = {
             "<leader>bi", desc = "Clangd Symbol Info", }
       }
    },
-   -- 'jose-elias-alvarez/null-ls.nvim', rip :(
-   -- {
-   --    "stevearc/aerial.nvim",
-   --    lazy = true,
-   --    opts = {
-   --       backends = { "lsp", "treesitter", "markdown", "man" },
-   --       -- TODO: Fix
-   --          -- wk.add({
-   --             -- { "{", "<cmd> AerialPrev<CR>", { buffer = bufnr, noremap = true, silent = true }, desc = "AerialPrev" },
-   --             -- { "}", "<cmd> AerialNext<CR>", { buffer = bufnr, noremap = true, silent = true }, desc = "AerialNext" },
-   --          -- })
-   --       default_direction = "prefer_left",
-   --    },
-   --    cmd = { "AerialOpen", "AerialToggle" },
-   -- },
    {
       -- lsp_signature | shows the signature of a function when typing parameters
       "ray-x/lsp_signature.nvim",

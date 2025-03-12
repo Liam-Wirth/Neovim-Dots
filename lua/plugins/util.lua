@@ -80,21 +80,4 @@ return {
          -- See Configuration section for rest
       },
    },
-   -- {
-   --    "antonk52/bad-practices.nvim",
-   --    lazy = false,
-   --    opts = {
-   --       most_splits = 4,
-   --       most_tabs = 4,
-   --       max_hjkl = 100,
-   --    }
-   -- }
- --  {
- --     "ThePrimeagen/harpoon",
- --     branch = "harpoon2",
- --     dependencies = { "nvim-lua/plenary.nvim" },
- --     opts = function ()
-
- --     end,
- --  }
 }
