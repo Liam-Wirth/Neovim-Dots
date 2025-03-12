@@ -60,22 +60,6 @@ return {
          end
       end,
    },
-   {
-      "stevearc/dressing.nvim",
-      lazy = true,
-      init = function()
-         ---@diagnostic disable-next-line: duplicate-set-field
-         vim.ui.select = function(...)
-            require("lazy").load({ plugins = { "dressing.nvim" } })
-            return vim.ui.select(...)
-         end
-         ---@diagnostic disable-next-line: duplicate-set-field
-         vim.ui.input = function(...)
-            require("lazy").load({ plugins = { "dressing.nvim" } })
-            return vim.ui.input(...)
-         end
-      end,
-   },
    -- Context
    {
       "SmiteshP/nvim-navic",
@@ -164,7 +148,6 @@ return {
          },
       },
    },
-   -- Supposed to make it so I can pick which split I want a window to open in
    {
       "s1n7ax/nvim-window-picker",
       name = "window-picker",
@@ -203,43 +186,6 @@ return {
                   end
                end, { buffer = true })
             end,
-         })
-      end,
-   },
-   {
-      "xiyaowong/transparent.nvim",
-      lazy = false,
-      config = function()
-         require("transparent").setup({ -- Optional, you don't have to run setup.
-            groups = { -- table: default groups
-               "Normal",
-               "NormalNC",
-               "Comment",
-               "Constant",
-               "Special",
-               "Identifier",
-               "Statement",
-               "PreProc",
-               "Type",
-               "Underlined",
-               "Todo",
-               "String",
-               "Function",
-               "Conditional",
-               "Repeat",
-               "Operator",
-               "Structure",
-               "LineNr",
-               "NonText",
-               "SignColumn",
-               "CursorLineNr",
-               "EndOfBuffer",
-            },
-            extra_groups = {
-               "NvimTreeNormal", -- NvimTree
-               "Neo-Tree",
-            },
-            exclude_groups = { "NormalFloat", "FloatBorder" }, -- table: groups you don't want to clear
          })
       end,
    },
