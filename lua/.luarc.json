@@ -1,64 +1,24 @@
 {
-    "workspace.library": [
-        "/home/liam/.local/share/nvim/lazy/neodev.nvim/types/stable",
-        "/usr/share/nvim/runtime/lua",
-        "/home/liam/.local/share/nvim/lazy/clangd_extensions.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/telescope.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/aerial.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/nvim-ts-context-commentstring/lua",
-        "/home/liam/.local/share/nvim/lazy/lazy.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/nvim-cmp/lua",
-        "/home/liam/.local/share/nvim/lazy/rust-tools.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/symbols-outline.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/cmp-nvim-lua/lua",
-        "/home/liam/.local/share/nvim/lazy/lsp_signature.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/edgy.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/cmp-buffer/lua",
-        "/home/liam/.local/share/nvim/lazy/neo-tree.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/nui.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/session-lens/lua",
-        "/home/liam/.local/share/nvim/lazy/fidget.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/cmp-path/lua",
-        "/home/liam/.local/share/nvim/lazy/presence.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/mason.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/bufferline.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/mini.splitjoin/lua",
-        "/home/liam/.local/share/nvim/lazy/barbecue/lua",
-        "/home/liam/.local/share/nvim/lazy/mini.comment/lua",
-        "/home/liam/.local/share/nvim/lazy/mini.surround/lua",
-        "/home/liam/.local/share/nvim/lazy/lualine.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/LuaSnip/lua",
-        "/home/liam/.local/share/nvim/lazy/cmp-calc/lua",
-        "/home/liam/.local/share/nvim/lazy/lspkind-nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/nvim-navic/lua",
-        "/home/liam/.local/share/nvim/lazy/window-picker/lua",
-        "/home/liam/.local/share/nvim/lazy/vim-illuminate/lua",
-        "/home/liam/.local/share/nvim/lazy/nvim-colorizer.lua/lua",
-        "/home/liam/.local/share/nvim/lazy/cmp_luasnip/lua",
-        "/home/liam/.local/share/nvim/lazy/nvim-web-devicons/lua",
-        "/home/liam/.local/share/nvim/lazy/cmp-cmdline/lua",
-        "/home/liam/.local/share/nvim/lazy/mini.bracketed/lua",
-        "/home/liam/.local/share/nvim/lazy/mason-lspconfig.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/nvim-lspconfig/lua",
-        "/home/liam/.local/share/nvim/lazy/doom-one.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/alpha-nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/mini.pairs/lua",
-        "/home/liam/.local/share/nvim/lazy/cmp-omni/lua",
-        "/home/liam/.local/share/nvim/lazy/gitsigns.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/plenary.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/dressing.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/cmp-nvim-lsp/lua",
-        "/home/liam/.local/share/nvim/lazy/neodev.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/vim-startuptime/lua",
-        "/home/liam/.local/share/nvim/lazy/which-key.nvim/lua",
-        "/home/liam/.local/share/nvim/lazy/nvim-notify/lua",
-        "/home/liam/.local/share/nvim/lazy/auto-session/lua",
-        "/home/liam/.local/share/nvim/lazy/nvim-spectre/lua",
-        "/home/liam/.config/nvim/lua",
-        "${3rd}/luv/library"
-    ],
-    "diagnostics.disable": [
-        "missing-fields"
-    ],
-    "workspace.checkThirdParty": false
+   "workspace": {
+      "library": [
+         "/home/liam/.local/share/nvim/lazy/neodev.nvim/types/stable",
+         "${3rd}/luv/library",
+         "$VIMRUNTIME"
+      ],
+      "checkThirdParty": false,
+      "maxPreload": 2000,
+      "preloadFileSize": 500
+   },
+   "runtime": {
+      "version": "LuaJIT"
+   },
+   "diagnostics": {
+      "disable": [
+         "missing-fields"
+      ],
+      "globals": [
+         "vim"
+      ]
+   },
+   "workspace.checkThirdParty": false
 }

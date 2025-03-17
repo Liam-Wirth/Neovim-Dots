@@ -75,6 +75,23 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
       end
    end,
 })
+local color_fix_group = vim.api.nvim_create_augroup("ColorFixes", { clear = true })
+
+-- Fix for the gray text in new, untyped buffers
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  group = color_fix_group,
+  pattern = "*",
+  callback = function()
+    if vim.bo.filetype == "" then
+      -- Set 'Normal' highlight explicitly. Adapt colors to your preference.
+      vim.cmd("highlight Normal guifg=#ebdbb2 guibg=#282828") -- Gruvbox colors
+      -- Alternative, using doom-one colors if that's the current scheme:
+      -- if vim.g.colorscheme == "doom-one" then
+      --   vim.cmd("highlight Normal guifg=#bbc2cf guibg=#282c34")
+      -- end
+    end
+  end,
+})
 
 -- vim.api.nvim_create_autocmd({ "WinEnter" }, {
 --    pattern = "*",
