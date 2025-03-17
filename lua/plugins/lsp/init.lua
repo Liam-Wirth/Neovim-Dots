@@ -43,11 +43,16 @@ local ret = {
             opts = function()
                return {
                   -- use AstroLSP setup for mason-lspconfig
-                  handlers = { function(server) require("astrolsp").lsp_setup(server) end },
+                  handlers = {
+                     function(server)
+                        require("astrolsp").lsp_setup(server)
+                     end,
+                  },
                   require("lspconfig"),
                }
             end,
          },
+         {"folke/neodev.nvim", opts = {}},
       },
       config = function()
          -- set up servers configured with AstroLSP
@@ -60,10 +65,15 @@ local ret = {
       lazy = true,
       event = "BufReadPost",
       opts = {
-         debug = true,
-         experimental = {
-            pathStrict = true,
+         library = {
+            enabled = true,
+            runtime = true,
+            types = true,
+            plugins = true,
          },
+         setup_jsonls = true,
+         lspconfig = true,
+         pathStrict = true,
       },
    },
    {
@@ -94,14 +104,16 @@ local ret = {
                   TemplateTypeParm = "",
                   TemplateTemplateParm = "",
                   TemplateParamObject = "",
-               }
+               },
             },
          })
       end,
       keys = {
          {
-            "<leader>bi", desc = "Clangd Symbol Info", }
-      }
+            "<leader>bi",
+            desc = "Clangd Symbol Info",
+         },
+      },
    },
    {
       -- lsp_signature | shows the signature of a function when typing parameters
@@ -110,18 +122,18 @@ local ret = {
       event = "BufReadPost",
       config = function()
          require("lsp_signature").setup({
-            floating_window = false
+            floating_window = false,
          })
-      end
+      end,
    },
    {
       "nvim-orgmode/orgmode",
       lazy = true,
       dependencies = {
          { "nvim-treesitter/nvim-treesitter", lazy = true },
-         { "akinsho/org-bullets.nvim",        lazy = true },
+         { "akinsho/org-bullets.nvim", lazy = true },
       },
-      ft = {"org","norg"},
+      ft = { "org", "norg" },
       config = function()
          -- Load treesitter grammar for org
 
@@ -164,13 +176,12 @@ local ret = {
             " (affects both C and C++ files)
             let g:cpp_simple_highlight = 0
          ]])
-      end
+      end,
    },
    {
       "AstroNvim/astrolsp",
       ft = "astro",
-      opts = {
-      }
+      opts = {},
    },
    {
       "L3MON4D3/LuaSnip",
