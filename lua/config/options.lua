@@ -97,6 +97,7 @@ vim.filetype.add({
     extension = {
         inc = "nasm",
         asm = "nasm",
+        zsh = "bash",
     },
 })
 

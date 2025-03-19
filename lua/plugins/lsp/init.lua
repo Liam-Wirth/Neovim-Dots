@@ -52,7 +52,7 @@ local ret = {
                }
             end,
          },
-         {"folke/neodev.nvim", opts = {}},
+         { "folke/neodev.nvim", opts = {} },
       },
       config = function()
          -- set up servers configured with AstroLSP
@@ -189,6 +189,14 @@ local ret = {
          "rafamadriz/friendly-snippets",
          config = function()
             require("luasnip.loaders.from_vscode").lazy_load()
+            require("luasnip.loaders.from_lua").load({
+               paths = {
+                  vim.fn.stdpath("config") .. "/lua/snippets/all.lua",
+                  "$HOME/.config/nvim/lua/snippets/all.lua",
+                  "$HOME/.config/nvim/lua/snippets/",
+               },
+            })
+            require("lua/snippets/")
          end,
       },
       opts = {
