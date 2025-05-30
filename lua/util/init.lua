@@ -149,4 +149,18 @@ M.toggle_completion = function()
    end
 end
 
+function M.file_exists(file)
+    local f = io.open(file, "rb")
+    if f then f:close() end
+    return f ~= nil
+end
+
+if M.file_exists("~/.worklaptop") then
+   vim.g.worklaptop = true
+end
+
+
+
+
+
 return M

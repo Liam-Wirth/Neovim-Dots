@@ -25,7 +25,6 @@ local servers = {
    "jsonls",
    "eslint",
    "tailwindcss",
-   "gopls",
    "svelte",
    "intelephense",
    "astro",
@@ -36,6 +35,11 @@ local servers = {
    "asm_lsp",
 
 }
+if vim.g.worklaptop == false then
+   table.insert(servers, "gopls")
+   table.insert(servers, "asm_lsp")
+
+end
 
 -- TODO: Fix
 require("conform").setup({
