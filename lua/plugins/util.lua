@@ -1,4 +1,4 @@
-return {
+local ret = {
    {
       "dstein64/vim-startuptime",
       cmd = "StartupTime",
@@ -39,9 +39,26 @@ return {
          line_number_text    = "Line %s out of %s",    -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
       }
    },
-   { 'wakatime/vim-wakatime', lazy = false },
    -- TODO: Setup a copilot section with keybinds and stuff, I want it disabled by DEFAULT and stuff
+}
+
+if vim.g.worklaptop == false then
+   table.insert(ret, 
    {
+      "CopilotC-Nvim/CopilotChat.nvim",
+      branch = "canary",
+      dependencies = {
+         { "github/copilot.vim" }, -- or github/copilot.vim
+         { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+      },
+      opts = {
+         debug = true, -- Enable debugging
+         -- See Configuration section for rest
+      },
+   }
+   )
+   table.insert(ret, {
+      
       'github/copilot.vim',
       lazy = true,
       event = { "BufReadPre", "BufNewFile", "BufEnter" },
@@ -67,17 +84,11 @@ return {
 
          end)
       end
-   },
-   {
-      "CopilotC-Nvim/CopilotChat.nvim",
-      branch = "canary",
-      dependencies = {
-         { "github/copilot.vim" }, -- or github/copilot.vim
-         { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-      },
-      opts = {
-         debug = true, -- Enable debugging
-         -- See Configuration section for rest
-      },
-   },
-}
+   })
+   table.insert(ret, 
+   { 'wakatime/vim-wakatime', lazy = false }
+   )
+end
+
+
+return ret
