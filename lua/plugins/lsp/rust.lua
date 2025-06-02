@@ -12,8 +12,8 @@ return {
             autoSetHints = true,
             float_win_config = {
                border = "rounded",
-               bg = vim.api.nvim_get_hl(0, {name = "RustaceanvimFloat"}).bg,
-               fg = vim.api.nvim_get_hl(0, {name = "Normal"}).fg,
+               bg = vim.api.nvim_get_hl(0, { name = "RustaceanvimFloat" }).bg,
+               fg = vim.api.nvim_get_hl(0, { name = "Normal" }).fg,
                winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,Search:None',
             }
          },
@@ -55,9 +55,9 @@ return {
                      "Parent Module"
                   },
                })
-                  vim.api.nvim_set_hl(0, "NormalFloat", { link = "RustaceanvimFloat" })
-                  vim.api.nvim_set_hl(0, "FloatBorder", { link = "RustaceanvimFloatBorder" })
-                  oa(client, bufnr) -- NOTE: Hacky but maybe not horrible?
+               vim.api.nvim_set_hl(0, "NormalFloat", { link = "RustaceanvimFloat" })
+               vim.api.nvim_set_hl(0, "FloatBorder", { link = "RustaceanvimFloatBorder" })
+               oa(client, bufnr)    -- NOTE: Hacky but maybe not horrible?
             end,
             default_settings = {
                -- rust-analyzer language server configuration

@@ -21,15 +21,13 @@ return {
             rust = { "rustfmt" },
             scss = { "prettier" },
             sql = { "sql_formatter" },
-            typescript = { "biome" }, -- or "prettier" if you prefer
+            typescript = { "biome" },
             vue = { "prettier" },
             asm = { "asmfmt" },
          },
 
-         -- Formatter-specific settings
          formatters = {
             prettier = {
-               -- Your prettier settings
                prepend_args = {
                   "--single-quote",
                   "--print-width",
@@ -37,7 +35,6 @@ return {
                },
             },
             stylua = {
-               -- Your stylua settings
                prepend_args = {
                   "--column-width",
                   "120",
@@ -52,7 +49,6 @@ return {
                },
             },
             rustfmt = {
-               -- Your rustfmt settings
                prepend_args = {
                   "--emit=stdout",
                   "--edition=2021",

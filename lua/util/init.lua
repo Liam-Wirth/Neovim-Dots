@@ -149,6 +149,7 @@ M.toggle_completion = function()
    end
 end
 
+-- Simple function returns boolean based on the existence of a file
 function M.file_exists(file)
     local f = io.open(file, "rb")
     if f then f:close() end

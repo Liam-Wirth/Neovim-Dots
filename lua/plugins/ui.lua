@@ -1,6 +1,6 @@
 -- TODO: possibly move this to util
-glyphs = require("util.glyphs")
-colors_light = {
+local glyphs = require("util.glyphs")
+local colors_light = {
    red = "#cc241d",
    green = "#98971a",
    yellow = "#d79921",
@@ -90,22 +90,22 @@ return {
       config = function()
          require("focus").setup({
             autoresize = {
-               enable = true, 
+               enable = true,
             },
             ui = {
-               number = true, -- Display line numbers in the focussed window only
-               relativenumber = false, -- Display relative line numbers in the focussed window only
-               hybridnumber = false, -- Display hybrid line numbers in the focussed window only
+               number = true,                     -- Display line numbers in the focussed window only
+               relativenumber = false,            -- Display relative line numbers in the focussed window only
+               hybridnumber = false,              -- Display hybrid line numbers in the focussed window only
                absolutenumber_unfocussed = false, -- Preserve absolute numbers in the unfocussed windows
 
-               cursorline = true, -- Display a cursorline in the focussed window only
-               cursorcolumn = false, -- Display cursorcolumn in the focussed window only
+               cursorline = true,                 -- Display a cursorline in the focussed window only
+               cursorcolumn = false,              -- Display cursorcolumn in the focussed window only
                colorcolumn = {
-                  enable = false, -- Display colorcolumn in the foccused window only
-                  list = "+1", -- Set the comma-saperated list for the colorcolumn
+                  enable = false,                 -- Display colorcolumn in the foccused window only
+                  list = "+1",                    -- Set the comma-saperated list for the colorcolumn
                },
-               signcolumn = true, -- Display signcolumn in the focussed window only
-               winhighlight = true, -- Auto highlighting for focussed/unfocussed windows
+               signcolumn = true,                 -- Display signcolumn in the focussed window only
+               winhighlight = true,               -- Auto highlighting for focussed/unfocussed windows
             },
          })
       end,
@@ -117,10 +117,10 @@ return {
       event = { "BufReadPost", "BufNewFile" },
       opts = {
          options = {
-            close_command = "bdelete! %d", -- can be a string | function, | false see "Mouse actions"
+            close_command = "bdelete! %d",       -- can be a string | function, | false see "Mouse actions"
             right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
-            left_mouse_command = "buffer %d", -- can be a string | function, | false see "Mouse actions"
-            middle_mouse_command = nil, -- can be a string | function, | false see "Mouse actions"
+            left_mouse_command = "buffer %d",    -- can be a string | function, | false see "Mouse actions"
+            middle_mouse_command = nil,          -- can be a string | function, | false see "Mouse actions"
             diagnostics = "nvim_lsp",
             always_show_bufferline = true,
             --separator_style = "slant",
@@ -156,12 +156,10 @@ return {
       config = function()
          local window_picker = require("window-picker")
          window_picker.setup({
-            -- your preferred configuration
             autoselect_one = false,
             include_current_win = false,
          })
 
-         -- Add custom integration with neo-tree
          vim.api.nvim_create_autocmd("FileType", {
             pattern = "neo-tree",
             callback = function()

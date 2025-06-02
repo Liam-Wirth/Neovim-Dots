@@ -50,7 +50,6 @@ return {
             { ft = "spectre_panel", size = { height = 0.4 } },
          },
          left = {
-            -- Neo-tree filesystem always takes half the screen height
             {
                title = "Neo-Tree",
                ft = "neo-tree",
@@ -153,9 +152,9 @@ return {
       "LunarVim/bigfile.nvim",
       lazy = false,
       opts = {
-         filesize = 2,   -- size of the file in MiB, the plugin round file sizes to the closest MiB
+         filesize = 2,      -- size of the file in MiB, the plugin round file sizes to the closest MiB
          pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
-         features = {    -- features to disable
+         features = {       -- features to disable
             "indent_blankline",
             "illuminate",
             "lsp",
