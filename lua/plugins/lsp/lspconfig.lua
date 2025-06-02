@@ -15,8 +15,6 @@ end, { desc = "Toggle Inlay Hints" })
 
 -- Setup mason so it can manage external tooling
 require("mason").setup()
-
--- List of LSP servers to ensure installed
 local servers = {
    "texlab",
    "verible",
@@ -33,12 +31,10 @@ local servers = {
    "marksman",
    "lua_ls",
    "asm_lsp",
-
 }
 if vim.g.worklaptop == false then
    table.insert(servers, "gopls")
    table.insert(servers, "asm_lsp")
-
 end
 
 -- TODO: Fix
@@ -147,22 +143,6 @@ for _, lsp in ipairs(servers) do
    })
 end
 
--- Example custom configuration for basedpyright (assuming it's a valid LSP server)
-require("lspconfig").basedpyright.setup({
-   capabilities = capabilities,
-   on_attach = M.on_attach,
-   settings = {
-      basedpyright = {
-         analysis = {
-            typeCheckingMode = "standard", -- off, basic, standard, strict, all
-            autoSearchPaths = true,
-            useLibraryCodeForTypes = true,
-            autoImportCompletions = true,
-            diagnosticMode = "workspace",
-         },
-      },
-   },
-})
 
 -- Custom configuration for lua_ls
 require("lspconfig").lua_ls.setup({
@@ -184,8 +164,8 @@ require("lspconfig").lua_ls.setup({
             enable = true,
             globals = { "vim", "nvim" },
             groupSeverity = {
-               strong = "Warning",
-               strict = "Warning",
+               -- strong = "Warning",
+               -- strict = "Warning",
             },
             groupFileStatus = {
                ["ambiguity"] = "Opened",
@@ -282,10 +262,6 @@ vim.api.nvim_create_autocmd("FileType", {
          cmd = { "bash-language-server", "start" },
       })
    end,
-})
-
-require("notify").setup({
-   background_colour = "#000000",
 })
 
 return M

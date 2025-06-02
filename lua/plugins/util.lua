@@ -42,23 +42,25 @@ local ret = {
    -- TODO: Setup a copilot section with keybinds and stuff, I want it disabled by DEFAULT and stuff
 }
 
+-- NOTE: See (.gitignored/private) file for configuration/setup of internal completions at work
 if vim.g.worklaptop == false then
-   table.insert(ret, 
-   {
-      "CopilotC-Nvim/CopilotChat.nvim",
-      branch = "canary",
-      dependencies = {
-         { "github/copilot.vim" }, -- or github/copilot.vim
-         { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-      },
-      opts = {
-         debug = true, -- Enable debugging
-         -- See Configuration section for rest
-      },
-   }
+   table.insert(ret,
+      {
+         "CopilotC-Nvim/CopilotChat.nvim",
+         branch = "canary",
+         dependencies = {
+            { "github/copilot.vim" }, -- or github/copilot.vim
+            { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+         },
+         opts = {
+            debug = true, -- Enable debugging
+            -- See Configuration section for rest
+         },
+      }
    )
+   -- Another thing is setup for a separate config. dw about it :)
    table.insert(ret, {
-      
+
       'github/copilot.vim',
       lazy = true,
       event = { "BufReadPre", "BufNewFile", "BufEnter" },
@@ -85,10 +87,13 @@ if vim.g.worklaptop == false then
          end)
       end
    })
-   table.insert(ret, 
-   { 'wakatime/vim-wakatime', lazy = false }
+   table.insert(ret,
+      { 'wakatime/vim-wakatime', lazy = false }
    )
 end
+
+
+
 
 
 return ret
