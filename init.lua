@@ -33,15 +33,20 @@ vim.opt.runtimepath:prepend(lazypath)
 local lazyspec = {
    { import = "plugins" },
    { import = "plugins.lsp" },
-   {import = "plugins.work"},
+   { import = "plugins.work" },
    { import = "plugins.editing" }
 }
 if vim.g.worklaptop then
    -- Add the private config to the Lua path
-   
    local private_path = "~/.config/nvim-private/"
-   -- Add private config to lazyspec
-   table.insert(lazyspec, { import = "nvim-private" })
+   
+   -- Only add private config to lazyspec if the directory exists
+   local private_dir = vim.fn.expand(private_path)
+   if vim.fn.isdirectory(private_dir) == 1 then
+      table.insert(lazyspec, { import = "nvim-private" })
+   else
+      vim.notify("nvim-private directory not found at " .. private_dir .. ". Skipping import.", vim.log.levels.WARN)
+   end
 end
 require("lazy").setup({
    spec = lazyspec,
