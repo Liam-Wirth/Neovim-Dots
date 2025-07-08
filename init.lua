@@ -11,6 +11,10 @@ if f then f:close() end
 vim.g.worklaptop = (f ~= nil)
 
 
+-- want to disable certain plugins if I'm in vscode (yuck)
+vim.g.vscode = vim.g.vscode or false
+
+
 
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

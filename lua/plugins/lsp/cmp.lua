@@ -1,5 +1,5 @@
 local vim = vim
-return {
+local ret = {
    {
       "hrsh7th/nvim-cmp",
       version = false, -- last release is way too old
@@ -234,3 +234,7 @@ return {
       end,
    }
 }
+
+if not vim.g.vscode then
+   return ret
+end

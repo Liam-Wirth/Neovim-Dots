@@ -52,7 +52,7 @@ local ret = {
                }
             end,
          },
-         { "folke/neodev.nvim", opts = {} },
+         { "folke/neodev.nvim",  opts = {} },
       },
       config = function()
          -- set up servers configured with AstroLSP
@@ -131,7 +131,7 @@ local ret = {
       lazy = true,
       dependencies = {
          { "nvim-treesitter/nvim-treesitter", lazy = true },
-         { "akinsho/org-bullets.nvim", lazy = true },
+         { "akinsho/org-bullets.nvim",        lazy = true },
       },
       ft = { "org", "norg" },
       config = function()
@@ -219,4 +219,7 @@ local ret = {
       },
    },
 }
-return ret
+
+if not vim.g.vscode then
+   return ret
+end

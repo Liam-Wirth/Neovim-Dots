@@ -1,4 +1,4 @@
-return {
+local ret = {
    "nvim-lualine/lualine.nvim",
    event = { "BufReadPost", "BufNewFile" },
    dependencies = { "meuter/lualine-so-fancy.nvim" },
@@ -242,3 +242,10 @@ return {
       return config
    end,
 }
+
+
+if not vim.g.vscode then
+   return ret
+else
+   return {} -- in vscode there is no need for lualine
+end

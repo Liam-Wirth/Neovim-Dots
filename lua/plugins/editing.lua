@@ -1,5 +1,4 @@
-local kind = require("util.glyphs").kind
-return {
+local ret = {
    {
       "lervag/vimtex",
       --NOTE: this plugin needs to be explicitly NOT Lazy loaded, as it lazy loads itself upon entering a latex buffer
@@ -148,22 +147,30 @@ return {
       event = "BufEnter",
       opts = {},
    },
-   {
-      "LunarVim/bigfile.nvim",
-      lazy = false,
-      opts = {
-         filesize = 2,      -- size of the file in MiB, the plugin round file sizes to the closest MiB
-         pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
-         features = {       -- features to disable
-            "indent_blankline",
-            "illuminate",
-            "lsp",
-            "treesitter",
-            "syntax",
-            "matchparen",
-            "vimopts",
-            "filetype",
-         },
+}
+
+if not vim.g.vscode then
+   local norm = {
+      {
+         "LunarVim/bigfile.nvim",
+         lazy = false,
+         opts = {
+            filesize = 2,      -- size of the file in MiB, the plugin round file sizes to the closest MiB
+            pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big files>
+            features = {       -- features to disable
+               "indent_blankline",
+               "illuminate",
+               "lsp",
+               "treesitter",
+               "syntax",
+               "matchparen",
+               "vimopts",
+               "filetype",
+            },
+         }
       }
    }
-}
+   vim.list_extend(ret, norm)
+end
+
+return ret
