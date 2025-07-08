@@ -1,4 +1,3 @@
-local oa = require([[plugins.lsp.lspconfig]]).on_attach
 vim.api.nvim_set_hl(0, "RustaceanvimFloat", { bg = "#282828", fg = "#ebdbb2" })       -- Example Gruvbox colors
 vim.api.nvim_set_hl(0, "RustaceanvimFloatBorder", { bg = "#282828", fg = "#a89984" }) -- I don't want rustaceanvim to be transparent
 

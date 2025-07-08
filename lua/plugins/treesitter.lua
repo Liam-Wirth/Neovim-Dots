@@ -1,4 +1,4 @@
-return {
+local ret = {
    {
       "nvim-treesitter/nvim-treesitter",
       lazy = true,
@@ -79,3 +79,9 @@ return {
       end,
    },
 }
+
+if not vim.g.vscode then
+   return ret
+else
+   return {}
+end

@@ -11,7 +11,7 @@ local colors_light = {
    gray = "#a89984",
 }
 
-return {
+local ret ={
    {
       "folke/which-key.nvim",
       event = "VeryLazy",
@@ -228,3 +228,7 @@ return {
       after = "rainow-delimiters.nvim",
    },
 }
+
+if not vim.g.vscode then
+   return ret -- ui stuff isn't needed in vscode
+end

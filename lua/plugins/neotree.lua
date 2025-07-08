@@ -1,5 +1,5 @@
 -- TODO: get lspsaga tree to dock or something below neotree
-return {
+local ret = {
    {
       "nvim-neo-tree/neo-tree.nvim",
       branch = "v3.x",
@@ -54,4 +54,10 @@ return {
       }
    }
 }
+
+if not vim.g.vscode then
+   return ret
+else
+   return {} -- no need for neotree in vscode
+end
 
