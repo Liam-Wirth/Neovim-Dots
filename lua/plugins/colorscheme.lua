@@ -21,7 +21,7 @@ GruvColors = {
    bold_fg = "#3c3836",
    fg = "#282828"
 }
-ret = {
+local ret = {
    {
       "NTBBloodbath/doom-one.nvim",
       lazy = true,
@@ -66,10 +66,13 @@ ret = {
             invert_signs = false,
             invert_tabline = false,
             invert_intend_guides = false,
-            inverse = false,     -- invert background for search, diffs, statuslines and errors
-            contrast = "hard",   -- can be "hard", "soft" or empty string
+            inverse = false,   -- invert background for search, diffs, statuslines and errors
+            contrast = "hard", -- can be "hard", "soft" or empty string
             palette_overrides = {},
             overrides = {
+               Normal = {
+                  fg = "#ebdbb2",
+               }
             },
             dim_inactive = false,
             -- transparent_mode = vim.g.transparent_enabled,
@@ -77,10 +80,51 @@ ret = {
          })
       end,
    },
+   {
+      "https://github.com/sainnhe/everforest",
+      lazy = false,
+   },
+   {
+      "https://github.com/luisiacc/gruvbox-baby",
+   }
 }
 
-vim.cmd [[
-"highlight! link Normal GruvboxBG0
-"highlight! link NeotreeNormalNC GruvboxBG0
-]]
+
+
+-- gruvbox color fix for untyped buffers
+local function apply_gruvbox_fixes()
+   if vim.g.colors_name == "gruvbox" then
+      -- Fix text visibility in untyped/no-filetype buffers
+      vim.api.nvim_set_hl(0, "Normal", { fg = "#ebdbb2", bg = "#282828" })
+      vim.api.nvim_set_hl(0, "NonText", { fg = "#ebdbb2" })
+      vim.api.nvim_set_hl(0, "Comment", { fg = "#928374" })
+      vim.api.nvim_set_hl(0, "Conceal", { fg = "#ebdbb2" })
+      vim.api.nvim_set_hl(0, "EndOfBuffer", { fg = "#3c3836" })
+      vim.api.nvim_set_hl(0, "LineNr", { fg = "#7c6f64", bg = "#282828" })
+      vim.api.nvim_set_hl(0, "SignColumn", { bg = "#282828" })
+   end
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+   pattern = "*",
+   callback = apply_gruvbox_fixes
+})
+
+-- Apply fixes when vim starts
+vim.api.nvim_create_autocmd("VimEnter", {
+   callback = function()
+      vim.schedule(apply_gruvbox_fixes)
+   end
+})
+
+-- Apply fixes when entering any buffer (especially new ones)
+vim.api.nvim_create_autocmd({"BufEnter", "BufNew", "BufWinEnter"}, {
+   callback = function()
+      vim.schedule(apply_gruvbox_fixes)
+   end
+})
+
+-- Set gruvbox as the default colorscheme
+vim.cmd.colorscheme("gruvbox")
+
 return ret
