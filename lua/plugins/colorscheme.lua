@@ -94,14 +94,16 @@ local ret = {
 -- gruvbox color fix for untyped buffers
 local function apply_gruvbox_fixes()
    if vim.g.colors_name == "gruvbox" then
-      -- Fix text visibility in untyped/no-filetype buffers
-      vim.api.nvim_set_hl(0, "Normal", { fg = "#ebdbb2", bg = "#282828" })
+      -- Fix text visibility in untyped/no-filetype buffers while respecting transparent mode
+      vim.api.nvim_set_hl(0, "Normal", { fg = "#ebdbb2" })  -- Don't force bg when transparent
       vim.api.nvim_set_hl(0, "NonText", { fg = "#ebdbb2" })
       vim.api.nvim_set_hl(0, "Comment", { fg = "#928374" })
       vim.api.nvim_set_hl(0, "Conceal", { fg = "#ebdbb2" })
-      vim.api.nvim_set_hl(0, "EndOfBuffer", { fg = "#3c3836" })
-      vim.api.nvim_set_hl(0, "LineNr", { fg = "#7c6f64", bg = "#282828" })
-      vim.api.nvim_set_hl(0, "SignColumn", { bg = "#282828" })
+      vim.api.nvim_set_hl(0, "EndOfBuffer", { fg = "#504945" })  -- More visible than #3c3836
+      vim.api.nvim_set_hl(0, "LineNr", { fg = "#7c6f64" })  -- Don't force bg when transparent
+      vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })  -- Keep transparent
+      -- Ensure text in untyped buffers is bright enough
+      vim.api.nvim_set_hl(0, "Whitespace", { fg = "#504945" })
    end
 end
 
