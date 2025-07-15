@@ -56,8 +56,8 @@ local ret = {
                end,
             },
             sources = cmp.config.sources({
-               { name = "nvim_lsp",             priority = 10 },
-               { name = "luasnip",              priority = 9 }, -- Force snippet/lsp suggestions to the top
+               { name = "nvim_lsp", priority = 10 },
+               { name = "luasnip",  priority = 9 }, -- Force snippet/lsp suggestions to the top
                { name = "nvim-lua" },
                { name = "crates" },
                -- { name = "vim-dadbod-completion" },

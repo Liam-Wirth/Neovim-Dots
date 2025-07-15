@@ -127,6 +127,5 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufNew", "BufWinEnter"}, {
 })
 
 -- Set gruvbox as the default colorscheme
-vim.cmd.colorscheme("gruvbox")
 
 return ret

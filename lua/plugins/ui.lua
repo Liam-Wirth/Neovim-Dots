@@ -221,9 +221,6 @@ local ret ={
    {
       "lukas-reineke/indent-blankline.nvim",
       main = "ibl",
-      config = function()
-         require("plugins.configs.indent-blankline")
-      end,
       before = "gruvbox.nvim",
       after = "rainow-delimiters.nvim",
    },

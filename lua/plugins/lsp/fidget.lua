@@ -16,11 +16,10 @@ if not vim.g.vscode then
             },
          },
          notification = {
-            override_vim_notify = true, -- Automatically override vim.notify() with Fidget
+            override_vim_notify = false, -- Automatically override vim.notify() with Fidget
             window = {
                winblend = 0,         -- Background color opacity in the notification window
                zindex = 75,          -- Stacking priority of the notification window
-               border = "rounded",   -- setting the border
             },
          },
       },

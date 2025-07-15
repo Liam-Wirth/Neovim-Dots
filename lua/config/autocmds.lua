@@ -1,3 +1,4 @@
+local vim=vim -- HACK: lol
 vim.api.nvim_create_autocmd("colorscheme", {
    group = vim.api.nvim_create_augroup("coloringfuckery", { clear = true }),
    pattern = "*",
