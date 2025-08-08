@@ -149,43 +149,43 @@ local ret ={
       },
    },
    {
-      "s1n7ax/nvim-window-picker",
-      name = "window-picker",
-      event = "VeryLazy",
-      version = "2.*",
-      config = function()
-         local window_picker = require("window-picker")
-         window_picker.setup({
-            autoselect_one = false,
-            include_current_win = false,
-         })
+      -- "s1n7ax/nvim-window-picker",
+      -- name = "window-picker",
+      -- event = "VeryLazy",
+      -- version = "2.*",
+      -- config = function()
+         -- local window_picker = require("window-picker")
+         -- window_picker.setup({
+            -- autoselect_one = false,
+            -- include_current_win = false,
+         -- })
 
-         vim.api.nvim_create_autocmd("FileType", {
-            pattern = "neo-tree",
-            callback = function()
-               vim.keymap.set("n", "<cr>", function()
-                  local state = require("neo-tree.sources.manager").get_state("filesystem")
-                  local node = state.tree:get_node()
+         -- vim.api.nvim_create_autocmd("FileType", {
+            -- pattern = "neo-tree",
+            -- callback = function()
+               -- vim.keymap.set("n", "<cr>", function()
+                  -- local state = require("neo-tree.sources.manager").get_state("filesystem")
+                  -- local node = state.tree:get_node()
 
-                  if node.type == "file" then
+                  -- if node.type == "file" then
                      -- Pick a window to open the file in
-                     local picked_window_id = window_picker.pick_window()
+                     -- local picked_window_id = window_picker.pick_window()
 
-                     if picked_window_id then
+                     -- if picked_window_id then
                         -- Switch to the picked window
-                        vim.api.nvim_set_current_win(picked_window_id)
+                        -- vim.api.nvim_set_current_win(picked_window_id)
 
                         -- Open the file
-                        require("neo-tree.sources.filesystem.commands").open()
-                     end
-                  else
+                        -- require("neo-tree.sources.filesystem.commands").open()
+                     -- end
+                  -- else
                      -- Default neo-tree behavior for non-file nodes
-                     require("neo-tree.sources.filesystem.commands").open()
-                  end
-               end, { buffer = true })
-            end,
-         })
-      end,
+                     -- require("neo-tree.sources.filesystem.commands").open()
+                  -- end
+               -- end, { buffer = true })
+            -- end,
+         -- })
+      -- end,
    },
    {
       "hiphish/rainbow-delimiters.nvim",
