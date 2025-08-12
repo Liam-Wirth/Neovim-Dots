@@ -13,6 +13,12 @@ local ret = {
       lazy = true,
       event = { "BufReadPre", "BufNewFile", "BufEnter" },
       opts = {
+         current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+         current_line_blame_opts = {
+            virt_text = true,
+            virt_text_pos = 'eol',
+            delay = 300,
+         },
          signs = {
             add = { text = "▎" },
             change = { text = "▎" },
@@ -23,6 +29,10 @@ local ret = {
          },
          on_attach = function(buffer)
             local gs = package.loaded.gitsigns
+
+            vim.api.nvim_create_user_command('GitBlameToggle', function()
+               gs.toggle_current_line_blame()
+            end, { desc = 'Toggle git blame' })
 
             local function map(mode, l, r, desc)
                vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
@@ -38,6 +48,7 @@ local ret = {
             map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
             map("n", "<leader>ghp", gs.preview_hunk, "Preview Hunk")
             map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
+            map("n", "<leader>gbt", gs.toggle_current_line_blame, "Toggle Inline Blame")
             map("n", "<leader>ghd", gs.diffthis, "Diff This")
             map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
             map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")

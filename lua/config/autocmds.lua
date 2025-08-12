@@ -5,8 +5,13 @@ vim.api.nvim_create_autocmd("colorscheme", {
    callback = function()
       for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
          vim.api.nvim_set_hl(0, group, {})
-
       end
+      -- Style git blame like a comment
+      vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { 
+         fg = "#928374", 
+         italic = true,
+         bg = "NONE" 
+      })
    end,
 })
 
