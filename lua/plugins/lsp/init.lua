@@ -31,7 +31,6 @@ local ret = {
    {
       "neovim/nvim-lspconfig",
       dependencies = {
-         { "AstroNvim/astrolsp", opts = {} },
          {
             "williamboman/mason-lspconfig.nvim", -- MUST be set up before `nvim-lspconfig`
             dependencies = {
@@ -40,24 +39,9 @@ local ret = {
                lazy = false,
                keys = { { "<leader>em", "<cmd>Mason<cr>", desc = "Mason" } },
             },
-            opts = function()
-               return {
-                  -- use AstroLSP setup for mason-lspconfig
-                  handlers = {
-                     function(server)
-                        require("astrolsp").lsp_setup(server)
-                     end,
-                  },
-                  require("lspconfig"),
-               }
-            end,
          },
          { "folke/neodev.nvim",  opts = {} },
       },
-      config = function()
-         -- set up servers configured with AstroLSP
-         vim.tbl_map(require("astrolsp").lsp_setup, require("astrolsp").config.servers)
-      end,
    },
    { "hrsh7th/cmp-nvim-lsp" },
    {
@@ -177,11 +161,6 @@ local ret = {
             let g:cpp_simple_highlight = 0
          ]])
       end,
-   },
-   {
-      "AstroNvim/astrolsp",
-      ft = "astro",
-      opts = {},
    },
    {
       "L3MON4D3/LuaSnip",

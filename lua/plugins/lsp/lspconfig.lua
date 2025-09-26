@@ -1,14 +1,13 @@
 local glyphs = require("util.glyphs")
-
 if not vim.g.vscode then
    local M = {}
 
    -- Keymap to toggle LSP inlay hints
 
    vim.keymap.set("n", "<leader>i", function()
-      local buf = vim.api.nvim_get_current_buf()
       if vim.lsp.buf.inlay_hint then
-         vim.lsp.buf.inlay_hint(buf, nil) -- Toggle inlay hints
+         local val = vim.lsp.inlay_hint
+         vim.lsp.inlay_hint.enable(not val)
       else
          require("notify")("Inlay Hints not supported by your current LSP, get that jawn fixed!")
       end
@@ -16,6 +15,8 @@ if not vim.g.vscode then
 
    -- Setup mason so it can manage external tooling
    require("mason").setup()
+
+   -- List of LSP servers to ensure installed
    local servers = {
       "texlab",
       "verible",
@@ -24,6 +25,7 @@ if not vim.g.vscode then
       "jsonls",
       "eslint",
       "tailwindcss",
+      "gopls",
       "svelte",
       "intelephense",
       "astro",
@@ -32,17 +34,14 @@ if not vim.g.vscode then
       "marksman",
       "lua_ls",
       "asm_lsp",
+      "ruff"
    }
-   if vim.g.worklaptop == false then
-      table.insert(servers, "gopls")
-      table.insert(servers, "asm_lsp")
-   end
 
-   -- TODO: Fix
+   -- Conform setup for formatting
    require("conform").setup({
       formatters_by_ft = {
          lua = { "stylua" },
-         python = { "black" },
+         python = { "ruff" },
          javascript = { "prettier" },
          typescript = { "prettier" },
          go = { "gofmt" },
@@ -52,14 +51,15 @@ if not vim.g.vscode then
          cpp = { "clang_format" },
          svelte = { "prettier" },
       },
-      vim.keymap.set({ "n", "v" }, "<leader>.", function()
-         require("conform").format({
-            lsp_fallback = true,
-            async = false,
-            timeout_ms = 500,
-         })
-      end, { desc = "Format file or range (in visual mode)" }),
    })
+
+   vim.keymap.set({ "n", "v" }, "<leader>.", function()
+      require("conform").format({
+         lsp_fallback = true,
+         async = false,
+         timeout_ms = 500,
+      })
+   end, { desc = "Format file or range (in visual mode)" })
 
    vim.api.nvim_create_user_command("Format", function()
       require("conform").format({
@@ -137,15 +137,23 @@ if not vim.g.vscode then
    capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
    -- Configure LSP servers
+   local manual_servers = {
+      ["basedpyright"] = true,
+      ["lua_ls"] = true,
+      ["clangd"] = true,
+      ["asm_lsp"] = true,
+   }
+
    for _, lsp in ipairs(servers) do
-      require("lspconfig")[lsp].setup({
-         on_attach = M.on_attach,
-         capabilities = capabilities,
-      })
+      -- Skip servers that we configure manually
+      if not manual_servers[lsp] then
+         require("lspconfig")[lsp].setup({
+            on_attach = M.on_attach,
+            capabilities = capabilities,
+         })
+      end
    end
 
-
-   -- Custom configuration for lua_ls
    require("lspconfig").lua_ls.setup({
       capabilities = capabilities,
       on_attach = M.on_attach,
@@ -165,8 +173,8 @@ if not vim.g.vscode then
                enable = true,
                globals = { "vim", "nvim" },
                groupSeverity = {
-                  -- strong = "Warning",
-                  -- strict = "Warning",
+                  strong = "Warning",
+                  strict = "Warning",
                },
                groupFileStatus = {
                   ["ambiguity"] = "Opened",
@@ -210,28 +218,57 @@ if not vim.g.vscode then
       },
    })
 
+   -- require("lspconfig").basedpyright.setup({
+   --    capabilities = capabilities,
+   --    on_attach = M.on_attach,
+   --    settings = {
+   --       basedpyright = {
+   --          analysis = {
+   --             typeCheckingMode = "strict",
+   --             diagnosticMode = "workspace",
+   --             useLibraryCodeForTypes = true,
+   --             autoImportCompletions = true,
+   --             diagnosticSeverityOverrides = {
+   --                reportMissingTypeStubs = "warning",
+   --                reportUnknownMemberType = "warning",
+   --                reportUnknownParameterType = "warning",
+   --                reportUnknownVariableType = "warning",
+   --                reportMissingTypeArgument = "warning",
+   --             },
+   --             inlayHints = {
+   --                variableTypes = true,
+   --                functionReturnTypes = true,
+   --                callArgumentNames = true,
+   --                callArgumentNamesMatching = false, -- optional
+   --                genericTypes = false, -- optional
+   --             },
+   --          },
+   --       },
+   --    },
+   -- })
+
    require("lspconfig").basedpyright.setup({
-      capabilities = capabilities,
-      on_attach = M.on_attach,
-      settings = {
-         python = {
-            analysis = {
-               typeCheckingMode = "off", -- Set to "off" to disable type checking warnings
-               diagnosticMode = "openFilesOnly",
-               useLibraryCodeForTypes = true,
-               autoImportCompletions = true,
-               diagnosticSeverityOverrides = {
-                  -- Optionally override specific diagnostic severities
-                  reportMissingTypeStubs = "none",
-                  reportUnknownMemberType = "none",
-                  reportUnknownParameterType = "none",
-                  reportUnknownVariableType = "none",
-                  reportMissingTypeArgument = "none",
-               },
-            },
-         },
+  settings = {
+    basedpyright = {
+      analysis = {
+        diagnosticMode = "workspace",
+        typeCheckingMode = "strict",
+        useLibraryCodeForTypes = true,
+        inlayHints = {
+          variableTypes = true,
+          callArgumentNames = true,
+          functionReturnTypes = true,
+          genericTypes = false,
+        },
+        diagnosticSeverityOverrides = {
+          reportMissingTypeStubs = "warning",
+          reportUnknownVariableType = "warning",
+          -- etc
+        },
       },
-   })
+    },
+  },
+})
 
    require("lspconfig").clangd.setup({
       on_attach = M.on_attach,
@@ -263,6 +300,10 @@ if not vim.g.vscode then
             cmd = { "bash-language-server", "start" },
          })
       end,
+   })
+
+   require("notify").setup({
+      background_colour = "#000000",
    })
 
    return M
