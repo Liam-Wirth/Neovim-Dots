@@ -37,7 +37,6 @@ vim.opt.runtimepath:prepend(lazypath)
 local lazyspec = {
    { import = "plugins" },
    { import = "plugins.lsp" },
-   { import = "plugins.work" },
    { import = "plugins.editing" }
 }
 require("lazy").setup({
