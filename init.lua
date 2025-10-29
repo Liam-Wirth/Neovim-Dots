@@ -45,10 +45,9 @@ require("lazy").setup({
 })
 require("plugins.colorscheme")
 
--- now colorscheme is handled, also what the hell is this colorscheme it is kinda nice
-vim.cmd [[
-colorscheme gruvbox
-]]
 
 require("plugins.lsp.lspconfig")
 require("config")
+vim.cmd [[
+colorscheme gruvbox
+]]

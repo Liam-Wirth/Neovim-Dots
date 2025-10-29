@@ -11,16 +11,22 @@ M.defaultOpts = {
    desc = nil,
 }
 
--- TODO: use icons with these
-wk.add({
-  -- Basic key mappings
-  { "<Esc>", "<C-\\><C-n>", desc = "Escape terminal mode", mode = "t" },
+local vsc = function(cmd) return function() vim.fn.VSCodeNotify(cmd) end end
 
-  -- Better up/down
-  -- { "j", "v:count == 0 ? 'gj' : 'j'", desc = "Better down movement", mode = { "n", "x" }, expr = true, silent = true },
-  -- { "k", "v:count == 0 ? 'gk' : 'k'", desc = "Better up movement", mode = { "n", "x" }, expr = true, silent = true },
-
-  -- Move to window using <ctrl> hjkl keys
+  -- Move to window using <ctrl> hjkl keys or leader+w+hjkl
+if vim.g.vscode then
+   wk.add({
+    { "<C-h>", vsc("workbench.action.focusLeftGroup"),  desc = "Focus left group",  mode = { "n", "x" } },
+    { "<leader>wh", vsc("workbench.action.focusLeftGroup"),  desc = "Focus left group",  mode = { "n", "x" } },
+    { "<C-j>", vsc("workbench.action.focusBelowGroup"), desc = "Focus below group", mode = { "n", "x" } },
+    { "<leader>wj", vsc("workbench.action.focusBelowGroup"), desc = "Focus below group", mode = { "n", "x" } },
+    { "<C-k>", vsc("workbench.action.focusAboveGroup"), desc = "Focus above group", mode = { "n", "x" } },
+    { "<leader>wk", vsc("workbench.action.focusAboveGroup"), desc = "Focus above group", mode = { "n", "x" } },
+    { "<C-l>", vsc("workbench.action.focusRightGroup"), desc = "Focus right group", mode = { "n", "x" } },
+    { "<leader>wl", vsc("workbench.action.focusRightGroup"), desc = "Focus right group", mode = { "n", "x" } },
+  })
+else
+   wk.add({
   { "<C-h>", "<C-w>h", desc = "Go to left window", mode = "n", remap = true },
   { "<C-j>", "<C-w>j", desc = "Go to lower window", mode = "n", remap = true },
   { "<C-k>", "<C-w>k", desc = "Go to upper window", mode = "n", remap = true },
@@ -30,7 +36,21 @@ wk.add({
   { "<C-Up>", "<cmd>resize +2<cr>", desc = "Increase window height", mode = "n" },
   { "<C-Down>", "<cmd>resize -2<cr>", desc = "Decrease window height", mode = "n" },
   { "<C-Left>", "<cmd>vertical resize -2<cr>", desc = "Decrease window width", mode = "n" },
-  { "<C-Right>", "<cmd>vertical resize +2<cr>", desc = "Increase window width", mode = "n" },
+  { "<C-Right>", "<cmd>vertical resize +2<cr>", desc = "Increase window width", mode = "n" }
+})
+end
+
+
+
+-- TODO: use icons with these
+wk.add({
+  -- Basic key mappings
+  { "<Esc>", "<C-\\><C-n>", desc = "Escape terminal mode", mode = "t" },
+
+  -- Better up/down
+  -- { "j", "v:count == 0 ? 'gj' : 'j'", desc = "Better down movement", mode = { "n", "x" }, expr = true, silent = true },
+  -- { "k", "v:count == 0 ? 'gk' : 'k'", desc = "Better up movement", mode = { "n", "x" }, expr = true, silent = true },
+
 
   -- Move Lines
   { "<A-j>", "<cmd>m .+1<cr>==", desc = "Move down", mode = "n" },
