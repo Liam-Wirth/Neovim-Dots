@@ -16,11 +16,9 @@ local ret = {
       end,
       opts = {
          animate = {
-            -- I like my sidebars snappy, bruh
             enabled = false,
          },
          bottom = {
-            -- toggleterm / lazyterm at the bottom with a height of 40% of the screen
             {
                ft = "toggleterm",
                size = { height = 0.4 },

@@ -161,7 +161,7 @@ local ret = {
                      color_warn = { fg = colors.yellow },
                      color_info = { fg = colors.cyan },
                   },
-                  on_click = function() vim.cmd("TroubleToggle") end, -- TODO click event to open trouble
+                  on_click = function() vim.cmd("Trouble diagnostics") end,
                },
             },
             lualine_x = {
@@ -181,8 +181,8 @@ local ret = {
                   function()
                      local msg = "No Active Lsp"
                      local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-                     local clients = vim.lsp.get_active_clients()
-                     
+                     local clients = vim.lsp.get_clients()
+
                      if next(clients) == nil then
                         return msg
                      end
@@ -224,7 +224,7 @@ local ret = {
                {
                   "progress",
                   color = { fg = colors.fg, gui = "bold" },
-                  padding = { right = 0, left = 0}
+                  padding = { right = 0, left = 0 }
                },
                {
                   "fancy_location",

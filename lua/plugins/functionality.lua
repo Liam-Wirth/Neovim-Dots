@@ -106,9 +106,9 @@ local ret = {
       keys = {
          "<leader>p", "<cmd>ColorizerToggle<CR>", desc = "Toggle Colorizer" }
    },
-
 }
 
+-- Hacky way to enable/disable certain things based on environment
 if not vim.g.vscode then
    local cond = {
       {

@@ -45,8 +45,6 @@ require("lazy").setup({
 })
 require("plugins.colorscheme")
 
-
-require("plugins.lsp.lspconfig")
 require("config")
 vim.cmd [[
 colorscheme gruvbox

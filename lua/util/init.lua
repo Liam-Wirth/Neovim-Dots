@@ -1,5 +1,4 @@
---NOTE:
-
+-- TODO: Might be worth my time to just nuke this in the future, seems overall broken
 local M = {}
 -- TODO: this function seems rather broken, doesnt work if I open the buffer while already within the root dir
 -- returns the root directory based on:
@@ -8,39 +7,46 @@ local M = {}
 -- * root pattern of filename of the current buffer
 -- * root pattern of cwd
 ---@return string
-function M.get_root()
-   ---@type string?
-   local path = vim.api.nvim_buf_get_name(0)
-   path = path ~= "" and vim.loop.fs_realpath(path) or nil
-   ---@type string[]
-   local roots = {}
-   if path then
-      for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
-         local workspace = client.config.workspace_folders
-         local paths = workspace and vim.tbl_map(function(ws)
-            return vim.uri_to_fname(ws.uri)
-         end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
-         for _, p in ipairs(paths) do
-            local r = vim.loop.fs_realpath(p)
-            if path:find(r, 1, true) then
-               roots[#roots + 1] = r
-            end
-         end
-      end
+local uv = vim.uv or vim.loop
+
+local ROOT_MARKERS = {
+   ".git",
+   "pyproject.toml",
+   "package.json",
+   "Cargo.toml",
+   "go.mod",
+   "Makefile",
+   "setup.cfg",
+   "setup.py",
+   "Pipfile",
+}
+
+local function dirname(p)
+   if not p or p == "" then return nil end
+   return vim.fs.dirname(p)
+end
+
+-- Always returns a directory string, either specifically to a pre-determined root file using all the markers I could think of
+-- or has fallbacks to cwd 
+function M.get_root(bufnr)
+   bufnr = bufnr or 0
+
+   local fname = vim.api.nvim_buf_get_name(bufnr)
+   local start = dirname(fname) or uv.cwd() or "."
+
+   -- Searches upward for a "root marker"
+   local found = vim.fs.find(ROOT_MARKERS, { path = start, upward = true })[1]
+   if found then
+      return dirname(found) or start
    end
-   table.sort(roots, function(a, b)
-      return #a > #b
-   end)
-   ---@type string?
-   local root = roots[1]
-   if not root then
-      path = path and vim.fs.dirname(path) or vim.loop.cwd()
-      ---@type string?
-      root = vim.fs.find(M.root_patterns, { path = path, upward = true })[1]
-      root = root and vim.fs.dirname(root) or vim.loop.cwd()
+
+   local git_top = vim.system({ "git", "-C", start, "rev-parse", "--show-toplevel" }, { text = true }):wait()
+   if git_top and git_top.code == 0 and git_top.stdout then
+      local line = git_top.stdout:gsub("%s+$", "")
+      if line ~= "" then return line end
    end
-   ---@cast root string
-   return root
+
+   return start
 end
 
 function M.has(plugin)
@@ -151,9 +157,9 @@ end
 
 -- Simple function returns boolean based on the existence of a file
 function M.file_exists(file)
-    local f = io.open(file, "rb")
-    if f then f:close() end
-    return f ~= nil
+   local f = io.open(file, "rb")
+   if f then f:close() end
+   return f ~= nil
 end
 
 if M.file_exists("~/.worklaptop") then

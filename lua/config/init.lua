@@ -1,13 +1,9 @@
 require("config.options")
 require("config.autocmds")
 require("config.keymaps")
---NOTE: putting this here, probably a bad idea
-vim.opt.termguicolors = true
-vim.opt.background = "dark"
 
 
 -- WSL yank support
-
 local clip = '/mnt/c/Windows/System32/clip.exe' -- change this path according to your mount point
 
 -- Check if we are in WSL

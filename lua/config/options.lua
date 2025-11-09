@@ -80,6 +80,10 @@ vim.o.completeopt = "menuone,noselect"
 vim.o.syntax = "on"
 
 -- Sign column and floating diagnostics
+
+vim.opt.termguicolors = true
+vim.opt.background = "dark"
+
 vim.cmd([[
 set signcolumn=yes
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })

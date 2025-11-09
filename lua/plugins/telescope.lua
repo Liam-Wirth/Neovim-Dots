@@ -2,10 +2,8 @@ if not vim.g.vscode then
    local Util = require("util")
    return {
       "nvim-telescope/telescope.nvim",
-      commit = vim.fn.has("nvim-0.9.0") == 0 and "057ee0f8783" or nil,
       cmd = "Telescope",
       lazy = true,
-      version = false, -- telescope did only one release, so use HEAD for now
       keys = {
          { "<leader>,",       "<cmd>Telescope buffers show_all_buffers=true<cr>",   desc = "Switch Buffer" },
          { "<leader>/",       Util.telescope("live_grep"),                          desc = "Grep (root dir)" },
