@@ -1,3 +1,6 @@
+vim.g.wakatime_log_level = "error" --SHUT UP!!! SHUT UP SHUT UP SHUT UP!!!
+vim.env.WAKATIME_LOG_LEVEL = "error"
+vim.g.wakatime_cli_path = "/usr/bin/wakatime-cli"
 local ret = {
    {
       "dstein64/vim-startuptime",
@@ -9,7 +12,7 @@ local ret = {
    -- library used by other plugins
    { "nvim-lua/plenary.nvim", lazy = true },
    {
-      'andweeb/presence.nvim',
+      "andweeb/presence.nvim",
       lazy = false,
       cond = function()
          -- if we are in WSL or just plain windows, don't load this plugin
@@ -20,7 +23,6 @@ local ret = {
          auto_update         = true,                                             -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
          neovim_image_text   = "that one text editor that LOSERS use! HAHAHAHA", -- Text displayed when hovered over the Neovim image
          main_image          = "neovim",                                         -- Main image display (either "neovim" or "file")
-         client_id           = "793271441293967371",                             -- Use your own Discord application client id (not recommended)
          log_level           = nil,                                              -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
          debounce_timeout    = 10,                                               -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
          enable_line_number  = false,                                            -- Displays the current line number instead of the current project
@@ -30,13 +32,13 @@ local ret = {
          show_time           = true,                                             -- Show the timer
 
          -- Rich Presence text options
-         editing_text        = "Editing a file",       -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
-         file_explorer_text  = "Browsing files",       -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
-         git_commit_text     = "Committing changes",   -- Format string rendered when committing changes in git (either string or function(filename: string): string)
-         plugin_manager_text = "Managing plugins",     -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
-         reading_text        = "Reading",              -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
-         workspace_text      = "Working on a project", -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
-         line_number_text    = "Line %s out of %s",    -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
+         editing_text        = "Editing a file",
+         file_explorer_text  = "Browsing files",
+         git_commit_text     = "Committing changes",
+         plugin_manager_text = "Managing plugins",
+         reading_text        = "Reading",
+         workspace_text      = "Working on a project",
+         line_number_text    = "Line %s out of %s",
       }
    },
    -- TODO: Setup a copilot section with keybinds and stuff, I want it disabled by DEFAULT and stuff
@@ -47,25 +49,21 @@ if vim.g.worklaptop == false then
    table.insert(ret,
       {
          "CopilotC-Nvim/CopilotChat.nvim",
-         branch = "canary",
          dependencies = {
-            { "github/copilot.vim" }, -- or github/copilot.vim
+            { "github/copilot.vim" },    -- or github/copilot.vim
             { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
          },
          opts = {
             debug = true, -- Enable debugging
-            -- See Configuration section for rest
          },
       }
    )
    -- Another thing is setup for a separate config. dw about it :)
    table.insert(ret, {
-
-      'github/copilot.vim',
+      "github/copilot.vim",
       lazy = true,
       event = { "BufReadPre", "BufNewFile", "BufEnter" },
       config = function()
-         -- configure the plugin here
          vim.g.copilot_enabled = 0 -- disable Copilot by default
          require("which-key").add({
             {
@@ -88,12 +86,14 @@ if vim.g.worklaptop == false then
       end
    })
    table.insert(ret,
-      { 'wakatime/vim-wakatime', lazy = false }
+      {
+         "wakatime/vim-wakatime",
+         lazy = false,
+         opts = {
+            debug = false,
+            heartbeat_frequency = 5,
+         }
+      }
    )
 end
-
-
-
-
-
 return ret

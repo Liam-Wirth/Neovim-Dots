@@ -11,7 +11,7 @@ local colors_light = {
    gray = "#a89984",
 }
 
-local ret ={
+local ret = {
    {
       "folke/which-key.nvim",
       event = "VeryLazy",
@@ -30,37 +30,26 @@ local ret ={
       },
    },
    {
-      "rcarriga/nvim-notify",
-      lazy = false,
-      keys = {
-         {
-            "<leader>un",
-            function()
-               require("notify").dismiss({ silent = true, pending = true })
-            end,
-            desc = "Dismiss all Notifications",
-         },
-      },
-      opts = {
-         timeout = 3000,
-         max_height = function()
-            return math.floor(vim.o.lines * 0.75)
-         end,
-         max_width = function()
-            return math.floor(vim.o.columns * 0.75)
-         end,
-      },
-      init = function()
-         -- when noice is not enabled, install notify on VeryLazy
-         local Util = require("util.init")
-         if not Util.has("noice.nvim") then
-            Util.on_very_lazy(function()
-               vim.notify = require("notify")
-            end)
-         end
-      end,
+     "rcarriga/nvim-notify",
+     event = "VeryLazy",
+     keys = {
+       {
+         "<leader>un",
+         function() require("notify").dismiss({ silent = true, pending = true }) end,
+         desc = "Dismiss all Notifications",
+       },
+     },
+     opts = {
+       timeout = 2000,
+       render = "compact",
+       background_colour = "#000000",
+       max_height = function() return math.floor(vim.o.lines * 0.75) end,
+       max_width  = function() return math.floor(vim.o.columns * 0.75) end,
+     },
+     init = function()
+       vim.notify = require("notify")
+     end,
    },
-   -- Context
    {
       "SmiteshP/nvim-navic",
       lazy = true,
@@ -82,8 +71,6 @@ local ret ={
          }
       end,
    },
-   "nvim-tree/nvim-web-devicons",
-   -- Helps with splits
    {
       "nvim-focus/focus.nvim",
       version = "*",
@@ -93,19 +80,19 @@ local ret ={
                enable = true,
             },
             ui = {
-               number = true,                     -- Display line numbers in the focussed window only
-               relativenumber = false,            -- Display relative line numbers in the focussed window only
-               hybridnumber = false,              -- Display hybrid line numbers in the focussed window only
-               absolutenumber_unfocussed = false, -- Preserve absolute numbers in the unfocussed windows
+               number = true,
+               relativenumber = false,
+               hybridnumber = false,
+               absolutenumber_unfocussed = false,
 
-               cursorline = true,                 -- Display a cursorline in the focussed window only
-               cursorcolumn = false,              -- Display cursorcolumn in the focussed window only
+               cursorline = true,
+               cursorcolumn = false,
                colorcolumn = {
-                  enable = false,                 -- Display colorcolumn in the foccused window only
-                  list = "+1",                    -- Set the comma-saperated list for the colorcolumn
+                  enable = false,
+                  list = "+1",
                },
-               signcolumn = true,                 -- Display signcolumn in the focussed window only
-               winhighlight = true,               -- Auto highlighting for focussed/unfocussed windows
+               signcolumn = true,
+               winhighlight = false,
             },
          })
       end,
@@ -117,13 +104,12 @@ local ret ={
       event = { "BufReadPost", "BufNewFile" },
       opts = {
          options = {
-            close_command = "bdelete! %d",       -- can be a string | function, | false see "Mouse actions"
-            right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
-            left_mouse_command = "buffer %d",    -- can be a string | function, | false see "Mouse actions"
-            middle_mouse_command = nil,          -- can be a string | function, | false see "Mouse actions"
+            close_command = "bdelete! %d",
+            right_mouse_command = "bdelete! %d",
+            left_mouse_command = "buffer %d",
+            middle_mouse_command = nil,
             diagnostics = "nvim_lsp",
             always_show_bufferline = true,
-            --separator_style = "slant",
             offsets = {
                {
                   filetype = "neo-tree",
@@ -149,50 +135,9 @@ local ret ={
       },
    },
    {
-      -- "s1n7ax/nvim-window-picker",
-      -- name = "window-picker",
-      -- event = "VeryLazy",
-      -- version = "2.*",
-      -- config = function()
-         -- local window_picker = require("window-picker")
-         -- window_picker.setup({
-            -- autoselect_one = false,
-            -- include_current_win = false,
-         -- })
-
-         -- vim.api.nvim_create_autocmd("FileType", {
-            -- pattern = "neo-tree",
-            -- callback = function()
-               -- vim.keymap.set("n", "<cr>", function()
-                  -- local state = require("neo-tree.sources.manager").get_state("filesystem")
-                  -- local node = state.tree:get_node()
-
-                  -- if node.type == "file" then
-                     -- Pick a window to open the file in
-                     -- local picked_window_id = window_picker.pick_window()
-
-                     -- if picked_window_id then
-                        -- Switch to the picked window
-                        -- vim.api.nvim_set_current_win(picked_window_id)
-
-                        -- Open the file
-                        -- require("neo-tree.sources.filesystem.commands").open()
-                     -- end
-                  -- else
-                     -- Default neo-tree behavior for non-file nodes
-                     -- require("neo-tree.sources.filesystem.commands").open()
-                  -- end
-               -- end, { buffer = true })
-            -- end,
-         -- })
-      -- end,
-   },
-   {
       "hiphish/rainbow-delimiters.nvim",
       lazy = false,
-      -- event = "BufReadPost",
       config = function()
-         -- This module contains a number of default definitions
          local rainbow_delimiters = require("rainbow-delimiters")
 
          vim.g.rainbow_delimiters = {
@@ -248,5 +193,5 @@ local ret ={
 }
 
 if not vim.g.vscode then
-   return ret -- ui stuff isn't needed in vscode
+   return ret
 end

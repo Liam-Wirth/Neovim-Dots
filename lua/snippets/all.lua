@@ -4,6 +4,7 @@ local t = ls.text_node
 local f = ls.function_node
 
 
+-- FIX: does not work
 local sheb = "#!/usr/bin/env"
 local shebmap = {
    python = sheb .. " python3",

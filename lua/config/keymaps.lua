@@ -47,11 +47,6 @@ wk.add({
   -- Basic key mappings
   { "<Esc>", "<C-\\><C-n>", desc = "Escape terminal mode", mode = "t" },
 
-  -- Better up/down
-  -- { "j", "v:count == 0 ? 'gj' : 'j'", desc = "Better down movement", mode = { "n", "x" }, expr = true, silent = true },
-  -- { "k", "v:count == 0 ? 'gk' : 'k'", desc = "Better up movement", mode = { "n", "x" }, expr = true, silent = true },
-
-
   -- Move Lines
   { "<A-j>", "<cmd>m .+1<cr>==", desc = "Move down", mode = "n" },
   { "<A-k>", "<cmd>m .-2<cr>==", desc = "Move up", mode = "n" },
@@ -135,9 +130,6 @@ wk.add({
 
   -- Telescope
   { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" },
-
-
-   -- focus (auto window resizing, sometimes it's a bit annoying)
 
    { "<leader>wf", "<cmd>FocusToggle<CR>", desc = "Toggle Focus auto-resizing", mode = "n" },
 

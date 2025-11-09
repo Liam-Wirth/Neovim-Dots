@@ -6,14 +6,13 @@ if not vim.g.vscode then
       cmd = { "ConformInfo" },
       config = function()
          local conform = require("conform")
-
          conform.setup({
             formatters_by_ft = {
                css = { "prettier" },
                elixir = { "mix" },
                go = { "gofmt" },
                graphql = { "prettier" },
-               javascript = { "biome" }, -- or "prettier" if you prefer
+               javascript = { "biome" },
                json = { "prettier" },
                lua = { "stylua" },
                php = { "prettier" },
@@ -52,20 +51,17 @@ if not vim.g.vscode then
                rustfmt = {
                   prepend_args = {
                      "--emit=stdout",
-                     "--edition=2021",
                   },
                },
                black = {
                   prepend_args = {},
                },
                biome = {
-                  -- Your biome settings
                   prepend_args = {
                      "format",
                   },
                },
             },
-            -- For format on key mapping (optional)
             format_after_save = false,
          })
 
