@@ -4,30 +4,43 @@ require("config.keymaps")
 
 
 -- WSL yank support
-local clip = '/mnt/c/Windows/System32/clip.exe' -- change this path according to your mount point
+local clip = '/mnt/c/Windows/System32/clip.exe'
 
 -- Check if we are in WSL
-IS_WSL = os.getenv("is_wsl")
+vim.g.IS_WSL = os.getenv("is_wsl")
 
-if IS_WSL and vim.fn.executable(clip) == 1 then
+if vim.g.IS_WSL and vim.fn.executable(clip) == 1 then
     -- Set up clipboard to use clip.exe
-    vim.api.nvim_set_option('clipboard', 'unnamedplus')
+    vim.opt.clipboard = 'unnamedplus'
 
     -- Create an autocommand group for yanking to the clipboard
-    vim.api.nvim_exec([[
-        augroup WSLYank
-            autocmd!
-            autocmd TextYankPost * if v:event.operator ==# 'y' | call system(']] .. clip .. [[', getreg('"')) | endif
-        augroup END
-    ]], false)
+    vim.api.nvim_create_augroup("WSLYank", { clear = true })
+    vim.api.nvim_create_autocmd("TextYankPost", {
+        group = "WSLYank",
+        callback = function()
+            if vim.v.event.operator == 'y' then
+                vim.fn.system(clip, vim.fn.getreg('"'))
+            end
+        end,
+    })
 end
-local tab = [[,tab:»■ ]]
-local tab2 = [[,tab:→\ ]]
-local tab3 = [[,tab:\ \ ]]
-local extends = [[,extends:❯]]
-local nbsp = [[,nbsp:␣]]
-local precedes = [[,precedes:❮]]
-vim.cmd("set listchars=eol:" .. "↩" .. tab2 .. extends .. precedes .. nbsp)
+-- NOTE: Might replace this with ascii type chars inthe future
+vim.opt.listchars = {
+    eol = "↩",
+    tab = "→ ",
+    extends = "❯",
+    precedes = "❮",
+    nbsp = "␣",
+}
+
+
+-- vim.opt.listchars= {
+-- eol = "<-"
+-- tab = "->"
+-- extends = ">"
+-- precedes = "<"
+-- nbsp = "_"
+-- }
 vim.opt.fillchars = {
   foldopen = "",
   foldclose = "",
