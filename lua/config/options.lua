@@ -4,13 +4,11 @@ local set = vim.opt
 vim.o.encoding = "UTF-8"
 vim.o.inccommand = "split"
 
--- Tab settings
 set.expandtab = true
 set.smartindent = true
 set.smarttab = true
 set.shiftwidth = 3
 
--- Searching settings
 set.ignorecase = true
 set.smartcase = true
 set.hlsearch = true
@@ -32,41 +30,34 @@ set.signcolumn = "yes"
 set.showtabline = 2
 set.cmdheight = 1
 set.pumheight = 10
-set.autochdir = true
 set.laststatus = 3
 set.splitkeep = "screen"
 
--- Misc settings
 set.hidden = true
 set.belloff = "all"
 set.mousefocus = true
 set.sidescroll = 50
 
--- Diagnostic settings
 vim.diagnostic.config({
    virtual_text = true,
    signs = true,
-   update_in_insert = true,
+   update_in_insert = false, -- Don't update diagnostics while typing
    underline = true,
-   severity_sort = false,
+   severity_sort = true,
    float = {
-      border = 'rounded',
-      header = '',
-      prefix = '',
+      border = "rounded",
+      header = "",
+      prefix = "",
    },
 })
 
--- Undo file settings
-vim.cmd([[
-if !isdirectory($HOME."/.vim")
-    call mkdir($HOME."/.vim", "", 0770)
-endif
-if !isdirectory($HOME."/.vim/undo-dir")
-    call mkdir($HOME."/.vim/undo-dir", "", 0700)
-endif
-set undodir=~/.vim/undo-dir
-set undofile
-]])
+-- Undo file settings - Modern Lua approach
+local undo_dir = vim.fn.expand("~/.vim/undo-dir")
+if vim.fn.isdirectory(undo_dir) == 0 then
+   vim.fn.mkdir(undo_dir, "p", 0700)
+end
+vim.opt.undodir = undo_dir
+vim.opt.undofile = true
 
 -- Disable netrw for Nvim Tree
 vim.g.loaded_netrw = 1
@@ -84,24 +75,17 @@ vim.o.syntax = "on"
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
 
-vim.cmd([[
-set signcolumn=yes
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-]])
-
-
-
 -- vim.g settings and stuff
 --
 
 vim.g.loaded_python3_provider = 0
 
--- TODO: Fix
+-- TODO: Remove if not needed - File type associations
 vim.filetype.add({
    extension = {
       inc = "nasm",
       asm = "nasm",
-      zsh = "bash",
+      zsh = "zsh", -- Keep as zsh, not bash
       v = "verilog",
       tcl = "tcl",
    },

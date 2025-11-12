@@ -22,52 +22,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
    group = highlight_group,
    pattern = "*",
 })
--- HACK: wtf is this doing in the autocmds file???
-local wk = require("which-key")
-vim.api.nvim_create_autocmd("LspAttach", {
-   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-   callback = function(ev)
-      -- Enable completion triggered by <c-x><c-o>
-      vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-      wk.add({
-         -- Group descriptions
-         { "<leader>b", group = "LSP Buffer Actions" },
-         { "<space>b", group = "LSP Buffer Workspace" },
-
-         -- Individual keymaps with descriptions
-         { "<leader>bgD", vim.lsp.buf.declaration, desc = "Go to Declaration", mode = "n" },
-         { "<leader>bgd", vim.lsp.buf.definition, desc = "Go to Definition", mode = "n" },
-         { "K", vim.lsp.buf.hover, desc = "Hover Documentation", mode = "n" },
-         { "<leader>bgi", vim.lsp.buf.implementation, desc = "Go to Implementation", mode = "n" },
-         { "<C-k>", vim.lsp.buf.signature_help, desc = "Signature Help", mode = "n" },
-
-         -- Workspace management
-         { "<space>bwa", vim.lsp.buf.add_workspace_folder, desc = "Add Workspace Folder", mode = "n" },
-         { "<space>bwr", vim.lsp.buf.remove_workspace_folder, desc = "Remove Workspace Folder", mode = "n" },
-         {
-            "<space>bwl",
-            function()
-               print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            end,
-            desc = "List Workspace Folders",
-            mode = "n",
-         },
-
-         { "<space>bD", vim.lsp.buf.type_definition, desc = "Type Definition", mode = "n" },
-         { "<space>br", desc = "Rename Symbol", mode = "n" },
-         { "<space>ba", desc = "Code Action", mode = { "n", "v" } },
-         {
-            "<space>.",
-            function()
-               vim.lsp.buf.format({ async = true })
-            end,
-            desc = "Format Code",
-            mode = "n",
-         },
-      })
-   end,
-})
+-- LSP keybindings are now defined in lspconfig.lua on_attach function
 
 vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
    callback = function()
