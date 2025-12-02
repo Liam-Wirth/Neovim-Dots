@@ -38,7 +38,7 @@ return {
             "fortls",
             "marksman",
             "lua_ls",
-            "asm_lsp",
+            -- "asm_lsp",
             "ruff",
          }
          require("mason-lspconfig").setup({ ensure_installed = servers })
@@ -119,8 +119,8 @@ return {
 
          local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-         local manual = { basedpyright = true, lua_ls = true, clangd = true, asm_lsp = true, gopls = true, ruff = true }
-         
+         local manual = { basedpyright = true, lua_ls = true, clangd = true, asm_lsp = true, gopls = true, ruff = true, verible = true }
+
          for _, name in ipairs(servers) do
             if not manual[name] then
                vim.lsp.config(name, { on_attach = on_attach, capabilities = capabilities })
@@ -151,6 +151,11 @@ return {
             },
          })
 
+         -- https://danielmangum.com/posts/setup-verible-verilog-neovim/
+         vim.lsp.config("verible", {
+              cmd = {'verible-verilog-ls', '--rules_config_search'},
+         })
+
          -- Configure ruff for fast linting only (let basedpyright handle type checking)
          vim.lsp.config("ruff", {
             on_attach = function(client, bufnr)
@@ -177,7 +182,7 @@ return {
                   runtime = { version = "LuaJIT" },
                   telemetry = { enable = false },
                   hint = {
-                     enable = true,  -- Enable inlay hints for Lua
+                     enable = true, -- Enable inlay hints for Lua
                      setType = true,
                      paramName = "All",
                      paramType = true,
@@ -192,7 +197,7 @@ return {
                      enable = true,
                      defaultConfig = {
                         indent_style = "space",
-                        indent_size = "3",  -- Match your config
+                        indent_size = "3", -- Match your config
                         continuation_indent = "3",
                         quote_style = "double",
                      },
@@ -220,19 +225,19 @@ return {
             settings = {
                basedpyright = {
                   analysis = {
-                     diagnosticMode = "openFilesOnly",  -- Only check open files for performance
-                     typeCheckingMode = "standard",      -- Use "standard" instead of "strict" for less noise
+                     diagnosticMode = "openFilesOnly", -- Only check open files for performance
+                     typeCheckingMode = "standard", -- Use "standard" instead of "strict" for less noise
                      useLibraryCodeForTypes = true,
                      autoSearchPaths = true,
                      inlayHints = {
                         variableTypes = true,
-                        callArgumentNames = "partial",   -- Only show for complex calls
+                        callArgumentNames = "partial", -- Only show for complex calls
                         functionReturnTypes = true,
                         genericTypes = false,
                         parameterTypes = true,
                      },
                      diagnosticSeverityOverrides = {
-                        reportMissingTypeStubs = "none",          -- Ruff handles imports
+                        reportMissingTypeStubs = "none", -- Ruff handles imports
                         reportUnknownVariableType = "information",
                         reportUnknownMemberType = "none",
                         reportUnknownParameterType = "none",
@@ -260,12 +265,12 @@ return {
             filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
             root_dir = function(bufnr, on_dir)
                local path = vim.api.nvim_buf_get_name(bufnr)
-               local root = vim.fs.root(path, { 
-                  "compile_commands.json", 
-                  "compile_flags.txt", 
+               local root = vim.fs.root(path, {
+                  "compile_commands.json",
+                  "compile_flags.txt",
                   ".clangd",
                   ".clang-format",
-                  ".git"
+                  ".git",
                }) or vim.fs.dirname(path)
                on_dir(root)
             end,
@@ -282,7 +287,7 @@ return {
          -- Setup notify
          require("notify").setup({ background_colour = "#000000" })
          vim.notify = require("notify")
-         
+
          -- Enable all configured LSP servers
          for _, server in ipairs(servers) do
             vim.lsp.enable(server)
