@@ -1,7 +1,8 @@
 -- local wk = require("which-key")
 local ret = {
    {
-      "utilyre/barbecue.nvim", -- TODO: Eventually phase out for lspsaga
+      "utilyre/barbecue.nvim",
+      enabled = false, -- Using lspsaga winbar instead
       lazy = true,
       event = "BufReadPost",
       name = "barbecue",
@@ -40,7 +41,16 @@ local ret = {
                keys = { { "<leader>em", "<cmd>Mason<cr>", desc = "Mason" } },
             },
          },
-         { "folke/neodev.nvim",  opts = {} },
+         {
+            "SmiteshP/nvim-navbuddy",
+            dependencies = {
+               "SmiteshP/nvim-navic",
+               "MunifTanjim/nui.nvim",
+            },
+            opts = { lsp = { auto_attach = true } },
+            keys = { {"<leader>en", "<cmd>Navbuddy<cr>"} },
+         },
+         { "folke/neodev.nvim", opts = {} },
       },
    },
    { "hrsh7th/cmp-nvim-lsp" },

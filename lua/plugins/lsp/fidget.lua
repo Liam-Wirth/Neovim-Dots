@@ -17,7 +17,7 @@ if not vim.g.vscode then
          notification = {
             override_vim_notify = false, -- Automatically override vim.notify() with Fidget
             window = {
-               winblend = 2, -- Background color opacity in the notification window
+               winblend = 0, -- Background color opacity (0 = fully transparent, 100 = opaque)
                group_separator = "---", -- Separator between notification groups
                zindex = 75, -- Stacking priority of the notification window
             },

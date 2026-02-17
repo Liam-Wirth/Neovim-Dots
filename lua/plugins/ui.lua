@@ -13,6 +13,28 @@ local colors_light = {
 
 local ret = {
    {
+      "stevearc/dressing.nvim",
+      lazy = true,
+      init = function()
+         ---@diagnostic disable-next-line: duplicate-set-field
+         vim.ui.select = function(...)
+            require("lazy").load({ plugins = { "dressing.nvim" } })
+            return vim.ui.select(...)
+         end
+         ---@diagnostic disable-next-line: duplicate-set-field
+         vim.ui.input = function(...)
+            require("lazy").load({ plugins = { "dressing.nvim" } })
+            return vim.ui.input(...)
+         end
+      end,
+      opts = {
+         select = {
+            backend = { "telescope", "builtin" },
+            telescope = require("telescope.themes").get_cursor(),
+         },
+      },
+   },
+   {
       "folke/which-key.nvim",
       event = "VeryLazy",
       opts = {},
