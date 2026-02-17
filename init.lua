@@ -7,25 +7,24 @@ require("util")
 
 -- setup specific for the work laptop :)
 local f = io.open(os.getenv("HOME") .. "/.worklaptop", "rb")
-if f then f:close() end
+if f then
+   f:close()
+end
 vim.g.worklaptop = (f ~= nil)
-
 
 -- want to disable certain plugins if I'm in vscode (yuck)
 vim.g.vscode = vim.g.vscode or false
 
-
-
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-   vim.fn.system {
+   vim.fn.system({
       "git",
       "clone",
       "--filter=blob:none",
       "--single-branch",
       "https://github.com/folke/lazy.nvim.git",
       lazypath,
-   }
+   })
 end
 vim.loader.enable()
 vim.opt.runtimepath:prepend(lazypath)
@@ -37,7 +36,7 @@ vim.opt.runtimepath:prepend(lazypath)
 local lazyspec = {
    { import = "plugins" },
    { import = "plugins.lsp" },
-   { import = "plugins.editing" }
+   { import = "plugins.editing" },
 }
 require("lazy").setup({
    spec = lazyspec,
@@ -46,6 +45,6 @@ require("lazy").setup({
 require("plugins.colorscheme")
 
 require("config")
-vim.cmd [[
+vim.cmd([[
 colorscheme gruvbox
-]]
+]])

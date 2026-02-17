@@ -78,6 +78,31 @@ local ret = {
          load_textobjects = true
       end,
    },
+   {
+      "nvim-treesitter/nvim-treesitter-context",
+      lazy = true,
+      event = { "BufReadPost", "BufNewFile" },
+      opts = {
+         enable = true,
+         max_lines = 3, -- How many lines of context to show
+         min_window_height = 0,
+         line_numbers = true,
+         multiline_threshold = 1,
+         trim_scope = 'outer', -- Remove leading/trailing whitespace
+         mode = 'cursor', -- Line used to calculate context. 'cursor' or 'topline'
+         separator = nil, -- Separator between context and content
+         zindex = 20,
+      },
+      keys = {
+         {
+            "<leader>tc",
+            function()
+               require("treesitter-context").toggle()
+            end,
+            desc = "Toggle Treesitter Context"
+         },
+      },
+   },
 }
 
 if not vim.g.vscode then

@@ -1,20 +1,27 @@
 -- TODO: make it so lspsaga outline docks below neotree
 return {
    {
-      'nvimdev/lspsaga.nvim',
+      "nvimdev/lspsaga.nvim",
       lazy = true,
-      after = 'nvim-lspconfig',
+      after = "nvim-lspconfig",
       event = "LspAttach",
       keys = {
-         { 'gh',          '<cmd>Lspsaga finder imp+def+ref<CR>',   silent = true },
-         { '<leader>bfi', '<cmd>Lspsaga finder imp<CR>',           silent = true },
-         { '<leader>bfr', '<cmd>Lspsaga finder ref<CR>',           silent = true },
-         { '<leader>ba',  '<cmd>Lspsaga code_action<CR>',          mode = { 'n', 'v' }, silent = true, desc = "LSPSaga Code Action" },
-         { '<leader>rn',  '<cmd>Lspsaga rename<CR>',               silent = true },
-         { '<leader>bgD', '<cmd>Lspsaga peek_definition<CR>',      silent = true },
-         { '<leader>bgT', '<cmd>Lspsaga peek_type_definition<CR>', silent = true },
-         { '<leader>ed',  '<cmd>Lspsaga show_buf_diagnostics<CR>', silent = true },
-         { '<leader>eo',      '<cmd>Lspsaga outline<CR>',              silent = true },
+         { "gh", "<cmd>Lspsaga finder imp+def+ref<CR>", silent = true },
+         { "<leader>bfi", "<cmd>Lspsaga finder imp<CR>", silent = true },
+         { "<leader>bfr", "<cmd>Lspsaga finder ref<CR>", silent = true },
+         {
+            "<leader>ba",
+            "<cmd>Lspsaga code_action<CR>",
+            mode = { "n", "v" },
+            silent = true,
+            desc = "LSPSaga Code Action",
+         },
+         { "<leader>rn", "<cmd>Lspsaga rename<CR>", silent = true },
+         { "<leader>bgD", "<cmd>Lspsaga peek_definition<CR>", silent = true },
+         { "<leader>bgT", "<cmd>Lspsaga peek_type_definition<CR>", silent = true },
+         { "<leader>ed", "<cmd>Lspsaga show_buf_diagnostics<CR>", silent = true },
+         { "<leader>eo", "<cmd>Lspsaga outline<CR>", silent = true },
+         { "K", "<cmd>Lspsaga hover_doc<CR>", mode = { "n" }, desc = "hover docs" },
       },
       opts = {
          preview = {
@@ -22,31 +29,30 @@ return {
             lines_below = 10,
          },
          scroll_preview = {
-            scroll_down = '<C-d>',
-            scroll_up = '<C-u>',
+            scroll_down = "<C-d>",
+            scroll_up = "<C-u>",
          },
          lightbulb = {
             enable = false,
          },
          finder = {
-            default = 'imp+def+ref',
+            default = "imp+def+ref",
             max_width = 0.6,
             left_width = 0.4,
             right_width = 0.6,
             keys = {
-               toggle_or_open = '<CR>',
-               vsplit = '<C-v>',
-               split = '<C-x>',
-               quit = '<ESC>',
-               close = 'q',
+               toggle_or_open = "<CR>",
+               vsplit = "<C-v>",
+               split = "<C-x>",
+               quit = "<ESC>",
+               close = "q",
             },
          },
          request_timeout = 2500,
          symbol_in_winbar = {
-            -- TODO: Maybe move? 
             enable = false, -- Showing symbols in LuaLine
-            separator = '  ',
-            hide_keyword = true,
+            separator = "  ",
+            hide_keyword = false,
             show_file = false,
          },
          hover = {
@@ -54,10 +60,10 @@ return {
          },
          definition = {
             keys = {
-               edit = '<CR>',
-               vsplit = '<C-v>',
-               split = '<C-x>',
-               quit = 'q',
+               edit = "<CR>",
+               vsplit = "<C-v>",
+               split = "<C-x>",
+               quit = "q",
             },
          },
          outline = {
@@ -65,11 +71,11 @@ return {
             left_width = 0.3,
             win_width = 40,
             keys = {
-               jump = '<CR>',
+               jump = "<CR>",
             },
          },
          diagnostic = {
-            custom_fix = 'Code Actions',
+            custom_fix = "Code Actions",
             on_insert = false,
             on_insert_follow = false,
             max_width = 0.4,
@@ -78,15 +84,15 @@ return {
          rename = {
             in_select = false,
             keys = {
-               quit = '<C-c>',
+               quit = "<C-c>",
             },
          },
          ui = {
-            border = 'rounded',
-            code_action = '',
-            diagnostic = '',
+            border = "rounded",
+            code_action = "",
+            diagnostic = "",
             max_width = 0.6,
          },
       },
-   }
+   },
 }

@@ -35,7 +35,7 @@ local ret = {
          local cmp = require("cmp")
 
          cmp.setup({
-            preselect = cmp.PreselectMode.None, --Don't automatically select a completion
+            preselect = cmp.PreselectMode.Item, -- Automatically select first/best completion
             -- disable completion in comments
             enabled = function()
                local context = require("cmp.config.context")
@@ -56,24 +56,31 @@ local ret = {
                end,
             },
             sources = cmp.config.sources({
-               { name = "nvim_lsp", priority = 10 },
-               { name = "luasnip",  priority = 9 }, -- Force snippet/lsp suggestions to the top
+               { name = "nvim_lsp" },
+               { name = "luasnip" },
                { name = "nvim-lua" },
                { name = "crates" },
                -- { name = "vim-dadbod-completion" },
                { name = "neorg" },
-               { name = "calc" },
+            }, {
+               { name = "buffer", keyword_length = 3 },
                { name = "path" },
-               {
-                  name = "buffer",
-                  priority = -2, -- Force buffer suggestions to the bottom
-                  option = {
-                     get_bufnrs = function()
-                        return vim.api.nvim_list_bufs()
-                     end,
-                  },
-               },
+               { name = "calc" },
             }),
+            sorting = {
+               priority_weight = 2,
+               comparators = {
+                  cmp.config.compare.offset,
+                  cmp.config.compare.exact,
+                  cmp.config.compare.score,
+                  cmp.config.compare.recently_used,
+                  cmp.config.compare.locality,
+                  cmp.config.compare.kind,
+                  cmp.config.compare.sort_text,
+                  cmp.config.compare.length,
+                  cmp.config.compare.order,
+               },
+            },
             experimental = {
                ghost_text = false,
             },
