@@ -1,35 +1,6 @@
 -- local wk = require("which-key")
 local ret = {
    {
-      "utilyre/barbecue.nvim",
-      enabled = false, -- Using lspsaga winbar instead
-      lazy = true,
-      event = "BufReadPost",
-      name = "barbecue",
-      version = "*",
-      dependencies = {
-         "SmiteshP/nvim-navic",
-         "nvim-tree/nvim-web-devicons",
-      },
-      opts = {
-         show_basename = false,
-         symbols = {
-            ---Modification indicator.
-            ---@type string
-            modified = "●",
-
-            ---Truncation indicator.
-            ---@type string
-            ellipsis = "…",
-
-            ---Entry separator.
-            ---@type string
-            separator = "",
-         },
-         context_follow_icon_color = true,
-      },
-   },
-   {
       "neovim/nvim-lspconfig",
       dependencies = {
          {
@@ -41,35 +12,10 @@ local ret = {
                keys = { { "<leader>em", "<cmd>Mason<cr>", desc = "Mason" } },
             },
          },
-         {
-            "SmiteshP/nvim-navbuddy",
-            dependencies = {
-               "SmiteshP/nvim-navic",
-               "MunifTanjim/nui.nvim",
-            },
-            opts = { lsp = { auto_attach = true } },
-            keys = { {"<leader>en", "<cmd>Navbuddy<cr>"} },
-         },
-         { "folke/neodev.nvim", opts = {} },
+         { "folke/lazydev.nvim", opts = {} },
       },
    },
    { "hrsh7th/cmp-nvim-lsp" },
-   {
-      "folke/neodev.nvim",
-      lazy = true,
-      event = "BufReadPost",
-      opts = {
-         library = {
-            enabled = true,
-            runtime = true,
-            types = true,
-            plugins = true,
-         },
-         setup_jsonls = true,
-         lspconfig = true,
-         pathStrict = true,
-      },
-   },
    {
       "p00f/clangd_extensions.nvim",
       lazy = false,
@@ -91,13 +37,13 @@ local ret = {
             },
             ast = {
                kind_icons = {
-                  Compound = "",
-                  Recovery = "",
-                  TranslationUnit = "",
-                  PackExpansion = "",
-                  TemplateTypeParm = "",
-                  TemplateTemplateParm = "",
-                  TemplateParamObject = "",
+                  Compound = "",
+                  Recovery = "",
+                  TranslationUnit = "",
+                  PackExpansion = "",
+                  TemplateTypeParm = "",
+                  TemplateTemplateParm = "",
+                  TemplateParamObject = "",
                },
             },
          })
@@ -152,13 +98,8 @@ local ret = {
          config = function()
             require("luasnip.loaders.from_vscode").lazy_load()
             require("luasnip.loaders.from_lua").load({
-               paths = {
-                  vim.fn.stdpath("config") .. "/lua/snippets/all.lua",
-                  "$HOME/.config/nvim/lua/snippets/all.lua",
-                  "$HOME/.config/nvim/lua/snippets/",
-               },
+               paths = { vim.fn.stdpath("config") .. "/lua/snippets" },
             })
-            require("lua/snippets/")
          end,
       },
       opts = {

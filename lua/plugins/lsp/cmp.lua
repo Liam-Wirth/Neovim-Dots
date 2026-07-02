@@ -11,12 +11,7 @@ local ret = {
          { "hrsh7th/cmp-path" },
          { "hrsh7th/cmp-cmdline" },
          { "hrsh7th/cmp-calc" },
-         {
-            "rafamadriz/friendly-snippets",
-            config = function()
-               require("luasnip.loaders.from_vscode").lazy_load()
-            end,
-         },
+         { "rafamadriz/friendly-snippets" },
          { "saadparwaiz1/cmp_luasnip" },
          { "hrsh7th/cmp-omni" },
          { "onsails/lspkind-nvim",    module = "lspkind" }

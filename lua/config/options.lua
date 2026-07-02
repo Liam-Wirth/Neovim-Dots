@@ -1,47 +1,88 @@
--- Setup variables and settings
-local set = vim.opt
+-- ──────────────────────────────────────────────────────────────────────────────
+-- Options: all vim.opt / vim.o / vim.g settings in one place
+-- ──────────────────────────────────────────────────────────────────────────────
 
+local opt = vim.opt
+
+-- Encoding & preview
 vim.o.encoding = "UTF-8"
 vim.o.inccommand = "split"
 
-set.expandtab = true
-set.smartindent = true
-set.smarttab = true
-set.shiftwidth = 3
+-- Indentation
+opt.expandtab = true
+opt.smartindent = true
+opt.smarttab = true
+opt.shiftwidth = 3
 
-set.ignorecase = true
-set.smartcase = true
-set.hlsearch = true
-set.incsearch = true
+-- Search
+opt.ignorecase = true
+opt.smartcase = true
+opt.hlsearch = true
+opt.incsearch = true
 
--- Split settings
-set.splitbelow = true
-set.splitright = true
+-- Splits
+opt.splitbelow = true
+opt.splitright = true
+opt.splitkeep = "screen"
 
--- Interface settings
-set.wrap = false
-set.scrolloff = 5
-set.relativenumber = true
-set.number = true
-set.cursorline = true
-set.numberwidth = 2
-set.colorcolumn = "100"
-set.signcolumn = "yes"
-set.showtabline = 2
-set.cmdheight = 1
-set.pumheight = 10
-set.laststatus = 3
-set.splitkeep = "screen"
+-- Interface
+opt.wrap = false
+opt.scrolloff = 5
+opt.relativenumber = true
+opt.number = true
+opt.cursorline = true
+opt.numberwidth = 2
+opt.colorcolumn = "100"
+opt.signcolumn = "yes"
+opt.showtabline = 2
+opt.cmdheight = 1
+opt.pumheight = 10
+opt.laststatus = 3
+opt.showmatch = true
 
-set.hidden = true
-set.belloff = "all"
-set.mousefocus = true
-set.sidescroll = 50
+-- Misc
+opt.hidden = true
+opt.belloff = "all"
+opt.mousefocus = true
+opt.sidescroll = 50
+opt.completeopt = "menuone,noselect"
+vim.o.syntax = "on"
+
+-- Appearance
+opt.termguicolors = true
+opt.background = "dark"
+
+-- Float window highlight defaults (gruvbox-friendly)
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#282828", fg = "#ebdbb2" })
+vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#282828", fg = "#a89984" })
+
+-- List characters (visible whitespace when :set list)
+opt.listchars = {
+   eol = "↩",
+   tab = "→ ",
+   extends = "❯",
+   precedes = "❮",
+   nbsp = "␣",
+}
+
+-- Fold and diff fill characters
+opt.fillchars = {
+   foldopen = "▾",
+   foldclose = "▸",
+   fold = " ",
+   foldsep = " ",
+   diff = "╱",
+   eob = " ",
+}
+
+-- ──────────────────────────────────────────────────────────────────────────────
+-- Diagnostics
+-- ──────────────────────────────────────────────────────────────────────────────
 
 vim.diagnostic.config({
    virtual_text = true,
    signs = true,
-   update_in_insert = false, -- Don't update diagnostics while typing
+   update_in_insert = false,
    underline = true,
    severity_sort = true,
    float = {
@@ -51,41 +92,56 @@ vim.diagnostic.config({
    },
 })
 
--- Undo file settings - Modern Lua approach
-local undo_dir = vim.fn.expand("~/.vim/undo-dir")
+-- ──────────────────────────────────────────────────────────────────────────────
+-- Persistent undo
+-- ──────────────────────────────────────────────────────────────────────────────
+
+local undo_dir = vim.fn.stdpath("data") .. "/undo"
 if vim.fn.isdirectory(undo_dir) == 0 then
    vim.fn.mkdir(undo_dir, "p", 0700)
 end
-vim.opt.undodir = undo_dir
-vim.opt.undofile = true
+opt.undodir = undo_dir
+opt.undofile = true
 
--- Disable netrw for Nvim Tree
+-- ──────────────────────────────────────────────────────────────────────────────
+-- Disabled built-in plugins
+-- ──────────────────────────────────────────────────────────────────────────────
+
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-
--- Highlight matching parens, braces, etc.
-vim.o.showmatch = true
-
--- Completeopt and syntax
-vim.o.completeopt = "menuone,noselect"
-vim.o.syntax = "on"
-
--- Sign column and floating diagnostics
-
-vim.opt.termguicolors = true
-vim.opt.background = "dark"
-
--- vim.g settings and stuff
---
-
 vim.g.loaded_python3_provider = 0
 
--- TODO: Remove if not needed - File type associations
+-- ──────────────────────────────────────────────────────────────────────────────
+-- WSL clipboard support
+-- ──────────────────────────────────────────────────────────────────────────────
+
+vim.g.IS_WSL = os.getenv("is_wsl")
+
+if vim.g.IS_WSL then
+   local clip = "/mnt/c/Windows/System32/clip.exe"
+   if vim.fn.executable(clip) == 1 then
+      opt.clipboard = "unnamedplus"
+      vim.api.nvim_create_augroup("WSLYank", { clear = true })
+      vim.api.nvim_create_autocmd("TextYankPost", {
+         group = "WSLYank",
+         callback = function()
+            if vim.v.event.operator == "y" then
+               vim.fn.system(clip, vim.fn.getreg('"'))
+            end
+         end,
+      })
+   end
+end
+
+-- ──────────────────────────────────────────────────────────────────────────────
+-- File type associations
+-- ──────────────────────────────────────────────────────────────────────────────
+
 vim.filetype.add({
    extension = {
       inc = "nasm",
       asm = "nasm",
-      zsh = "zsh", -- Keep as zsh, not bash
+      zsh = "zsh",
       v = "verilog",
       tcl = "tcl",
    },

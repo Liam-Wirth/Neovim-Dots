@@ -1,4 +1,3 @@
--- TODO: Might be worth my time to just nuke this in the future, seems overall broken
 local M = {}
 -- TODO: this function seems rather broken, doesnt work if I open the buffer while already within the root dir
 -- returns the root directory based on:
@@ -7,7 +6,7 @@ local M = {}
 -- * root pattern of filename of the current buffer
 -- * root pattern of cwd
 ---@return string
-local uv = vim.uv or vim.loop
+local uv = vim.uv
 
 local ROOT_MARKERS = {
    ".git",
@@ -27,7 +26,7 @@ local function dirname(p)
 end
 
 -- Always returns a directory string, either specifically to a pre-determined root file using all the markers I could think of
--- or has fallbacks to cwd 
+-- or has fallbacks to cwd
 function M.get_root(bufnr)
    bufnr = bufnr or 0
 
@@ -73,14 +72,14 @@ function M.telescope(builtin, opts)
       opts = params.opts
       opts = vim.tbl_deep_extend("force", { cwd = M.get_root() }, opts or {})
       if builtin == "files" then
-         if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. "/.git") then
+         if vim.uv.fs_stat((opts.cwd or vim.uv.cwd()) .. "/.git") then
             opts.show_untracked = true
             builtin = "git_files"
          else
             builtin = "find_files"
          end
       end
-      if opts.cwd and opts.cwd ~= vim.loop.cwd() then
+      if opts.cwd and opts.cwd ~= vim.uv.cwd() then
          opts.attach_mappings = function(_, map)
             map("i", "<a-c>", function()
                local action_state = require("telescope.actions.state")
@@ -117,41 +116,12 @@ function M.fg(name)
 end
 
 --super simple function that allows for easy toggling of light mode and darkmode
-function M.togle_light_mode()
-   local current_background = vim.opt.background
+function M.toggle_light_mode()
+   local current_background = vim.o.background
    if current_background == "dark" then
       vim.opt.background = "light"
    else
       vim.opt.background = "dark"
-   end
-end
-
--- toggle cmp completion
-vim.g.cmp_toggle_flag = false -- initialize
-local normal_buftype = function()
-   return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-end
-M.toggle_completion = function()
-   local ok, cmp = pcall(require, "cmp")
-   if ok then
-      local next_cmp_toggle_flag = not vim.g.cmp_toggle_flag
-      if next_cmp_toggle_flag then
-         require("notify")("Completion On")
-      else
-         require("notify")("Completion Off")
-      end
-      cmp.setup({
-         enabled = function()
-            vim.g.cmp_toggle_flag = next_cmp_toggle_flag
-            if next_cmp_toggle_flag then
-               return normal_buftype
-            else
-               return next_cmp_toggle_flag
-            end
-         end,
-      })
-   else
-      require("notify")("Completion Not Available")
    end
 end
 
@@ -161,13 +131,5 @@ function M.file_exists(file)
    if f then f:close() end
    return f ~= nil
 end
-
-if M.file_exists("~/.worklaptop") then
-   vim.g.worklaptop = true
-end
-
-
-
-
 
 return M
