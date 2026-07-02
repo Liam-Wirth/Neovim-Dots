@@ -100,12 +100,12 @@ wk.add({
   -- Tab management
   { "<leader><tab><tab>", "<cmd>tabnew<cr>", desc = "New Tab", mode = "n" },
   { "<leader><tab>]", "<cmd>BufferLineMoveNext<cr>", desc = "Next Tab", mode = "n" },
-  { "<leader><tab>d", "<cmd>BufferLine<cr>", desc = "Close Tab", mode = "n" },
+  { "<leader><tab>d", "<cmd>bdelete<cr>", desc = "Close Tab", mode = "n" },
   { "<leader><tab>[", "<cmd>BufferLineMovePrev<cr>", desc = "Previous Tab", mode = "n" },
 
   -- Auxiliary windows
   -- { "<leader>et", "<cmd>Neotree<cr>", desc = "Toggle Filetree", mode = "n" },
-  { "<leader>ee", "<cmd>TroubleToggle<cr>", desc = "Open/Close Trouble", mode = "n" },
+  { "<leader>ee", "<cmd>Trouble diagnostics toggle<cr>", desc = "Open/Close Trouble", mode = "n" },
   { "<leader>eu", "<cmd>lua require('undotree').toggle()<cr>", desc = "Toggle Visual undotree", mode = "n" },
   { "<leader>ea", "<cmd>AerialToggle<cr>", desc = "Toggle Aerial (File overview)", mode = "n" },
 
@@ -137,27 +137,4 @@ wk.add({
 
 })
 
-wk.add({
-  { "<leader>g", group = "Git" },
-  { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File", mode = "n" },
-  { "<leader>fb", function() print("hello") end, desc = "Foobar" },
-  { "<leader>fn", desc = "New File" },
-  { "<leader>f1", hidden = true },
-  { "<leader>w", group = "Window Management", proxy = "<c-w>" },
-  { "<leader>b", group = "Buffers", expand = function()
-      return require("which-key.extras").expand.buf()
-    end
-  },
-  { "<leader>c", group = "Config" },
-  { "<leader>q", group = "Session Management" },
-  { "<leader>s", group = "Dismiss Notifications" },
-  { "<leader><tab>", group = "Tab Navigation" },
-  { "<leader>e", group = "Open Auxiliary Windows" },
-  { "<leader>r", group = "Rename" },
-  { "<leader>t", group = "Telescope" },
-  { "<leader>o", group = "Org Mode" },
-  { "<leader>x", group = "ToggleTerm and list" },
-  { "<leader>d", group = "Debug" },
-  { "<leader>f", group = "Telescope/Find" },
-}, { prefix = "<leader>", noremap = true })
 return M

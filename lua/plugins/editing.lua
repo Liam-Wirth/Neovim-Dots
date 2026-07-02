@@ -4,7 +4,7 @@ local ret = {
       --NOTE: this plugin needs to be explicitly NOT Lazy loaded, as it lazy loads itself upon entering a latex buffer
       lazy = false,
    },
-   { "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
+
    -- Handles size of buffer splits and stuff is nice
    {
       "folke/edgy.nvim",
@@ -113,7 +113,7 @@ local ret = {
          },
          {
             "<leader>exc",
-            "<cmd>Troubl symbols toggle focus=false<cr>",
+            "<cmd>Trouble symbols toggle focus=false<cr>",
             desc = "Symbols (Trouble)"
          }
       }
@@ -121,7 +121,7 @@ local ret = {
    {
       "mbbill/undotree",
    },
-   { "echasnovski/mini.comment",                    version = false, lazy = true, event = { "BufEnter" } },
+
    {
       "echasnovski/mini.surround",
       opts = {

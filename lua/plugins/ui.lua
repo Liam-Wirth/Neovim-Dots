@@ -1,16 +1,5 @@
 -- TODO: possibly move this to util
 local glyphs = require("util.glyphs")
-local colors_light = {
-   red = "#cc241d",
-   green = "#98971a",
-   yellow = "#d79921",
-   blue = "#458588",
-   purple = "#b16286",
-   aqua = "#689d6a",
-   cyan = "#689d6a",
-   gray = "#a89984",
-}
-
 local ret = {
    {
       "stevearc/dressing.nvim",
@@ -71,27 +60,6 @@ local ret = {
      init = function()
        vim.notify = require("notify")
      end,
-   },
-   {
-      "SmiteshP/nvim-navic",
-      lazy = true,
-      init = function()
-         vim.g.navic_silence = true
-         require("util").on_attach(function(client, buffer)
-            if client.server_capabilities.documentSymbolProvider then
-               require("nvim-navic").attach(client, buffer)
-            end
-         end)
-      end,
-      opts = function()
-         return {
-            separator = " ",
-            depth_limit = 5,
-            icons = require("util.glyphs").kind,
-            highlight = true,
-            click = true,
-         }
-      end,
    },
    {
       "nvim-focus/focus.nvim",

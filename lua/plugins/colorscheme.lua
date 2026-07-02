@@ -53,6 +53,7 @@ local ret = {
             -- transparent_mode = vim.g.transparent_enabled,
             transparent_mode = true,
          })
+         vim.cmd.colorscheme('gruvbox')
       end,
    },
 }
@@ -79,21 +80,5 @@ vim.api.nvim_create_autocmd("ColorScheme", {
    pattern = "*",
    callback = apply_gruvbox_fixes
 })
-
--- Apply fixes when vim starts
-vim.api.nvim_create_autocmd("VimEnter", {
-   callback = function()
-      vim.schedule(apply_gruvbox_fixes)
-   end
-})
-
--- Apply fixes when entering any buffer (especially new ones)
-vim.api.nvim_create_autocmd({"BufEnter", "BufNew", "BufWinEnter"}, {
-   callback = function()
-      vim.schedule(apply_gruvbox_fixes)
-   end
-})
-
--- Set gruvbox as the default colorscheme
 
 return ret

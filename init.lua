@@ -1,22 +1,16 @@
-local vim = vim
+-- Bootstrap: leader key must be set before lazy.nvim loads plugins
 vim.g.mapleader = " "
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#282828", fg = "#ebdbb2" }) -- Gruvbox colors
-vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#282828", fg = "#a89984" })
+vim.g.maplocalleader = " "
 
-require("util")
-
--- setup specific for the work laptop :)
+-- Environment detection
 local f = io.open(os.getenv("HOME") .. "/.worklaptop", "rb")
-if f then
-   f:close()
-end
+if f then f:close() end
 vim.g.worklaptop = (f ~= nil)
-
--- want to disable certain plugins if I'm in vscode (yuck)
 vim.g.vscode = vim.g.vscode or false
 
+-- Lazy.nvim bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
    vim.fn.system({
       "git",
       "clone",
@@ -26,25 +20,17 @@ if not vim.loop.fs_stat(lazypath) then
       lazypath,
    })
 end
-vim.loader.enable()
 vim.opt.runtimepath:prepend(lazypath)
+vim.loader.enable()
 
--- to anyone perusing my dots, all this is is a simple directory with like two lua files
--- in those files is just some extra config I did that is just for work, and doesn't need to be shared
--- Check if the private config exists
-
-local lazyspec = {
-   { import = "plugins" },
-   { import = "plugins.lsp" },
-   { import = "plugins.editing" },
-}
+-- Plugin setup
 require("lazy").setup({
-   spec = lazyspec,
+   spec = {
+      { import = "plugins" },
+      { import = "plugins.lsp" },
+   },
    performance = {},
 })
-require("plugins.colorscheme")
 
+-- Load user config (options, autocmds, keymaps)
 require("config")
-vim.cmd([[
-colorscheme gruvbox
-]])
