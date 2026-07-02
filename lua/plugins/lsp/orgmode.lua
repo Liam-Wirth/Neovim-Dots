@@ -8,15 +8,6 @@ return {
       },
       ft = { "org" },
       config = function()
-         -- Setup treesitter for org files
-         require("nvim-treesitter.configs").setup({
-            highlight = {
-               enable = true,
-               additional_vim_regex_highlighting = { "org" },
-            },
-            ensure_installed = { "org" },
-         })
-
          require("orgmode").setup({
             org_agenda_files = {
                "~/org/roam/daily/**/*",
