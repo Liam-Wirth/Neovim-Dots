@@ -1,6 +1,9 @@
 vim.g.wakatime_log_level = "error" --SHUT UP!!! SHUT UP SHUT UP SHUT UP!!!
 vim.env.WAKATIME_LOG_LEVEL = "error"
 vim.g.wakatime_cli_path = "/usr/bin/wakatime-cli"
+
+-- Developer-experience tooling: startup profiling, Discord rich presence,
+-- WakaTime time-tracking, and Copilot/CopilotChat.
 local ret = {
    {
       "dstein64/vim-startuptime",
@@ -9,8 +12,6 @@ local ret = {
          vim.g.startuptime_tries = 10
       end,
    },
-   -- library used by other plugins
-   { "nvim-lua/plenary.nvim", lazy = true },
    {
       "andweeb/presence.nvim",
       lazy = false,
@@ -41,36 +42,11 @@ local ret = {
          line_number_text = "Line %s out of %s",
       },
    },
-   {
-      "stevearc/oil.nvim",
-      ---@module 'oil'
-      ---@type oil.SetupOpts
-      opts = {},
-      -- Optional dependencies
-      dependencies = { { "nvim-mini/mini.icons", opts = {} } },
-      -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-      -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
-      lazy = false,
-   },
-   -- TODO: Setup a copilot section with keybinds and stuff, I want it disabled by DEFAULT and stuff
-   {
-      "Bekaboo/dropbar.nvim",
-      -- optional, but required for fuzzy finder support
-      dependencies = {
-         "nvim-telescope/telescope-fzf-native.nvim",
-         build = "make",
-      },
-      config = function()
-         local dropbar_api = require("dropbar.api")
-         vim.keymap.set("n", "<Leader>;", dropbar_api.pick, { desc = "Pick symbols in winbar" })
-         vim.keymap.set("n", "[;", dropbar_api.goto_context_start, { desc = "Go to start of current context" })
-         vim.keymap.set("n", "];", dropbar_api.select_next_context, { desc = "Select next context" })
-      end,
-   },
 }
 
 -- NOTE: See (.gitignored/private) file for configuration/setup of internal completions at work
 if vim.g.worklaptop == false then
+   -- TODO: Setup a copilot section with keybinds and stuff, I want it disabled by DEFAULT and stuff
    table.insert(ret, {
       "CopilotC-Nvim/CopilotChat.nvim",
       dependencies = {
@@ -115,4 +91,5 @@ if vim.g.worklaptop == false then
       },
    })
 end
+
 return ret

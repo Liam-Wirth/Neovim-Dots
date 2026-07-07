@@ -8,6 +8,8 @@ if not vim.g.vscode then
          local conform = require("conform")
          conform.setup({
             formatters_by_ft = {
+               c = { "clang_format" },
+               cpp = { "clang_format" },
                css = { "prettier" },
                elixir = { "mix" },
                go = { "gofmt" },
@@ -21,8 +23,10 @@ if not vim.g.vscode then
                rust = { "rustfmt" },
                scss = { "prettier" },
                sql = { "sql_formatter" },
+               svelte = { "prettier" },
                typescript = { "biome" },
                vue = { "prettier" },
+               yaml = { "prettier" },
                asm = { "asmfmt" },
             },
 
@@ -73,6 +77,10 @@ if not vim.g.vscode then
                timeout_ms = 500,
             })
          end, { desc = "Format file or range (in visual mode)" })
+
+         vim.api.nvim_create_user_command("Format", function()
+            conform.format({ timeout_ms = 500, lsp_fallback = true })
+         end, { desc = "Format current buffer" })
       end,
    }
 end
