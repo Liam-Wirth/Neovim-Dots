@@ -1,5 +1,5 @@
--- TODO: possibly move this to util
-local glyphs = require("util.glyphs")
+-- Generic UI chrome: better vim.ui.select/input, keymap hints, notifications,
+-- buffer tabs, and indent guides.
 local ret = {
    {
       "stevearc/dressing.nvim",
@@ -61,32 +61,6 @@ local ret = {
        vim.notify = require("notify")
      end,
    },
-   {
-      "nvim-focus/focus.nvim",
-      version = "*",
-      config = function()
-         require("focus").setup({
-            autoresize = {
-               enable = true,
-            },
-            ui = {
-               number = true,
-               relativenumber = false,
-               hybridnumber = false,
-               absolutenumber_unfocussed = false,
-
-               cursorline = true,
-               cursorcolumn = false,
-               colorcolumn = {
-                  enable = false,
-                  list = "+1",
-               },
-               signcolumn = true,
-               winhighlight = false,
-            },
-         })
-      end,
-   },
    -- Pretty Buffer line
    {
       "akinsho/bufferline.nvim",
@@ -123,35 +97,6 @@ local ret = {
             end,
          },
       },
-   },
-   {
-      "hiphish/rainbow-delimiters.nvim",
-      lazy = false,
-      config = function()
-         local rainbow_delimiters = require("rainbow-delimiters")
-
-         vim.g.rainbow_delimiters = {
-            strategy = {
-               [""] = rainbow_delimiters.strategy["global"],
-               commonlisp = rainbow_delimiters.strategy["local"],
-            },
-            query = {
-               [""] = "rainbow-delimiters",
-               lua = "rainbow-blocks",
-               latex = "rainbow-blocks",
-            },
-            highlight = {
-               "RainbowDelimiterRed",
-               "RainbowDelimiterYellow",
-               "RainbowDelimiterBlue",
-               "RainbowDelimiterOrange",
-               "RainbowDelimiterGreen",
-               "RainbowDelimiterViolet",
-               "RainbowDelimiterCyan",
-            },
-            blacklist = { "c" },
-         }
-      end,
    },
    {
       "lukas-reineke/indent-blankline.nvim",

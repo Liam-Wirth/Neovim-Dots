@@ -1,21 +1,7 @@
--- local wk = require("which-key")
+-- Extra LSP-adjacent tooling that doesn't belong in lspconfig.lua's server
+-- table: clangd's custom UI extensions, function-signature popups,
+-- markdown headline styling, and legacy vim-regex C/C++ highlighting.
 local ret = {
-   {
-      "neovim/nvim-lspconfig",
-      dependencies = {
-         {
-            "williamboman/mason-lspconfig.nvim", -- MUST be set up before `nvim-lspconfig`
-            dependencies = {
-               "williamboman/mason.nvim",
-               cmd = "Mason",
-               lazy = false,
-               keys = { { "<leader>em", "<cmd>Mason<cr>", desc = "Mason" } },
-            },
-         },
-         { "folke/lazydev.nvim", opts = {} },
-      },
-   },
-   { "hrsh7th/cmp-nvim-lsp" },
    {
       "p00f/clangd_extensions.nvim",
       lazy = false,
@@ -90,36 +76,6 @@ local ret = {
             let g:cpp_simple_highlight = 0
          ]])
       end,
-   },
-   {
-      "L3MON4D3/LuaSnip",
-      dependencies = {
-         "rafamadriz/friendly-snippets",
-         config = function()
-            require("luasnip.loaders.from_vscode").lazy_load()
-            require("luasnip.loaders.from_lua").load({
-               paths = { vim.fn.stdpath("config") .. "/lua/snippets" },
-            })
-         end,
-      },
-      opts = {
-         history = true,
-         delete_check_events = "TextChanged",
-      },
-      -- stylua: ignore
-      keys = {
-         {
-            "S-<tab>",
-            function()
-               return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "S-<tab>"
-            end,
-            expr = true,
-            silent = true,
-            mode = "i",
-         },
-         { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
-         { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
-      },
    },
 }
 

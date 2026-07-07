@@ -2,7 +2,7 @@ local ret = {
    {
       "nvim-treesitter/nvim-treesitter",
       lazy = true,
-      version = false, -- last release is way too old and doesn't work on Windows
+      branch = "master", -- pin to legacy API (main branch requires Neovim >=0.12 and a different setup entirely)
       build = ":TSUpdate",
       event = { "BufReadPost", "BufNewFile" },
       dependencies = {
@@ -44,8 +44,8 @@ local ret = {
             end, opts.ensure_installed)
          end
 
-         -- New nvim-treesitter API: use require("nvim-treesitter").setup()
-         require("nvim-treesitter").setup(opts)
+         -- master branch API: require("nvim-treesitter.configs").setup()
+         require("nvim-treesitter.configs").setup(opts)
       end,
    },
    {
