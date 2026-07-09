@@ -32,6 +32,13 @@ else
   { "<C-k>", "<C-w>k", desc = "Go to upper window", mode = "n", remap = true },
   { "<C-l>", "<C-w>l", desc = "Go to right window", mode = "n", remap = true },
 
+  -- Alternative to <C-hjkl> above, in case the terminal/multiplexer eats
+  -- Ctrl combos.
+  { "<leader>wh", "<C-w>h", desc = "Go to left window", mode = "n", remap = true },
+  { "<leader>wj", "<C-w>j", desc = "Go to lower window", mode = "n", remap = true },
+  { "<leader>wk", "<C-w>k", desc = "Go to upper window", mode = "n", remap = true },
+  { "<leader>wl", "<C-w>l", desc = "Go to right window", mode = "n", remap = true },
+
   -- Resize window using <ctrl> arrow keys
   { "<C-Up>", "<cmd>resize +2<cr>", desc = "Increase window height", mode = "n" },
   { "<C-Down>", "<cmd>resize -2<cr>", desc = "Decrease window height", mode = "n" },

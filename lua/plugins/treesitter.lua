@@ -2,7 +2,7 @@ local ret = {
    {
       "nvim-treesitter/nvim-treesitter",
       lazy = true,
-      branch = "master", -- pin to legacy API (main branch requires Neovim >=0.12 and a different setup entirely)
+      branch = "master",
       build = ":TSUpdate",
       event = { "BufReadPost", "BufNewFile" },
       dependencies = {
@@ -17,7 +17,7 @@ local ret = {
          highlight = { enable = true, additional_vim_regex_highlighting = { "org" }, disable = { "latex" }, },
          indent = { enable = true },
          ensure_installed = {
-            "bash", "c", "html", "javascript", "jsdoc", "json", "lua", "luadoc", "luap",
+            "bash", "c", "html", "java", "javascript", "jsdoc", "json", "lua", "luadoc", "luap",
             "markdown", "markdown_inline", "org", "python", "query", "regex", "tsx", "typescript",
             "vim", "vimdoc", "yaml",
          },
@@ -44,7 +44,6 @@ local ret = {
             end, opts.ensure_installed)
          end
 
-         -- master branch API: require("nvim-treesitter.configs").setup()
          require("nvim-treesitter.configs").setup(opts)
       end,
    },
