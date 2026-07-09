@@ -2,8 +2,6 @@ vim.g.wakatime_log_level = "error" --SHUT UP!!! SHUT UP SHUT UP SHUT UP!!!
 vim.env.WAKATIME_LOG_LEVEL = "error"
 vim.g.wakatime_cli_path = "/usr/bin/wakatime-cli"
 
--- Developer-experience tooling: startup profiling, Discord rich presence,
--- WakaTime time-tracking, and Copilot/CopilotChat.
 local ret = {
    {
       "dstein64/vim-startuptime",
@@ -45,7 +43,7 @@ local ret = {
 }
 
 -- NOTE: See (.gitignored/private) file for configuration/setup of internal completions at work
-if vim.g.worklaptop == false then
+if not vim.g.is_amazon_machine then
    -- TODO: Setup a copilot section with keybinds and stuff, I want it disabled by DEFAULT and stuff
    table.insert(ret, {
       "CopilotC-Nvim/CopilotChat.nvim",

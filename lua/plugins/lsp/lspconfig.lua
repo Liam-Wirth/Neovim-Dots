@@ -56,40 +56,10 @@ return {
                enabled = true,
             },
 
-            -- Formatting options (actual conform.nvim setup lives in plugins/lsp/formatting.lua)
             format = {
                timeout_ms = 500,
                async = false,
             },
-
-            -- NOTE on install strategy:
-            -- Every entry in `servers` below has a full LSP config, but nothing here is
-            -- installed at startup. Installation is deferred to a `FileType` autocmd
-            -- (see `lazy_install` below and the bottom of `config()`), so opening a
-            -- `.rs` file installs only `rust_analyzer`, not the whole list. Run
-            -- `:LspInstall <server>` yourself to install one ahead of time.
-            --
-            -- filetypes: buffer filetypes that should trigger this server's lazy install.
-            lazy_install = {
-               texlab = { "tex", "plaintex", "bib" },
-               verible = { "verilog", "systemverilog" },
-               clangd = { "c", "cpp", "objc", "objcpp", "cuda" },
-               basedpyright = { "python" },
-               jsonls = { "json", "jsonc" },
-               eslint = { "javascript", "typescript", "javascriptreact", "typescriptreact" },
-               tailwindcss = { "html", "css", "javascriptreact", "typescriptreact", "svelte", "astro" },
-               gopls = { "go", "gomod", "gowork", "gotmpl" },
-               svelte = { "svelte" },
-               intelephense = { "php" },
-               astro = { "astro" },
-               yamlls = { "yaml" },
-               fortls = { "fortran" },
-               marksman = { "markdown" },
-               lua_ls = { "lua" },
-               ruff = { "python" },
-            },
-
-            -- LSP Server configurations
             ---@type table<string, vim.lsp.Config|boolean>
             servers = {
                -- Global server configuration
@@ -266,6 +236,19 @@ return {
                verible = {
                   cmd = { "verible-verilog-ls", "--rules_config_search" },
                },
+
+               -- No special config needed -- just registered so :LspInstall
+               -- and the <leader>bI picker know about them.
+               texlab = {},
+               jsonls = {},
+               eslint = {},
+               tailwindcss = {},
+               svelte = {},
+               intelephense = {},
+               astro = {},
+               yamlls = {},
+               fortls = {},
+               marksman = {},
             },
 
             -- Setup function for custom server configurations
@@ -279,11 +262,8 @@ return {
       end,
 
       config = function(_, opts)
-         -- Setup diagnostics globally
          vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-         -- Setup Mason core (kept eager per mason.nvim's own README recommendation --
-         -- Mason core setup itself is cheap; it's the tool *installs* we defer below)
          require("mason").setup()
          require("mason-lspconfig").setup({
             -- Nothing pre-installed at startup. Installation is triggered lazily,
@@ -291,6 +271,9 @@ return {
             -- `:LspInstall <server>`. automatic_enable (default) calls
             -- vim.lsp.enable() for us once a server finishes installing.
             ensure_installed = {},
+            automatic_enable = {
+               exclude = { "jdtls" },
+            },
          })
 
          -- Toggle inlay hints keybinding
@@ -300,6 +283,59 @@ return {
             vim.lsp.inlay_hint.enable(not enabled, { bufnr = buf })
             vim.notify(("Inlay hints %s"):format(enabled and "disabled" or "enabled"), vim.log.levels.INFO)
          end, { desc = "Toggle Inlay Hints" })
+
+         local LANGUAGE_TOOLS = {
+            lua = { lsp = { "lua_ls" }, formatter = { "stylua" }, ts = { "lua", "luadoc", "luap" } },
+            go = { lsp = { "gopls" } }, -- gofmt ships with the Go toolchain
+            python = { lsp = { "basedpyright", "ruff" }, formatter = { "black" }, ts = { "python" } },
+            c = { lsp = { "clangd" }, formatter = { "clang-format" }, ts = { "c" } },
+            cpp = { lsp = { "clangd" }, formatter = { "clang-format" } },
+            rust = {}, -- LSP via rustaceanvim (plugins/lsp/rust.lua); rustfmt ships with rustup
+            javascript = { lsp = { "eslint" }, formatter = { "biome" }, ts = { "javascript", "jsdoc" } },
+            typescript = { lsp = { "eslint" }, formatter = { "biome" }, ts = { "tsx", "typescript" } },
+            svelte = { lsp = { "svelte" }, formatter = { "prettier" } },
+            astro = { lsp = { "astro" } },
+            html = { lsp = { "tailwindcss" } },
+            css = { lsp = { "tailwindcss" }, formatter = { "prettier" } },
+            json = { lsp = { "jsonls" }, formatter = { "prettier" }, ts = { "json" } },
+            yaml = { lsp = { "yamlls" }, formatter = { "prettier" }, ts = { "yaml" } },
+            markdown = { lsp = { "marksman" }, ts = { "markdown", "markdown_inline" } },
+            php = { lsp = { "intelephense" }, formatter = { "prettier" } },
+            fortran = { lsp = { "fortls" } },
+            verilog = { lsp = { "verible" } },
+            tex = { lsp = { "texlab" } },
+            vue = { formatter = { "prettier" } },
+            sql = { formatter = { "sql-formatter" } },
+            graphql = { formatter = { "prettier" } },
+            elixir = {}, -- mix ships with the Elixir toolchain
+            prisma = {}, -- prisma-fmt ships with the Prisma CLI, not Mason
+            asm = { formatter = { "asmfmt" } },
+            java = {}, -- see plugins/lsp/java.lua: :MasonInstall jdtls java-debug-adapter java-test google-java-format
+         }
+
+         vim.keymap.set("n", "<leader>bI", function()
+            local languages = vim.tbl_keys(LANGUAGE_TOOLS)
+            table.sort(languages)
+            vim.ui.select(languages, { prompt = "Install everything for language:" }, function(language)
+               if not language then
+                  return
+               end
+               local tools = LANGUAGE_TOOLS[language]
+               local lsp_names = tools.lsp or {}
+               if #lsp_names > 0 then
+                  vim.cmd("LspInstall " .. table.concat(lsp_names, " "))
+               end
+               if tools.formatter and #tools.formatter > 0 then
+                  vim.cmd("MasonInstall " .. table.concat(tools.formatter, " "))
+               end
+               if tools.ts and #tools.ts > 0 then
+                  vim.cmd("TSInstall " .. table.concat(tools.ts, " "))
+               end
+               if #lsp_names == 0 and not tools.formatter and not tools.ts then
+                  vim.notify(("Nothing to install here -- see plugins/lsp/%s.lua"):format(language), vim.log.levels.INFO)
+               end
+            end)
+         end, { desc = "Install Everything For A Language" })
 
          -- Setup on_attach callback
          local function on_attach(client, bufnr)
@@ -388,6 +424,7 @@ return {
          end
 
          -- Enable code lens if configured
+         -- TODO: Fix this/migrate off of deprecated stuff
          if opts.codelens.enabled then
             vim.api.nvim_create_autocmd("LspAttach", {
                callback = function(args)
@@ -406,40 +443,6 @@ return {
          -- Setup notify
          require("notify").setup({ background_colour = "#000000" })
          vim.notify = require("notify")
-
-         ---------------------------------------------------------------------------
-         -- Lazy, on-demand Mason installs
-         --
-         -- Every server above has its LSP config registered via vim.lsp.config(),
-         -- but none are installed at startup. The first time a matching filetype
-         -- is opened, :LspInstall triggers the install; mason-lspconfig's
-         -- automatic_enable (on by default) takes care of vim.lsp.enable() once
-         -- that install finishes. Run `:LspInstall <server>` yourself to install
-         -- ahead of time.
-         ---------------------------------------------------------------------------
-
-         local ft_to_servers = {}
-         for server_name, filetypes in pairs(opts.lazy_install) do
-            for _, ft in ipairs(filetypes) do
-               ft_to_servers[ft] = ft_to_servers[ft] or {}
-               table.insert(ft_to_servers[ft], server_name)
-            end
-         end
-
-         vim.api.nvim_create_autocmd("FileType", {
-            group = vim.api.nvim_create_augroup("LazyLspInstall", { clear = true }),
-            callback = function(args)
-               local servers = ft_to_servers[vim.bo[args.buf].filetype]
-               if not servers then
-                  return
-               end
-               for _, server_name in ipairs(servers) do
-                  if #vim.lsp.get_clients({ name = server_name, bufnr = args.buf }) == 0 then
-                     vim.cmd("LspInstall " .. server_name)
-                  end
-               end
-            end,
-         })
       end,
    },
 }
