@@ -1,6 +1,23 @@
 -- TODO: Configure so that lsp uses this
 if not vim.g.vscode then
    return {
+      -- Declarative formatter installs (mason-lspconfig only covers LSP servers).
+      -- gofmt/rustfmt/mix/prisma-fmt ship with their toolchains, not Mason.
+      {
+         "WhoIsSethDaniel/mason-tool-installer.nvim",
+         event = "VeryLazy",
+         dependencies = { "mason-org/mason.nvim" },
+         opts = {
+            ensure_installed = {
+               "stylua",
+               "black",
+               "clang-format",
+               "prettier",
+               "biome",
+            },
+         },
+      },
+      {
       "stevearc/conform.nvim",
       event = { "BufWritePre" },
       cmd = { "ConformInfo" },
@@ -82,5 +99,6 @@ if not vim.g.vscode then
             conform.format({ timeout_ms = 500, lsp_fallback = true })
          end, { desc = "Format current buffer" })
       end,
+      },
    }
 end

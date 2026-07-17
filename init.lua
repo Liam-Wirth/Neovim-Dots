@@ -2,15 +2,14 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- Environment detection
---
--- vim.g.worklaptop: manually-set marker (`touch ~/.worklaptop`) for corp
--- laptops. Kept as-is for backwards compatibility with existing checks.
---
--- vim.g.is_cloud_desktop: auto-detected. Amazon Cloud Desktops have a
--- `dev-dsk-*.amazon.com` hostname and a `/apollo` directory; 
---
--- vim.g.is_amazon_machine: 
+
+---------------------------------------------------------------------------------------------------
+---                                    ENVIRONMENT DETECTION
+---------------------------------------------------------------------------------------------------
+-- I try to use neovim for everything, and not everything needs the same configuration
+-- thus, at startup my neovim config does a few things to try and figure out what OS we are running on,
+-- and also for other indicators that might classify it as a work machine vs a personal machine,
+-- throught the config you'll see conditional checks that enable/disable things based on these env-vars
 local f = io.open(os.getenv("HOME") .. "/.worklaptop", "rb")
 if f then f:close() end
 vim.g.worklaptop = (f ~= nil)
@@ -23,6 +22,10 @@ vim.g.is_amazon_machine = vim.g.worklaptop or vim.g.is_cloud_desktop
 
 vim.g.vscode = vim.g.vscode or false
 
+
+---------------------------------------------------------------------------------------------------
+---                                    LazyVim Bootstrapping
+---------------------------------------------------------------------------------------------------
 -- Lazy.nvim bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
@@ -38,6 +41,9 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 vim.loader.enable()
 
+-- Options must load before plugins (specs read vim.opt/vim.g at load time)
+require("config.options")
+
 -- Plugin setup
 require("lazy").setup({
    spec = {
@@ -47,5 +53,6 @@ require("lazy").setup({
    performance = {},
 })
 
--- Load user config (options, autocmds, keymaps)
-require("config")
+-- Keymaps and autocmds after plugins (some reference plugin modules)
+require("config.autocmds")
+require("config.keymaps")

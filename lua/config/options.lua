@@ -1,7 +1,3 @@
--- ──────────────────────────────────────────────────────────────────────────────
--- Options: all vim.opt / vim.o / vim.g settings in one place
--- ──────────────────────────────────────────────────────────────────────────────
-
 local opt = vim.opt
 
 -- Encoding & preview
@@ -75,10 +71,6 @@ opt.fillchars = {
    eob = " ",
 }
 
--- ──────────────────────────────────────────────────────────────────────────────
--- Diagnostics
--- ──────────────────────────────────────────────────────────────────────────────
-
 vim.diagnostic.config({
    virtual_text = true,
    signs = true,
@@ -92,14 +84,9 @@ vim.diagnostic.config({
    },
 })
 
--- ──────────────────────────────────────────────────────────────────────────────
--- Persistent undo
--- ──────────────────────────────────────────────────────────────────────────────
-
+-- Persistent undo. mkdir with "p" is a no-op if the dir already exists.
 local undo_dir = vim.fn.stdpath("data") .. "/undo"
-if vim.fn.isdirectory(undo_dir) == 0 then
-   vim.fn.mkdir(undo_dir, "p", 0700)
-end
+vim.fn.mkdir(undo_dir, "p")
 opt.undodir = undo_dir
 opt.undofile = true
 
@@ -109,7 +96,6 @@ opt.undofile = true
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_python3_provider = 0
 
 -- ──────────────────────────────────────────────────────────────────────────────
 -- WSL clipboard support

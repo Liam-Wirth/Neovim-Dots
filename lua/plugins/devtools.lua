@@ -14,8 +14,8 @@ local ret = {
       "andweeb/presence.nvim",
       lazy = false,
       cond = function()
-         -- if we are in WSL or just plain windows, don't load this plugin
-         return os.getenv("WSL_DISTRO_NAME") == nil -- will eval true if and only if we are not in WSL (hopefully)
+         -- Skip in WSL and on Amazon machines (no Discord on the corp desktop)
+         return os.getenv("WSL_DISTRO_NAME") == nil and not vim.g.is_amazon_machine
       end,
       opts = {
          -- General options

@@ -1,8 +1,24 @@
 local vim = vim -- HACK: lol
+
+-- Diagnostics: use plain underline instead of undercurl (undercurl is
+-- unreliable through tmux/terminals without Smulx support). Keeps the
+-- colorscheme's per-severity underline colors (sp).
+local function diagnostic_plain_underline()
+   for _, sev in ipairs({ "Error", "Warn", "Info", "Hint" }) do
+      local group = "DiagnosticUnderline" .. sev
+      local hl = vim.api.nvim_get_hl(0, { name = group, link = false })
+      hl.undercurl = nil
+      hl.underline = true
+      vim.api.nvim_set_hl(0, group, hl)
+   end
+end
+diagnostic_plain_underline() -- colorscheme already loaded by lazy at this point
+
 vim.api.nvim_create_autocmd("colorscheme", {
    group = vim.api.nvim_create_augroup("coloringfuckery", { clear = true }),
    pattern = "*",
    callback = function()
+      diagnostic_plain_underline()
       for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
          vim.api.nvim_set_hl(0, group, {})
       end
@@ -17,7 +33,7 @@ vim.api.nvim_create_autocmd("colorscheme", {
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
    callback = function()
-      vim.highlight.on_yank()
+      vim.hl.on_yank()
    end,
    group = highlight_group,
    pattern = "*",

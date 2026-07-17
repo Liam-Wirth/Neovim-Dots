@@ -113,8 +113,7 @@ wk.add({
   -- Auxiliary windows
   -- { "<leader>et", "<cmd>Neotree<cr>", desc = "Toggle Filetree", mode = "n" },
   { "<leader>ee", "<cmd>Trouble diagnostics toggle<cr>", desc = "Open/Close Trouble", mode = "n" },
-  { "<leader>eu", "<cmd>lua require('undotree').toggle()<cr>", desc = "Toggle Visual undotree", mode = "n" },
-  { "<leader>ea", "<cmd>AerialToggle<cr>", desc = "Toggle Aerial (File overview)", mode = "n" },
+  { "<leader>eu", "<cmd>UndotreeToggle<cr>", desc = "Toggle Visual undotree", mode = "n" },
 
   -- Diagnostic
   { "<leader>be", vim.diagnostic.open_float, desc = "Open Float", mode = "n", remap = true, silent = true },

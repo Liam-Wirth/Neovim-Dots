@@ -9,10 +9,10 @@ return {
       ft = { "org" },
       config = function()
          require("orgmode").setup({
+            -- NOTE: was declared twice (Lua kept only the second); merged 2026-07-17
             org_agenda_files = {
-               "~/org/roam/daily/**/*",
-               "~/org/roam/agenda/**/*",
-               "~/org/**/*"
+               "~/org/**/*",
+               "~/.config/nvim",
             },
             org_default_notes_file = "~/org/refile.org",
 
@@ -31,13 +31,6 @@ return {
             -- Priority settings (matching your A-E setup)
             org_priority_highest = "A",
             org_priority_lowest = "E",
-
-            -- Enable agenda
-            org_agenda_files = {
-               "~/org/roam/daily",
-               "~/org/roam/agenda",
-               "~/.config/nvim"
-            },
          })
       end,
    },
@@ -97,20 +90,20 @@ return {
             }
          })
          local wk = require("which-key")
-         wk.register({
-            f = { function() require("org-roam").node.find() end, "Find org-roam node" },
-            i = { function() require("org-roam").node.insert() end, "Insert org-roam node" },
-            c = { function() require("org-roam").capture.capture() end, "Org-roam capture" },
-            b = { function() require("org-roam").buffer.toggle() end, "Toggle org-roam buffer" },
-            d = {
-               name = "Dailies",
-               t = { function() require("org-roam").dailies.today() end, "Today's daily note" },
-               y = { function() require("org-roam").dailies.yesterday() end, "Yesterday's daily note" },
-               T = { function() require("org-roam").dailies.tomorrow() end, "Tomorrow's daily note" },
-            },
-            s = { function() require("org-roam").capture.capture({ template = "stub" }) end, "Create org-roam stub" },
-            x = { function() require("org-roam").extract.subtree() end, "Extract subtree to new node" },
-         }, { prefix = "<leader>nr" })
+         -- which-key v3 spec (wk.register was removed in v3)
+         wk.add({
+            { "<leader>nr", group = "Org-roam" },
+            { "<leader>nrf", function() require("org-roam").node.find() end, desc = "Find org-roam node" },
+            { "<leader>nri", function() require("org-roam").node.insert() end, desc = "Insert org-roam node" },
+            { "<leader>nrc", function() require("org-roam").capture.capture() end, desc = "Org-roam capture" },
+            { "<leader>nrb", function() require("org-roam").buffer.toggle() end, desc = "Toggle org-roam buffer" },
+            { "<leader>nrd", group = "Dailies" },
+            { "<leader>nrdt", function() require("org-roam").dailies.today() end, desc = "Today's daily note" },
+            { "<leader>nrdy", function() require("org-roam").dailies.yesterday() end, desc = "Yesterday's daily note" },
+            { "<leader>nrdT", function() require("org-roam").dailies.tomorrow() end, desc = "Tomorrow's daily note" },
+            { "<leader>nrs", function() require("org-roam").capture.capture({ template = "stub" }) end, desc = "Create org-roam stub" },
+            { "<leader>nrx", function() require("org-roam").extract.subtree() end, desc = "Extract subtree to new node" },
+         })
       end
    }
 }
