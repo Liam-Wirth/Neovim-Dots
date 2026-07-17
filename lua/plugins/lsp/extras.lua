@@ -42,19 +42,9 @@ local ret = {
       },
    },
    {
-      -- lsp_signature | shows the signature of a function when typing parameters
-      "ray-x/lsp_signature.nvim",
-      lazy = true,
-      event = "BufReadPost",
-      config = function()
-         require("lsp_signature").setup({
-            floating_window = false,
-         })
-      end,
-   },
-   {
       "lukas-reineke/headlines.nvim",
       dependencies = "nvim-treesitter/nvim-treesitter",
+      ft = { "org", "markdown" }, -- was eager; only useful in these filetypes
       config = true, -- or `opts = {}`
    },
    {

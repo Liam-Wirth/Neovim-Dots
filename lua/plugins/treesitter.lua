@@ -6,7 +6,7 @@ local ret = {
       build = ":TSUpdate",
       event = { "BufReadPost", "BufNewFile" },
       dependencies = {
-         "nvim-treesitter/nvim-treesitter-textobjects",
+         { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
       },
       cmd = { "TSUpdateSync" },
       keys = {
@@ -49,6 +49,7 @@ local ret = {
    },
    {
       "nvim-treesitter/nvim-treesitter-textobjects",
+      branch = "master", -- must match nvim-treesitter's branch; 'main' is the incompatible rewrite
       lazy = true,
       event = { "BufNewFile", "BufReadPost" },
    },

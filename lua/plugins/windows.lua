@@ -1,33 +1,9 @@
--- Window layout and sizing: auto-resize the focused split, and dock
--- auxiliary panels (Neo-tree, Trouble, terminal, help, quickfix) to fixed
--- edges instead of letting them shuffle around like normal splits.
+-- Window layout and sizing: dock auxiliary panels (Neo-tree, Trouble,
+-- terminal, help, quickfix) to fixed edges instead of letting them shuffle
+-- around like normal splits.
+-- NOTE: focus.nvim removed 2026-07-17 -- its autoresize fought edgy's pinned
+-- panel sizes.
 local ret = {
-   {
-      "nvim-focus/focus.nvim",
-      version = "*",
-      config = function()
-         require("focus").setup({
-            autoresize = {
-               enable = true,
-            },
-            ui = {
-               number = true,
-               relativenumber = false,
-               hybridnumber = false,
-               absolutenumber_unfocussed = false,
-
-               cursorline = true,
-               cursorcolumn = false,
-               colorcolumn = {
-                  enable = false,
-                  list = "+1",
-               },
-               signcolumn = true,
-               winhighlight = false,
-            },
-         })
-      end,
-   },
    {
       "folke/edgy.nvim",
       lazy = false,
@@ -94,11 +70,6 @@ local ret = {
                end,
                pinned = false,
                open = "Neotree position=top buffers",
-            },
-            {
-               ft = "Outline",
-               pinned = false,
-               open = "SymbolsOutlineOpen",
             },
             -- any other neo-tree windows
             "neo-tree",

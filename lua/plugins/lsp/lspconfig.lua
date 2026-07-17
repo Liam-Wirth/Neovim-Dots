@@ -7,7 +7,6 @@ return {
       dependencies = {
          { "mason-org/mason.nvim", version = "^2.0.0" },
          { "mason-org/mason-lspconfig.nvim", version = "^2.0.0" },
-         "hrsh7th/cmp-nvim-lsp",
          "rcarriga/nvim-notify",
       },
       opts_extend = { "servers.*.keys" },
@@ -73,7 +72,8 @@ return {
                      },
                   },
                   keys = {
-                     { "K", vim.lsp.buf.hover, desc = "Hover" },
+                     -- NOTE: hover (K) and code actions (<leader>ba) are owned by
+                     -- lspsaga (plugins/lsp/lspsaga.lua); rust overrides per-buffer.
                      { "gd", vim.lsp.buf.definition, desc = "Goto Definition" },
                      {
                         "gr",
@@ -86,7 +86,6 @@ return {
                      { "gy", vim.lsp.buf.type_definition, desc = "Goto Type Definition" },
                      { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
                      { "<C-k>", vim.lsp.buf.signature_help, mode = "i", desc = "Signature Help" },
-                     { "<leader>ba", vim.lsp.buf.code_action, mode = { "n", "v" }, desc = "Code Action" },
                      { "<leader>bD", vim.lsp.buf.type_definition, desc = "Type Definition" },
                      {
                         "<leader>bd",
@@ -105,13 +104,14 @@ return {
                   },
                },
 
-               -- Lua configuration
+               -- Lua configuration. Runtime/plugin type info is provided
+               -- on-demand by lazydev.nvim (see spec below) instead of
+               -- indexing the entire runtimepath here.
                lua_ls = {
                   settings = {
                      Lua = {
                         workspace = {
                            checkThirdParty = false,
-                           library = vim.api.nvim_get_runtime_file("", true),
                         },
                         completion = { workspaceWord = true, callSnippet = "Both" },
                         runtime = { version = "LuaJIT" },
@@ -237,8 +237,8 @@ return {
                   cmd = { "verible-verilog-ls", "--rules_config_search" },
                },
 
-               -- No special config needed -- just registered so :LspInstall
-               -- and the <leader>bI picker know about them.
+               -- No special config needed -- just registered so vim.lsp.config
+               -- knows about them if installed manually via :Mason.
                texlab = {},
                jsonls = {},
                eslint = {},
@@ -266,11 +266,21 @@ return {
 
          require("mason").setup()
          require("mason-lspconfig").setup({
-            -- Nothing pre-installed at startup. Installation is triggered lazily,
-            -- per-filetype (see the FileType autocmd below) or manually via
-            -- `:LspInstall <server>`. automatic_enable (default) calls
-            -- vim.lsp.enable() for us once a server finishes installing.
-            ensure_installed = {},
+            -- Declarative server install list (documented best practice).
+            -- Mason installs anything missing in the background at startup;
+            -- automatic_enable (default) calls vim.lsp.enable() for each.
+            -- rust-analyzer is managed by rustaceanvim, jdtls by nvim-jdtls.
+            ensure_installed = {
+               "lua_ls",
+               "basedpyright",
+               "ruff",
+               "clangd",
+               "eslint",
+               "fortls",
+               "marksman",
+               "texlab",
+               "verible",
+            },
             automatic_enable = {
                exclude = { "jdtls" },
             },
@@ -284,68 +294,8 @@ return {
             vim.notify(("Inlay hints %s"):format(enabled and "disabled" or "enabled"), vim.log.levels.INFO)
          end, { desc = "Toggle Inlay Hints" })
 
-         local LANGUAGE_TOOLS = {
-            lua = { lsp = { "lua_ls" }, formatter = { "stylua" }, ts = { "lua", "luadoc", "luap" } },
-            go = { lsp = { "gopls" } }, -- gofmt ships with the Go toolchain
-            python = { lsp = { "basedpyright", "ruff" }, formatter = { "black" }, ts = { "python" } },
-            c = { lsp = { "clangd" }, formatter = { "clang-format" }, ts = { "c" } },
-            cpp = { lsp = { "clangd" }, formatter = { "clang-format" } },
-            rust = {}, -- LSP via rustaceanvim (plugins/lsp/rust.lua); rustfmt ships with rustup
-            javascript = { lsp = { "eslint" }, formatter = { "biome" }, ts = { "javascript", "jsdoc" } },
-            typescript = { lsp = { "eslint" }, formatter = { "biome" }, ts = { "tsx", "typescript" } },
-            svelte = { lsp = { "svelte" }, formatter = { "prettier" } },
-            astro = { lsp = { "astro" } },
-            html = { lsp = { "tailwindcss" } },
-            css = { lsp = { "tailwindcss" }, formatter = { "prettier" } },
-            json = { lsp = { "jsonls" }, formatter = { "prettier" }, ts = { "json" } },
-            yaml = { lsp = { "yamlls" }, formatter = { "prettier" }, ts = { "yaml" } },
-            markdown = { lsp = { "marksman" }, ts = { "markdown", "markdown_inline" } },
-            php = { lsp = { "intelephense" }, formatter = { "prettier" } },
-            fortran = { lsp = { "fortls" } },
-            verilog = { lsp = { "verible" } },
-            tex = { lsp = { "texlab" } },
-            vue = { formatter = { "prettier" } },
-            sql = { formatter = { "sql-formatter" } },
-            graphql = { formatter = { "prettier" } },
-            elixir = {}, -- mix ships with the Elixir toolchain
-            prisma = {}, -- prisma-fmt ships with the Prisma CLI, not Mason
-            asm = { formatter = { "asmfmt" } },
-            java = {}, -- see plugins/lsp/java.lua: :MasonInstall jdtls java-debug-adapter java-test google-java-format
-         }
-
-         vim.keymap.set("n", "<leader>bI", function()
-            local languages = vim.tbl_keys(LANGUAGE_TOOLS)
-            table.sort(languages)
-            vim.ui.select(languages, { prompt = "Install everything for language:" }, function(language)
-               if not language then
-                  return
-               end
-               local tools = LANGUAGE_TOOLS[language]
-               local lsp_names = tools.lsp or {}
-               if #lsp_names > 0 then
-                  vim.cmd("LspInstall " .. table.concat(lsp_names, " "))
-               end
-               if tools.formatter and #tools.formatter > 0 then
-                  vim.cmd("MasonInstall " .. table.concat(tools.formatter, " "))
-               end
-               if tools.ts and #tools.ts > 0 then
-                  vim.cmd("TSInstall " .. table.concat(tools.ts, " "))
-               end
-               if #lsp_names == 0 and not tools.formatter and not tools.ts then
-                  vim.notify(("Nothing to install here -- see plugins/lsp/%s.lua"):format(language), vim.log.levels.INFO)
-               end
-            end)
-         end, { desc = "Install Everything For A Language" })
-
          -- Setup on_attach callback
          local function on_attach(client, bufnr)
-            -- Attach nvim-navic for breadcrumbs (barbecue)
-            if client.server_capabilities.documentSymbolProvider then
-               pcall(function()
-                  require("nvim-navic").attach(client, bufnr)
-               end)
-            end
-
             -- Enable document highlight
             if client.server_capabilities.documentHighlightProvider then
                pcall(function()
@@ -382,8 +332,13 @@ return {
             end
          end
 
-         -- Get capabilities
-         local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+         -- Get capabilities: 0.11 registers most completion capabilities natively;
+         -- merge blink.cmp's extras when it's available.
+         local capabilities = vim.lsp.protocol.make_client_capabilities()
+         local ok_blink, blink = pcall(require, "blink.cmp")
+         if ok_blink then
+            capabilities = blink.get_lsp_capabilities(capabilities)
+         end
 
          -- Register (but do not enable) every configured server. `vim.lsp.config`
          -- just stores the config for later use by `vim.lsp.enable()` -- it does not
@@ -429,7 +384,7 @@ return {
             vim.api.nvim_create_autocmd("LspAttach", {
                callback = function(args)
                   local client = vim.lsp.get_client_by_id(args.data.client_id)
-                  if client and client.server_capabilities.codeLensProvider then
+                  if client and client:supports_method("textDocument/codeLens") then
                      vim.lsp.codelens.refresh()
                      vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
                         buffer = args.buf,
@@ -444,5 +399,19 @@ return {
          require("notify").setup({ background_colour = "#000000" })
          vim.notify = require("notify")
       end,
+   },
+
+   -- Lua development: feeds lua_ls type info for the Neovim runtime and
+   -- plugins you actually require(), on demand -- instead of indexing the
+   -- whole runtimepath (which made Lua completion slow and noisy).
+   {
+      "folke/lazydev.nvim",
+      ft = "lua",
+      opts = {
+         library = {
+            -- Load luvit types when vim.uv is referenced
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+         },
+      },
    },
 }

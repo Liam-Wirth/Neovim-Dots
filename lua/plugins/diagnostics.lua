@@ -10,7 +10,7 @@ return {
       keys = {
          {
             "<leader>ext",
-            "<cmd>Trouble todo",
+            "<cmd>Trouble todo<cr>",
             desc = "Open Project's TODO entries in Trouble"
          }
       }

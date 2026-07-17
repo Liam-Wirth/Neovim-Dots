@@ -66,13 +66,6 @@ if not vim.g.vscode then
             "Selection (cwd)"
          },
          {
-            "<leader>ts",
-            "<cmd>SearchSession<cr>",
-            mode = { "v", "n" },
-            desc =
-            "Search Sessions"
-         },
-         {
             "<leader>ss",
             Util.telescope("lsp_document_symbols", {
                symbols = {

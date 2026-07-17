@@ -195,22 +195,4 @@ local icons = {
    },
 }
 
-icons.get_misc = function()
-   return icons.misc()
-end
-icons.get_diagnostics = function()
-   return icons.diagnostics()
-end
-icons.get_git = function()
-   return icons.git()
-end
-icons.get_ui = function()
-   return icons.ui()
-end
-icons.get_kind = function()
-   return icons.kind()
-end
-icons.get_dap = function ()
-   return icons.dap()
-end
 return icons

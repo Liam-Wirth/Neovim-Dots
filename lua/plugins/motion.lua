@@ -22,7 +22,7 @@ local ret = {
    { "echasnovski/mini.splitjoin", version = false, lazy = true, event = { "BufEnter" } },
    { "echasnovski/mini.bracketed", version = false, lazy = true, event = { "BufEnter" } },
    { "echasnovski/mini.pairs",     version = false, lazy = true, event = { "BufEnter" }, opts = {}, },
-   { "echasnovski/mini.icons",     version = false, lazy = true },
+   { "nvim-mini/mini.icons",       version = false, lazy = true, opts = {} },
    {
       "windwp/nvim-ts-autotag",
       event = "BufEnter",
