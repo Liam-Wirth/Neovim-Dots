@@ -14,9 +14,7 @@ local f = io.open(os.getenv("HOME") .. "/.worklaptop", "rb")
 if f then f:close() end
 vim.g.worklaptop = (f ~= nil)
 
-local hostname = vim.uv.os_gethostname()
-vim.g.is_cloud_desktop = hostname:match("REDACTED") ~= nil
-   or vim.uv.fs_stat("/nonexistent-marker") ~= nil
+vim.g.is_cloud_desktop = vim.uv.fs_stat(os.getenv("HOME") .. "/.cloud-desktop") ~= nil
 
 vim.g.is_amazon_machine = vim.g.worklaptop or vim.g.is_cloud_desktop
 

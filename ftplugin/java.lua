@@ -59,11 +59,11 @@ if vim.g.is_amazon_machine then
    end
 end
 
--- Register JDKs for jdtls to analyze projects with. The build system vends each
--- package's build JDK under <workspace_root>/env/JDK<N>-*/runtime/jdk-<N>;
--- prefer that (e.g. a package targets a JDK, which isn't installed system-wide)
--- and mark it default. Fall back to the system Corretto installs. Any path
--- that doesn't exist is filtered out so a missing runtime never errors jdtls.
+-- Register JDKs for jdtls to analyze projects with. The build system vends
+-- each package's build JDK under <workspace_root>/env/JDK<N>-*/runtime/jdk-<N>;
+-- prefer that (e.g. a package targets a JDK not installed system-wide) and
+-- mark it default. Fall back to the system Corretto installs. Any path that
+-- doesn't exist is filtered out so a missing runtime never errors jdtls.
 local function workspace_jdk_runtime()
    local bemol = vim.fs.find({ ".bemol" }, { upward = true, path = root_dir, type = "directory" })[1]
    if not bemol then
