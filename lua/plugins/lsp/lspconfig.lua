@@ -372,7 +372,7 @@ return {
                   if client and client.server_capabilities.foldingRangeProvider then
                      vim.wo.foldmethod = "expr"
                      vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
-                     vim.wo.foldenable = false
+                     vim.wo.foldenable = true
                   end
                end,
             })

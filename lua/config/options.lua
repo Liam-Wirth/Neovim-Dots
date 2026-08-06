@@ -16,6 +16,10 @@ opt.smartcase = true
 opt.hlsearch = true
 opt.incsearch = true
 
+opt.spell = true
+opt.spelllang = { "en_us" }
+opt.spelloptions:append("camel") -- split CamelCase so identifiers aren't flagged
+
 -- Splits
 opt.splitbelow = true
 opt.splitright = true
@@ -70,6 +74,15 @@ opt.fillchars = {
    diff = "╱",
    eob = " ",
 }
+
+-- Folding: treesitter by default; LSP folding overrides on attach (see lspconfig.lua).
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- TODO: possibly look into using UFO but idk
+opt.foldcolumn = "1"
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldenable = true
 
 vim.diagnostic.config({
    virtual_text = true,

@@ -1,11 +1,5 @@
--- Starts jdtls for the current Java buffer and wires in Bemol's
--- the build system-generated workspace folders. Sourced automatically by Neovim
--- (ftplugin/<filetype>.lua convention) whenever a `java` buffer is opened.
+-- Starts jdtls for the current Java buffer and wires in Bemol stuff
 --
--- Prerequisite: run `bemol --watch --verbose` from your the build system workspace
--- root (`toolbox install bemol` if you don't have it) so `.bemol/` exists
--- with real classpath info. Without it, jdtls will still start but won't
--- know about the build system dependencies.
 
 local jdtls = require("jdtls")
 local jdtls_setup = require("jdtls.setup")
@@ -14,9 +8,6 @@ local home = os.getenv("HOME")
 local mason_packages = home .. "/.local/share/nvim/mason/packages"
 local path_to_lombok = mason_packages .. "/jdtls/lombok.jar"
 
--- Reads Bemol's generated workspace-folder list and adds each one to the
--- LSP client's workspace folders (the build system packages don't share a single
--- root_dir the way a typical Maven/Gradle project does).
 local function add_bemol_workspace_folders()
    local bemol_dir = vim.fs.find({ ".bemol" }, { upward = true, type = "directory" })[1]
    if not bemol_dir then
@@ -37,8 +28,6 @@ local function add_bemol_workspace_folders()
    file:close()
 end
 
--- Root: prefer the Bemol-marked workspace root; fall back to common
--- Java project markers for non-the build system Java code.
 local root_markers = { ".bemol", "settings.gradle", "settings.gradle.kts", "pom.xml", "build.gradle", ".git" }
 local root_dir = jdtls_setup.find_root(root_markers)
 if not root_dir then
@@ -49,9 +38,6 @@ local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
 local workspace_dir = home .. "/.cache/jdtls/workspace/" .. project_name
 
 -- jdtls itself requires Java 21+ to run, regardless of what version the
--- project being edited targets. This only applies on Amazon-managed
--- machines where Corretto lives at this fixed path; elsewhere, whatever
--- JAVA_HOME/PATH is already configured takes over.
 if vim.g.is_amazon_machine and (not vim.env.JAVA_HOME or vim.env.JAVA_HOME == "") then
    local corretto21 = "/usr/lib/jvm/java-21-amazon-corretto"
    if vim.fn.isdirectory(corretto21) == 1 then
@@ -59,13 +45,6 @@ if vim.g.is_amazon_machine and (not vim.env.JAVA_HOME or vim.env.JAVA_HOME == ""
    end
 end
 
--- `jdtls` must be the Mason-installed wrapper script on $PATH (requires
--- Python 3.9+ to run -- the eclipse.jdt.ls launcher script's own shebang
--- resolves whatever `python3` is first on PATH). Amazon Linux 2's system
--- python3 is 3.7, which is too old; prepend a newer interpreter (installed
--- via `uv python install 3.11`) to PATH for just this spawned process so
--- system Python is untouched. Only relevant on Amazon machines with this
--- exact stale-Python problem; harmless no-op elsewhere.
 local jdtls_cmd = { "jdtls" }
 if vim.fn.filereadable(path_to_lombok) == 1 then
    table.insert(jdtls_cmd, "--jvm-arg=-javaagent:" .. path_to_lombok)
@@ -79,6 +58,40 @@ if vim.g.is_amazon_machine then
       cmd_env = { PATH = uv_python_bin .. ":" .. (vim.env.PATH or "") }
    end
 end
+
+-- Register JDKs for jdtls to analyze projects with. The build system vends each
+-- package's build JDK under <workspace_root>/env/JDK<N>-*/runtime/jdk-<N>;
+-- prefer that (e.g. a package targets a JDK, which isn't installed system-wide)
+-- and mark it default. Fall back to the system Corretto installs. Any path
+-- that doesn't exist is filtered out so a missing runtime never errors jdtls.
+local function workspace_jdk_runtime()
+   local bemol = vim.fs.find({ ".bemol" }, { upward = true, path = root_dir, type = "directory" })[1]
+   if not bemol then
+      return nil
+   end
+   local ws_root = vim.fn.fnamemodify(bemol, ":h")
+   local jdk = vim.fn.glob(ws_root .. "/env/JDK*-*/runtime/jdk-*", true, true)[1]
+   local major = jdk and jdk:match("jdk%-(%d+)")
+   if not (jdk and major and vim.fn.isdirectory(jdk) == 1) then
+      return nil
+   end
+   return { name = "JavaSE-" .. major, path = jdk, default = true }
+end
+
+local runtimes = {
+   { name = "JavaSE-21", path = "/usr/lib/jvm/java-21-amazon-corretto" },
+   { name = "JavaSE-17", path = "/usr/lib/jvm/java-17-amazon-corretto" },
+   { name = "JavaSE-11", path = "/usr/lib/jvm/java-11-amazon-corretto.x86_64" },
+}
+local ws_runtime = workspace_jdk_runtime()
+if ws_runtime then
+   table.insert(runtimes, 1, ws_runtime)
+else
+   runtimes[1].default = true
+end
+runtimes = vim.tbl_filter(function(r)
+   return vim.fn.isdirectory(r.path) == 1
+end, runtimes)
 
 local config = {
    name = "jdtls",
@@ -102,18 +115,7 @@ local config = {
 
    settings = {
       java = {
-         -- jdtls runs on Java 21. On an Amazon-managed machine, also
-         -- register the Corretto versions actually available so it can
-         -- compile/analyze older-targeted the build system packages correctly; on
-         -- a personal machine these paths simply won't exist and jdtls
-         -- falls back to whatever JDK the project's build file specifies.
-         configuration = vim.g.is_amazon_machine and {
-            runtimes = {
-               { name = "JavaSE-21", path = "/usr/lib/jvm/java-21-amazon-corretto", default = true },
-               { name = "JavaSE-17", path = "/usr/lib/jvm/java-17-amazon-corretto" },
-               { name = "JavaSE-11", path = "/usr/lib/jvm/java-11-amazon-corretto" },
-            },
-         } or nil,
+         configuration = (#runtimes > 0) and { runtimes = runtimes } or nil,
          references = {
             includeDecompiledSources = true,
          },
