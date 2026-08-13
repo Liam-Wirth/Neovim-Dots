@@ -145,3 +145,15 @@ vim.filetype.add({
       tcl = "tcl",
    },
 })
+
+-- ──────────────────────────────────────────────────────────────────────────────
+--  Custom commands
+-- ──────────────────────────────────────────────────────────────────────────────
+
+vim.api.nvim_create_user_command("ClearFloats", function()
+   for _, w in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_config(w).relative ~= "" then
+         vim.api.nvim_win_close(w, false)
+      end
+   end
+end, { desc = "clears floating windows that may linger/stick around when i encounter that bug" })

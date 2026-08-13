@@ -61,6 +61,36 @@ return {
             },
             ---@type table<string, vim.lsp.Config|boolean>
             servers = {
+               -- TypeScript / JavaScript (typescript-language-server = ts_ls).
+               -- tsserver ships inlay hints OFF by default, so parameter-name/type
+               -- hints are never requested until these settings are set. Display is
+               -- handled by the LspAttach handler below (inlay_hint.enable).
+               -- parameterNames.enabled is a STRING: "none" | "literals" | "all".
+               ts_ls = {
+                  settings = {
+                     typescript = {
+                        inlayHints = {
+                           parameterNames = { enabled = "all", suppressWhenArgumentMatchesName = true },
+                           parameterTypes = { enabled = true },
+                           variableTypes = { enabled = true },
+                           propertyDeclarationTypes = { enabled = true },
+                           functionLikeReturnTypes = { enabled = true },
+                           enumMemberValues = { enabled = true },
+                        },
+                     },
+                     javascript = {
+                        inlayHints = {
+                           parameterNames = { enabled = "all", suppressWhenArgumentMatchesName = true },
+                           parameterTypes = { enabled = true },
+                           variableTypes = { enabled = true },
+                           propertyDeclarationTypes = { enabled = true },
+                           functionLikeReturnTypes = { enabled = true },
+                           enumMemberValues = { enabled = true },
+                        },
+                     },
+                  },
+               },
+
                -- Global server configuration
                ["*"] = {
                   capabilities = {
