@@ -85,9 +85,6 @@ vim.diagnostic.config({
 })
 
 -- Persistent undo. mkdir with "p" is a no-op if the dir already exists.
-local undo_dir = vim.fn.stdpath("data") .. "/undo"
-vim.fn.mkdir(undo_dir, "p")
-opt.undodir = undo_dir
 opt.undofile = true
 
 -- ──────────────────────────────────────────────────────────────────────────────
