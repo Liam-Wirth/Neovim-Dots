@@ -61,13 +61,18 @@ return {
             },
             ---@type table<string, vim.lsp.Config|boolean>
             servers = {
-               -- TypeScript / JavaScript (typescript-language-server = ts_ls).
-               -- tsserver ships inlay hints OFF by default, so parameter-name/type
-               -- hints are never requested until these settings are set. Display is
-               -- handled by the LspAttach handler below (inlay_hint.enable).
-               -- parameterNames.enabled is a STRING: "none" | "literals" | "all".
-               ts_ls = {
+               -- TypeScript / JavaScript. vtsls (@vtsls/language-server) wraps the
+               -- VSCode TS integration -- more complete than typescript-language-server
+               -- (ts_ls) and reads the SAME typescript/javascript.inlayHints keys.
+               -- tsserver ships inlay hints OFF, so these settings are what request them;
+               -- display is handled by the LspAttach handler. enabled is a STRING:
+               -- "none" | "literals" | "all".
+               vtsls = {
                   settings = {
+                     vtsls = {
+                        -- prefer the repo's own node_modules/typescript when present
+                        autoUseWorkspaceTsdk = true,
+                     },
                      typescript = {
                         inlayHints = {
                            parameterNames = { enabled = "all", suppressWhenArgumentMatchesName = true },
@@ -306,13 +311,17 @@ return {
                "ruff",
                "clangd",
                "eslint",
+               "vtsls",
                "fortls",
                "marksman",
                "texlab",
                "verible",
             },
             automatic_enable = {
-               exclude = { "jdtls" },
+               -- jdtls: managed by nvim-jdtls. ts_ls: superseded by vtsls -- the
+               -- typescript-language-server mason pkg may still be installed, so
+               -- exclude it here to avoid a double TS client on the buffer.
+               exclude = { "jdtls", "ts_ls" },
             },
          })
 

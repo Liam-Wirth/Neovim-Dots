@@ -54,3 +54,4 @@ require("lazy").setup({
 -- Keymaps and autocmds after plugins (some reference plugin modules)
 require("config.autocmds")
 require("config.keymaps")
+require("config.colorcolumn")
