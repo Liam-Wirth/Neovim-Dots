@@ -38,13 +38,12 @@ local ret = {
          n = colors.green,
          i = colors.blue,
          v = colors.purple,
-         [''] = colors.purple,
+         [""] = colors.purple,
          V = colors.purple,
          c = colors.orange,
          no = colors.red,
          s = colors.orange,
          S = colors.orange,
-         [''] = colors.orange,
          ic = colors.yellow,
          R = colors.red,
          Rv = colors.magenta,
@@ -131,7 +130,7 @@ local ret = {
             lualine_b = {
                {
                   "branch",
-                  icon = require('util.glyphs').git.Branch,
+                  icon = require("util.glyphs").git.Branch,
                   color = { fg = colors.green },
                },
                {
@@ -147,10 +146,10 @@ local ret = {
             },
             lualine_c = {
                {
-                  "fancy_cwd",
+                  "filename",
                   cond = conditions.buffer_not_empty,
                   color = { fg = colors.magenta, gui = "bold" },
-                  path = 0,
+                  path = 1,
                },
                {
                   "diagnostics",
@@ -179,20 +178,43 @@ local ret = {
                },
                {
                   function()
+                     if vim.b.lang_version == nil then
+                        local ft = vim.bo.filetype
+                        -- ft -> { command, pattern to match version out of its output }
+                        local detectors = {
+                           java = { "java -version 2>&1", 'version "([%d%._]+)"' },
+                           rust = { "rustc --version 2>/dev/null", "rustc ([%d%.]+)" },
+                           python = { "python3 --version 2>&1", "Python ([%d%.]+)" },
+                           lua = { "lua -v 2>&1", "Lua ([%d%.]+)" },
+                           go = { "go version 2>/dev/null", "go([%d%.]+)" },
+                        }
+                        local d = detectors[ft]
+                        if d then
+                           local out = vim.fn.system(d[1])
+                           vim.b.lang_version = out:match(d[2]) or ""
+                        else
+                           vim.b.lang_version = ""
+                        end
+                     end
+                     return vim.b.lang_version
+                  end,
+                  cond = function() return vim.b.lang_version and vim.b.lang_version ~= "" end,
+                  color = { fg = colors.orange, gui = "bold" },
+               },
+               {
+                  function()
                      local msg = "No Active Lsp"
-                     local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
-                     local clients = vim.lsp.get_clients()
-
+                     -- nvim-jdtls starts jdtls via start_or_attach, so its client
+                     -- has no standard config.filetypes list to match against.
+                     local clients = vim.lsp.get_clients({ bufnr = 0 })
                      if next(clients) == nil then
                         return msg
                      end
+                     local names = {}
                      for _, client in ipairs(clients) do
-                        local filetypes = client.config.filetypes
-                        if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                           return client.name
-                        end
+                        table.insert(names, client.name)
                      end
-                     return msg
+                     return table.concat(names, ", ")
                   end,
                   color = { fg = colors.fg, gui = "bold" },
                },

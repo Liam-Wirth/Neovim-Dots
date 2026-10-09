@@ -1,6 +1,3 @@
-vim.g.wakatime_log_level = "error" --SHUT UP!!! SHUT UP SHUT UP SHUT UP!!!
-vim.env.WAKATIME_LOG_LEVEL = "error"
-vim.g.wakatime_cli_path = "/usr/bin/wakatime-cli"
 
 local ret = {
    {
@@ -43,6 +40,7 @@ local ret = {
 }
 
 -- NOTE: See (.gitignored/private) file for configuration/setup of internal completions at work
+
 if not vim.g.is_amazon_machine then
    -- TODO: Setup a copilot section with keybinds and stuff, I want it disabled by DEFAULT and stuff
    table.insert(ret, {
@@ -79,14 +77,6 @@ if not vim.g.is_amazon_machine then
          })
          vim.keymap.set("n", "<leader>cp", function() end)
       end,
-   })
-   table.insert(ret, {
-      "wakatime/vim-wakatime",
-      lazy = false,
-      opts = {
-         debug = false,
-         heartbeat_frequency = 5,
-      },
    })
 end
 
