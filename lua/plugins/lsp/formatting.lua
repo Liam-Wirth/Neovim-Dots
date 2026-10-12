@@ -84,6 +84,7 @@ if not vim.g.vscode then
                },
             },
             format_after_save = false,
+            lsp_format = "fallback",
          })
 
          -- Optional: Add key mappings

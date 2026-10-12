@@ -8,6 +8,9 @@ local home = os.getenv("HOME")
 local mason_packages = home .. "/.local/share/nvim/mason/packages"
 local path_to_lombok = mason_packages .. "/jdtls/lombok.jar"
 
+-- Setting these based on the Google Java Style Guides
+vim.bo.shiftwidth = 4
+vim.bo.expandtab = true
 local function add_bemol_workspace_folders()
    local bemol_dir = vim.fs.find({ ".bemol" }, { upward = true, type = "directory" })[1]
    if not bemol_dir then
@@ -37,7 +40,7 @@ end
 local project_name = vim.fn.fnamemodify(root_dir, ":p:h:t")
 local workspace_dir = home .. "/.cache/jdtls/workspace/" .. project_name
 
--- jdtls itself requires Java 21+ to run, regardless of what version the
+-- jdtls itself requires Java 21+ to run, regardless of what version the package is in
 if vim.g.is_amazon_machine and (not vim.env.JAVA_HOME or vim.env.JAVA_HOME == "") then
    local corretto21 = "/usr/lib/jvm/java-21-amazon-corretto"
    if vim.fn.isdirectory(corretto21) == 1 then
@@ -58,6 +61,7 @@ if vim.g.is_amazon_machine then
       cmd_env = { PATH = uv_python_bin .. ":" .. (vim.env.PATH or "") }
    end
 end
+
 
 -- Register JDKs for jdtls to analyze projects with. The build system vends
 -- each package's build JDK under <workspace_root>/env/JDK<N>-*/runtime/jdk-<N>;
@@ -127,6 +131,8 @@ local config = {
          },
          format = {
             enabled = true,
+            insertSpaces = true,
+            tabSize = 4,
          },
       },
    },

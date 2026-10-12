@@ -3,7 +3,7 @@ local vim = vim -- HACK: lol
 local DEFAULT = vim.go.colorcolumn
 
 local project = {
-   java = { files = { "checkstyle.xml" }, pat = 'name="LineLength".-name="max"%s-value="(%d+)"', tool = 80 },
+   java = { files = { "checkstyle.xml", "checkstyle-config.xml" }, pat = 'name="LineLength".-name="max"%s-value="(%d+)"', tool = 80 },
    lua = { files = { ".stylua.toml", "stylua.toml" }, pat = "column_width%s*=%s*(%d+)", tool = 120 },
    rust = { files = { "rustfmt.toml", ".rustfmt.toml" }, pat = "max_width%s*=%s*(%d+)", tool = 100 },
    python = { files = { "pyproject.toml", "setup.cfg", ".flake8", "ruff.toml" }, pat = "line[-_]length%s*=%s*(%d+)", tool = 88 },
